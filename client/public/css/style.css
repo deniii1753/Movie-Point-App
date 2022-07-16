@@ -387,7 +387,7 @@ input::-webkit-input-placeholder {
     transform: scaleY(0);
     transition: all 0.4s;
 }
-.mainmenu li a.active, .mainmenu li a:hover {
+.mainnav li a.active, .mainmenu li a:hover {
     color: #eb315a;
 }
 .header-right form {
