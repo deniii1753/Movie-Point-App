@@ -1,8 +1,8 @@
 export function Register() {
     return (
-        <div class="login-area">
-            <div class="login-box">
-                <a href="/"><i class="icofont icofont-close"></i></a>
+        <div className="login-area">
+            <div className="login-box">
+                <a href="/"><i className="icofont icofont-close"></i></a>
                 <h2>REGISTER</h2>
                 <form action="#" className="auth-form">
                     <h6>First Name:</h6>
@@ -21,7 +21,7 @@ export function Register() {
                     <input type="text" name="imgUrl"/>
                     <h6>Bio:</h6>
                     <textarea name="bio"></textarea>
-                    <button class="theme-btn auth-button">REGISTER</button>
+                    <button className="theme-btn auth-button">REGISTER</button>
                 </form>
             </div>
         </div>

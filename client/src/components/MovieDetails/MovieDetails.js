@@ -1,11 +1,11 @@
 export function MovieDetails() {
     return (
         <>
-            <section class="breadcrumb-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb-area-content">
+            <section className="breadcrumb-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="breadcrumb-area-content">
                                 <h1>Movie Details Page</h1>
                             </div>
                         </div>
@@ -13,65 +13,65 @@ export function MovieDetails() {
                 </div>
             </section>
 
-            <section class="transformers-area">
-                <div class="container">
-                    <div class="transformers-box">
-                        <div class="row flexbox-center">
-                            <div class="col-lg-5 text-lg-left text-center">
-                                <div class="transformers-content">
+            <section className="transformers-area">
+                <div className="container">
+                    <div className="transformers-box">
+                        <div className="row flexbox-center">
+                            <div className="col-lg-5 text-lg-left text-center">
+                                <div className="transformers-content">
                                     <img src="/img/slide2.png" alt="about" />
                                 </div>
                             </div>
-                            <div class="col-lg-7">
-                                <div class="transformers-content">
+                            <div className="col-lg-7">
+                                <div className="transformers-content">
                                     <h2>The Transformers</h2>
                                     <p>3D | Animation | Action | Sci-Fi</p>
                                     <ul>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Movie:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 <a href="/">Sci-Fic</a>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Writer:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 Stephen McFeely, Christopher Markus
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Director:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 Joe Johnston
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Time:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 190m
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Release:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 2018-07-22
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="transformers-left">
+                                            <div className="transformers-left">
                                                 Language:
                                             </div>
-                                            <div class="transformers-right">
+                                            <div className="transformers-right">
                                                 English, Russian
                                             </div>
                                         </li>
@@ -80,75 +80,75 @@ export function MovieDetails() {
                             </div>
                         </div>
                         <div>
-                            <a href="/" class="like-btn">👍Like</a>
-                            <a href="/" class="dislike-btn">👎Dislike</a>
+                            <a href="/" className="like-btn">👍Like</a>
+                            <a href="/" className="dislike-btn">👎Dislike</a>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=LlspjxekvzI" class="theme-btn popup-youtube">Watch Trailer</a>
+                        <a href="https://www.youtube.com/watch?v=LlspjxekvzI" className="theme-btn popup-youtube">Watch Trailer</a>
                     </div>
                 </div>
             </section>
 
-            <section class="details-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <div class="details-content">
-                                <div class="details-overview">
+            <section className="details-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-9">
+                            <div className="details-content">
+                                <div className="details-overview">
                                     <h2>Overview</h2>
                                     <p>Humans are at war with the Transformers, and Optimus Prime is gone. The key to saving the future lies buried in the secrets of the past and the hidden history of Transformers on Earth. Now it's up to the unlikely alliance of inventor Cade Yeager, Bumblebee, a n English lord and an Oxford professor to save the world. Transformers: The Last Knight has a deeper mythos and bigger spectacle than its predecessors, yet still ends up being mostly hollow and cacophonous. The first "Transformers" movie that could actually be characterized as badass. Which isn't a bad thing. It may, in fact, be better.</p>
                                 </div>
-                                {/* <div class="details-reply">
+                                {/* <div className="details-reply">
                                     <h2>Leave a Reply</h2>
                                     <form action="/">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="select-container">
+                                        <div className="row">
+                                            <div className="col-lg-4">
+                                                <div className="select-container">
                                                     <input type="text" placeholder="Name" />
-                                                    <i class="icofont icofont-ui-user"></i>
+                                                    <i className="icofont icofont-ui-user"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
-                                                <div class="select-container">
+                                            <div className="col-lg-4">
+                                                <div className="select-container">
                                                     <input type="text" placeholder="Email" />
-                                                    <i class="icofont icofont-envelope"></i>
+                                                    <i className="icofont icofont-envelope"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
-                                                <div class="select-container">
+                                            <div className="col-lg-4">
+                                                <div className="select-container">
                                                     <input type="text" placeholder="Phone" />
-                                                    <i class="icofont icofont-phone"></i>
+                                                    <i className="icofont icofont-phone"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="textarea-container">
+                                            <div className="col-lg-12">
+                                                <div className="textarea-container">
                                                     <textarea placeholder="Type Here Message"></textarea>
-                                                    <button><i class="icofont icofont-send-mail"></i></button>
+                                                    <button><i className="icofont icofont-send-mail"></i></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="details-comment">
-                                    <a class="theme-btn theme-btn2" href="/">Post Comment</a>
+                                <div className="details-comment">
+                                    <a className="theme-btn theme-btn2" href="/">Post Comment</a>
                                     <p>You may use these HTML tags and attributes: You may use these HTML tags and attributes: You may use these HTML tags and attributes: </p>
                                 </div> */}
-                                {/* <div class="details-thumb">
-                                    <div class="details-thumb-prev">
-                                        <div class="thumb-icon">
-                                            <i class="icofont icofont-simple-left"></i>
+                                {/* <div className="details-thumb">
+                                    <div className="details-thumb-prev">
+                                        <div className="thumb-icon">
+                                            <i className="icofont icofont-simple-left"></i>
                                         </div>
-                                        <div class="thumb-text">
+                                        <div className="thumb-text">
                                             <h4>Previous Post</h4>
                                             <p>Standard Post With Gallery</p>
                                         </div>
                                     </div>
-                                    <div class="details-thumb-next">
-                                        <div class="thumb-text">
+                                    <div className="details-thumb-next">
+                                        <div className="thumb-text">
                                             <h4>Next Post</h4>
                                             <p>Standard Post With Preview Image</p>
                                         </div>
-                                        <div class="thumb-icon">
-                                            <i class="icofont icofont-simple-right"></i>
+                                        <div className="thumb-icon">
+                                            <i className="icofont icofont-simple-right"></i>
                                         </div>
                                     </div>
                                 </div> */}

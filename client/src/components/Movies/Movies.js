@@ -1,11 +1,11 @@
 export function Movies() {
     return (
         <>
-            <section class="breadcrumb-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb-area-content">
+            <section className="breadcrumb-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="breadcrumb-area-content">
                                 <h1>Movies Page</h1>
                             </div>
                         </div>
@@ -13,18 +13,18 @@ export function Movies() {
                 </div>
             </section>
 
-            <section class="portfolio-area pt-60">
-                <div class="container movies-container">
-                    <div class="row flexbox-center">
-                        <div class="col-lg-6 text-center text-lg-left">
-                            <div class="section-title">
-                                <h1><i class="icofont icofont-movie"></i> Spotlight This Month</h1>
+            <section className="portfolio-area pt-60">
+                <div className="container movies-container">
+                    <div className="row flexbox-center">
+                        <div className="col-lg-6 text-center text-lg-left">
+                            <div className="section-title">
+                                <h1><i className="icofont icofont-movie"></i> Spotlight This Month</h1>
                             </div>
                         </div>
-                        <div class="col-lg-6 text-center text-lg-right">
-                            <div class="portfolio-menu">
+                        <div className="col-lg-6 text-center text-lg-right">
+                            <div className="portfolio-menu">
                                 <ul>
-                                    <li data-filter="*" class="active">Latest</li>
+                                    <li data-filter="*" className="active">Latest</li>
                                     <li data-filter=".soon">Comming Soon</li>
                                     <li data-filter=".top">Top Rated</li>
                                     <li data-filter=".released">Recently Released</li>
@@ -33,7 +33,7 @@ export function Movies() {
                         </div>
                     </div>
                     <hr />
-                    <div class="row portfolio-item">
+                    <div className="row portfolio-item">
                         <div className="col-md-3">
                             <div className="single-portfolio">
                                 <div className="single-portfolio-img">

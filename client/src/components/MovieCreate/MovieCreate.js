@@ -1,11 +1,11 @@
 export function MovieCreate() {
     return (
         <>
-            <section class="breadcrumb-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb-area-content">
+            <section className="breadcrumb-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="breadcrumb-area-content">
                                 <h1>Add Movie</h1>
                             </div>
                         </div>
@@ -13,15 +13,15 @@ export function MovieCreate() {
                 </div>
             </section>
 
-            <section class="transformers-area">
-                <div class="container">
-                    <div class="transformers-box">
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-auto">
+            <section className="transformers-area">
+                <div className="container">
+                    <div className="transformers-box">
+                        <div className="row justify-content-md-center">
+                            <div className="col-md-auto">
                                 <h2>Add Movie</h2>
                             </div>
 
-                            <div class="add-movie col-lg-12">
+                            <div className="add-movie col-lg-12">
                                 <form action="">
                                     <label for="username">Movie Name: </label>
                                     <input type="text" id="username" name="username" />
