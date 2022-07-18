@@ -8,7 +8,7 @@ const app = express();
 
 require('./config/express')(app, express);
 
-app.use(routes);
+app.use('/api', routes);
 
 connectDatabase()
     .then(() => app.listen(port, () => console.log(`Database connected! Listening on port ${port}! ...`)))

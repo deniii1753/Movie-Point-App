@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-router.get('/test', (req, res) => {
-    res.json({name: 'test'});
-});
+const movieController = require('./controllers/movieController');
+
+router.use('/movies', movieController);
 
 module.exports = router;
