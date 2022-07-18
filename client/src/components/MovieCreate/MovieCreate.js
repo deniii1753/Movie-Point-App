@@ -23,8 +23,8 @@ export function MovieCreate() {
 
                             <div className="add-movie col-lg-12">
                                 <form action="">
-                                    <label for="username">Movie Name: </label>
-                                    <input type="text" id="username" name="username" />
+                                    <label for="title">Movie Name: </label>
+                                    <input type="text" id="title" name="title" />
                                     <label for="writer">Writer: </label>
                                     <input type="text" id="writer" name="writer" />
                                     <label for="director">Director: </label>
@@ -37,6 +37,8 @@ export function MovieCreate() {
                                     <input type="text" id="releaseDate" name="releaseDate" />
                                     <label for="languages">Language: </label>
                                     <input type="text" id="languages" name="languages" />
+                                    <label for="trailer">Trailer: </label>
+                                    <input type="text" id="trailer" name="trailer" />
                                     <label for="imgUrl">Image: </label>
                                     <input type="text" id="imgUrl" name="imgUrl" />
                                     <label for="author">Author: </label>

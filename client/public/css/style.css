@@ -492,8 +492,8 @@ option {
 .single-slide-cast img {
     min-width: 50px;
     min-height: 50px;
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 55px;
+    max-height: 55px;
     border-radius: 100%;
     margin-right: 15px;
 }
@@ -609,7 +609,7 @@ hr {
 }
 .video-area,
 .single-portfolio-img {
-	overflow: hidden;
+    overflow: hidden;
 	position: relative;
 }
 .single-portfolio-img:hover .popup-youtube span {
@@ -620,6 +620,8 @@ hr {
 }
 .video-area img,
 .single-portfolio-img img {
+    width: 255px;
+    height: 410px;
 	transition: 0.9s;
 }
 .video-area:hover img,
@@ -1370,4 +1372,9 @@ hr {
 
 .auth-button {
     transition: 0.6s;
+}
+
+.no-added-movies {
+    justify-content: center;
+    margin-top: 20px;
 }

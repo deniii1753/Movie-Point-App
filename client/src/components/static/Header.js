@@ -8,7 +8,7 @@ export function Header() {
             <div className="container">
                 <div className="header-area">
                     <div className="logo">
-                        <a href="index.html"><img src="/img/logo.png" alt="logo" /></a>
+                        <NavLink to="/"><img src="/img/logo.png" alt="logo" /></NavLink>
                     </div>
                     <div className="header-right mainnav">
                         <form action="#">
