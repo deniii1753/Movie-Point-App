@@ -17,7 +17,7 @@ export function Header() {
                         </form>
                         <ul>
                             <li>Welcome Guest!</li>
-                            <li><NavLink exact to="/" className={activeClassName}>Home</NavLink></li>
+                            <li><NavLink to="/" className={activeClassName}>Home</NavLink></li>
                             <li><NavLink to="/movies" className={activeClassName} end>Movies</NavLink></li>
                             <li><NavLink to="/movies/create" className={activeClassName}>Add Movie</NavLink></li>
                             <li><NavLink to="/profile" className={activeClassName}>Profile</NavLink></li>

@@ -1,0 +1,5 @@
+{
+    "databaseUrl": "mongodb://localhost:27017/movie-point-app",
+    "port": 3030,
+    "saltRounds": 10
+}
