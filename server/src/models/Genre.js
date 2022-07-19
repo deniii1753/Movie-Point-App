@@ -1,8 +1,12 @@
 const {Schema, model} = require('mongoose');
 
 const genreSchema = new Schema({
-    name: {
-        type: 'String',
+    label: {
+        type: String,
+        required: true
+    },
+    value: {
+        type: String,
         required: true
     },
     movies: [{
