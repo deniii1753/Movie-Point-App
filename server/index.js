@@ -11,7 +11,7 @@ require('./config/express')(app, express);
 app.use('/api', routes);
 
 connectDatabase()
-    .then(() => app.listen(port, () => console.log(`Database connected! Listening on port ${port}! ...`)))
+    .then(() => app.listen(port, () => console.log(`Database connected! Server listening on port ${port}! ...`)))
     .catch(err => {
         console.error('An error occured!');
         console.log(err);
