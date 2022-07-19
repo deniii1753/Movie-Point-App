@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:3030/api/movies';
 
 export function getRecent() {
-    return fetch(`${BASE_URL}?sort=creationDate&order=asc&limit=8`)
+    return fetch(`${BASE_URL}?sort=_creationDate&order=desc&limit=8`)
         .then(res => res.json());
 }
 
