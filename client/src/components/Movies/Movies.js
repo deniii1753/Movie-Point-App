@@ -30,7 +30,7 @@ export function Movies() {
         genreService.getAll()
             .then(data => setGenres(data.genres))
         
-        movieService.getMovies(0, MOVIES_PER_REQUEST)
+        movieService.getRecent(0, MOVIES_PER_REQUEST)
             .then(data => setMovies({
                 movies: data.movies,
                 currentMoviesCount: MOVIES_PER_REQUEST,
