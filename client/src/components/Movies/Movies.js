@@ -19,25 +19,45 @@ const selectStyles = {
 }
 
 export function Movies() {
-    const [options, setOptions] = useState([]);
+    const [genres, setGenres] = useState([]);
     const [movies, setMovies] = useState({
         movies: [],
-        currentMoviesCount: 0
+        currentMoviesCount: 0,
+        sortBy: 'Latest Added'
     });
 
     useEffect(() => {
         genreService.getAll()
-            .then(data => setOptions(data.genres))
+            .then(data => setGenres(data.genres))
         
         movieService.getMovies(0, MOVIES_PER_REQUEST)
             .then(data => setMovies({
                 movies: data.movies,
-                currentMoviesCount: MOVIES_PER_REQUEST
+                currentMoviesCount: MOVIES_PER_REQUEST,
+                sortBy: 'Latest Added'
             }));
     }, []);
 
-    function changeHandler(option) {
-        console.log(option);
+    function genreChangeHandler(genre) {
+        console.log(genre);
+    }
+
+    function sortClickHandler(e) {
+        const sortCriteria = e.target.textContent;
+
+        setMovies(oldMovies => {
+            let newMovies = [...oldMovies.movies];
+
+            if(sortCriteria === 'Latest Added') {
+                newMovies = oldMovies.movies.sort((a,b) => b._creationDate - a._creationDate);
+            }
+
+            return {
+                ...oldMovies,
+                movies: newMovies,
+                sortBy: sortCriteria
+            }
+        });
     }
 
     return (
@@ -49,7 +69,7 @@ export function Movies() {
                     <div className="row flexbox-center">
                         <div className="col-lg-6 text-center text-lg-left">
                             <div className="section-title">
-                                <h1><i className="icofont icofont-movie"></i> Spotlight This Month</h1>
+                                <h1><i className="icofont icofont-movie"></i> {movies.sortBy}</h1>
                             </div>
                         </div>
                         <div className="col-lg-6 text-center text-lg-right">
@@ -59,8 +79,8 @@ export function Movies() {
                                     <span className={styles["genre-label"]}>Genre: </span>
 
                                     <Select
-                                        options={options}
-                                        onChange={changeHandler}
+                                        options={genres}
+                                        onChange={genreChangeHandler}
                                         menuPortalTarget={document.body}
                                         styles={selectStyles}
                                     />
@@ -69,8 +89,9 @@ export function Movies() {
 
                                 <span>Sort  by:</span>
                                 <ul className={styles["sort-by-ul"]}>
-                                    <li>Release Date</li>
-                                    <li>Rating</li>
+                                    <li className={movies.sortBy === 'Latest Added' ? 'active' : undefined} onClick={sortClickHandler}>Latest Added</li>
+                                    <li className={movies.sortBy === 'Release Date' ? 'active' : undefined} onClick={sortClickHandler}>Release Date</li>
+                                    <li className={movies.sortBy === 'Rating' ? 'active' : undefined} onClick={sortClickHandler}>Rating</li>
                                 </ul>
                             </div>
                         </div>
