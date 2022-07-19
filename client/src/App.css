@@ -596,8 +596,10 @@ hr {
     color: #fff;
 }
 
-.portfolio-menu li.active::before,.portfolio-menu li:hover::before {
+.portfolio-menu li.active::before,
+.portfolio-menu li:hover::before {
     background: #eb315a;
+    z-index: 1;
 }
 .portfolio-content h2 {
     margin-top: 20px;

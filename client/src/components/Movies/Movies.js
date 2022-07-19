@@ -1,17 +1,32 @@
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
+
+import styles from './Movies.module.css';
+
+import { MoviesHeader } from "./MoviesHeader/MoviesHeader";
+import * as genreService from '../../services/genreService';
+
 export function Movies() {
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        genreService.getAll()
+            .then(data => setOptions(data.genres))
+    }, []);
+
+    const selectStyles = {
+        option: (provided) => ({
+            ...provided,
+            color: 'black'
+        })
+    }
+
+    function changeHandler(option) {
+        console.log(option);
+    }
     return (
         <>
-            <section className="breadcrumb-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="breadcrumb-area-content">
-                                <h1>Movies Page</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <MoviesHeader />
 
             <section className="portfolio-area pt-60">
                 <div className="container movies-container">
@@ -23,11 +38,32 @@ export function Movies() {
                         </div>
                         <div className="col-lg-6 text-center text-lg-right">
                             <div className="portfolio-menu">
-                                <ul>
-                                    <li data-filter="*" className="active">Latest</li>
-                                    <li data-filter=".soon">Comming Soon</li>
-                                    <li data-filter=".top">Top Rated</li>
-                                    <li data-filter=".released">Recently Released</li>
+
+                                <div className={styles["genre-select"]}>
+                                    <span className={styles["genre-label"]}>Genre: </span>
+                                    <Select
+                                        options={options}
+                                        onChange={changeHandler}
+                                        menuPortalTarget={document.body}
+                                        styles={selectStyles}
+                                    />
+                                </div>
+
+                                <span>Sort  by:</span>
+                                <ul className={styles["sort-by-ul"]}>
+                                    <li className="active">Release Date</li>
+                                    <li>Rating</li>
+                                    <li>
+
+                                        {/* <select onChange={changeHandler} className={styles['genre-select']}>
+                                            <option disabled selected hidden>Genre</option>
+                                            <option>Action</option>
+                                            <option>Comedy</option>
+                                            <option>Horror</option>
+                                            <option>Triller</option>
+                                            <option>Adventure</option>
+                                        </select> */}
+                                    </li>
                                 </ul>
                             </div>
                         </div>

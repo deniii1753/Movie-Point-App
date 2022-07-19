@@ -15,7 +15,7 @@ export function MovieCreate() {
 
             <section className="transformers-area">
                 <div className="container">
-                    <div className="transformers-box">
+                    <div className="transformers-box movies-container">
                         <div className="row justify-content-md-center">
                             <div className="col-md-auto">
                                 <h2>Add Movie</h2>
@@ -23,29 +23,29 @@ export function MovieCreate() {
 
                             <div className="add-movie col-lg-12">
                                 <form action="">
-                                    <label for="title">Movie Name: </label>
+                                    <label htmlFor="title">Movie Name: </label>
                                     <input type="text" id="title" name="title" />
-                                    <label for="writer">Writer: </label>
+                                    <label htmlFor="writer">Writer: </label>
                                     <input type="text" id="writer" name="writer" />
-                                    <label for="director">Director: </label>
+                                    <label htmlFor="director">Director: </label>
                                     <input type="text" id="director" name="director" />
-                                    <label for="genre">Genre: </label>
+                                    <label htmlFor="genre">Genre: </label>
                                     <input type="text" id="genre" name="genre" />
-                                    <label for="time">Time: </label>
+                                    <label htmlFor="time">Time: </label>
                                     <input type="Number" id="time" name="time" />
-                                    <label for="releaseDate">Release date: </label>
+                                    <label htmlFor="releaseDate">Release date: </label>
                                     <input type="text" id="releaseDate" name="releaseDate" />
-                                    <label for="languages">Language: </label>
+                                    <label htmlFor="languages">Language: </label>
                                     <input type="text" id="languages" name="languages" />
-                                    <label for="trailer">Trailer: </label>
+                                    <label htmlFor="trailer">Trailer: </label>
                                     <input type="text" id="trailer" name="trailer" />
-                                    <label for="imgUrl">Image: </label>
+                                    <label htmlFor="imgUrl">Image: </label>
                                     <input type="text" id="imgUrl" name="imgUrl" />
-                                    <label for="author">Author: </label>
+                                    <label htmlFor="author">Author: </label>
                                     <input type="text" id="author" name="author" />
-                                    <label for="authorImg">Author Image: </label>
+                                    <label htmlFor="authorImg">Author Image: </label>
                                     <input type="text" id="authorImg" name="authorImg" />
-                                    <label for="description">Description:</label>
+                                    <label htmlFor="description">Description:</label>
                                     <textarea name="description" id="description" className="textarea-container"></textarea>
                                     <button>Submit</button>
                                 </form>
