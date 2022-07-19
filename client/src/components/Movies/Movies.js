@@ -4,26 +4,42 @@ import Select from 'react-select';
 import styles from './Movies.module.css';
 
 import { MoviesHeader } from "./MoviesHeader/MoviesHeader";
+import { MovieItem } from './MovieItem/MovieItem';
+
 import * as genreService from '../../services/genreService';
+import * as movieService from '../../services/movieService';
+
+const MOVIES_PER_REQUEST = 8;
+
+const selectStyles = {
+    option: (provided) => ({
+        ...provided,
+        color: 'black'
+    })
+}
 
 export function Movies() {
     const [options, setOptions] = useState([]);
+    const [movies, setMovies] = useState({
+        movies: [],
+        currentMoviesCount: 0
+    });
 
     useEffect(() => {
         genreService.getAll()
             .then(data => setOptions(data.genres))
+        
+        movieService.getMovies(0, MOVIES_PER_REQUEST)
+            .then(data => setMovies({
+                movies: data.movies,
+                currentMoviesCount: MOVIES_PER_REQUEST
+            }));
     }, []);
-
-    const selectStyles = {
-        option: (provided) => ({
-            ...provided,
-            color: 'black'
-        })
-    }
 
     function changeHandler(option) {
         console.log(option);
     }
+
     return (
         <>
             <MoviesHeader />
@@ -41,220 +57,32 @@ export function Movies() {
 
                                 <div className={styles["genre-select"]}>
                                     <span className={styles["genre-label"]}>Genre: </span>
+
                                     <Select
                                         options={options}
                                         onChange={changeHandler}
                                         menuPortalTarget={document.body}
                                         styles={selectStyles}
                                     />
+                                    
                                 </div>
 
                                 <span>Sort  by:</span>
                                 <ul className={styles["sort-by-ul"]}>
-                                    <li className="active">Release Date</li>
+                                    <li>Release Date</li>
                                     <li>Rating</li>
-                                    <li>
-
-                                        {/* <select onChange={changeHandler} className={styles['genre-select']}>
-                                            <option disabled selected hidden>Genre</option>
-                                            <option>Action</option>
-                                            <option>Comedy</option>
-                                            <option>Horror</option>
-                                            <option>Triller</option>
-                                            <option>Adventure</option>
-                                        </select> */}
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <hr />
+
                     <div className="row portfolio-item">
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="single-portfolio">
-                                <div className="single-portfolio-img">
-                                    <img src="/img/portfolio/portfolio6.png" alt="portfolio" />
-                                    <a href="https://www.youtube.com/watch?v=RZXnugbhw_4" className="popup-youtube">
-                                        <span>Details</span>
-                                    </a>
-                                </div>
-                                <div className="portfolio-content">
-                                    <h2>Last Hero</h2>
-                                    <div className="review">
-                                        <div className="author-review">
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                            <i className="icofont icofont-star"></i>
-                                        </div>
-                                        <h4>180k voters</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        {movies.movies.map(x => <MovieItem key={x._id} movie={x}/>)}
+                        
                     </div>
+
                 </div>
             </section>
         </>

@@ -12,5 +12,10 @@ export function getTopFive() {
 
 export function getTopRated() {
     return fetch(`${BASE_URL}?sort=likes&order=desc&limit=1`)
-    .then(res => res.json());
+        .then(res => res.json());
+}
+
+export function getMovies(from, to) {
+    return fetch(`${BASE_URL}?skip=${from}&limit=${to}`)
+        .then(res => res.json());
 }

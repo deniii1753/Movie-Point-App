@@ -4,6 +4,7 @@ const router = require("express").Router();
 
 router.get('/', async (req, res) => {
     const limit = req?.query?.limit || 8;
+    const skip = req?.query?.skip || 0;
     const sort = req?.query?.sort;
     const order = req?.query?.order;
 
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
     if(sort && order) sortCriteria[sort] = order;
 
     try {
-        const movies = await getMovies(sortCriteria, limit);
+        const movies = await getMovies(sortCriteria, limit, skip);
         res.status(200).json({movies});
     } catch (err) {
         const statusCode = err.statusCode || 400;
