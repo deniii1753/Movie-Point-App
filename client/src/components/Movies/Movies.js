@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import styles from './Movies.module.css';
 
@@ -9,7 +10,7 @@ import { MovieItem } from './MovieItem/MovieItem';
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
-const MOVIES_PER_REQUEST = 8;
+const MOVIES_PER_REQUEST = 16;
 
 const selectStyles = {
     option: (provided) => ({
@@ -22,44 +23,73 @@ export function Movies() {
     const [genres, setGenres] = useState([]);
     const [movies, setMovies] = useState({
         movies: [],
-        currentMoviesCount: 0,
-        sortBy: 'Latest Added'
+        totalMoviesInDB: null,
+        sortBy: ''
     });
+
+    //      TODO:
+    // release date filter
+    // rating filter
+    // genre filter
 
     useEffect(() => {
         genreService.getAll()
             .then(data => setGenres(data.genres))
-        
-        movieService.getRecent(0, MOVIES_PER_REQUEST)
-            .then(data => setMovies({
+            .catch(err => {
+                // redirect to server error page
+                console.log(err);
+            });
+
+        movieService.getMovies(0, MOVIES_PER_REQUEST)
+            .then(data => setMovies(state => ({
+                ...state, 
                 movies: data.movies,
-                currentMoviesCount: MOVIES_PER_REQUEST,
-                sortBy: 'Latest Added'
-            }));
+                totalMoviesInDB: data.moviesCount,
+            })))
+            .catch(err => {
+                // redirect to server error page
+                console.log(err);
+            });
+    
     }, []);
 
     function genreChangeHandler(genre) {
         console.log(genre);
     }
 
-    function sortClickHandler(e) {
-        const sortCriteria = e.target.textContent;
-
+    useEffect(() => {
         setMovies(oldMovies => {
             let newMovies = [...oldMovies.movies];
 
-            if(sortCriteria === 'Latest Added') {
-                newMovies = oldMovies.movies.sort((a,b) => b._creationDate - a._creationDate);
+            if (movies.sortBy === 'Latest Added') {
+                newMovies = oldMovies.movies.sort((a, b) => b._creationDate - a._creationDate);
             }
 
             return {
                 ...oldMovies,
                 movies: newMovies,
-                sortBy: sortCriteria
+                sortBy: movies.sortBy
             }
         });
+    }, [movies.sortBy]);
+
+    function sortClickHandler(e) {
+        const sortCriteria = e.target.textContent;
+
+        setMovies(state => ({ ...state, sortBy: sortCriteria }));
     }
 
+    function loadNextMovies() {
+        if(movies.movies.length < MOVIES_PER_REQUEST) return;
+
+        movieService.getMovies(movies.movies.length, MOVIES_PER_REQUEST)
+            .then(data => setMovies(state => {
+                return {
+                ...state,
+                movies: [...state.movies, ...data.movies],
+                sortBy: ''
+            }}))
+    }
     return (
         <>
             <MoviesHeader />
@@ -69,7 +99,7 @@ export function Movies() {
                     <div className="row flexbox-center">
                         <div className="col-lg-6 text-center text-lg-left">
                             <div className="section-title">
-                                <h1><i className="icofont icofont-movie"></i> {movies.sortBy}</h1>
+                                <h1><i className="icofont icofont-movie"></i> {movies.sortBy || 'All Movies'}</h1>
                             </div>
                         </div>
                         <div className="col-lg-6 text-center text-lg-right">
@@ -84,7 +114,7 @@ export function Movies() {
                                         menuPortalTarget={document.body}
                                         styles={selectStyles}
                                     />
-                                    
+
                                 </div>
 
                                 <span>Sort  by:</span>
@@ -97,12 +127,15 @@ export function Movies() {
                         </div>
                     </div>
                     <hr />
-
-                    <div className="row portfolio-item">
-
-                        {movies.movies.map(x => <MovieItem key={x._id} movie={x}/>)}
-                        
-                    </div>
+                    
+                    <InfiniteScroll
+                        dataLength={movies.movies.length}
+                        next={loadNextMovies}
+                        hasMore={true}
+                        className='row portfolio-item'
+                    >
+                        {movies.movies.map(x => <MovieItem key={x._id} movie={x} />)}
+                    </InfiniteScroll>
 
                 </div>
             </section>

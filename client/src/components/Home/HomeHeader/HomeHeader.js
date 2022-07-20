@@ -8,7 +8,6 @@ export function HomeHeader() {
     useEffect(() => {
         getTopRated()
             .then(data => {
-                console.log(data);
                 setMovie(data.movies[0])
             })
             .catch(err => {

@@ -15,7 +15,12 @@ export function getTopRated() {
         .then(res => res.json());
 }
 
-export function getMovies(from, to) {
+export function getMovies(from = 0, to = 8) {
     return fetch(`${BASE_URL}?skip=${from}&limit=${to}`)
+        .then(res => res.json());
+}
+
+export function getMoviesCount() {
+    return fetch(`${BASE_URL}/count`)
         .then(res => res.json());
 }

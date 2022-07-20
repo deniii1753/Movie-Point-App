@@ -1,4 +1,4 @@
-const { getMovies } = require("../services/movieService");
+const movieService = require("../services/movieService");
 
 const router = require("express").Router();
 
@@ -13,12 +13,26 @@ router.get('/', async (req, res) => {
     if(sort && order) sortCriteria[sort] = order;
 
     try {
-        const movies = await getMovies(sortCriteria, limit, skip);
-        res.status(200).json({movies});
+        const [movies, moviesCount] = await Promise.all([
+            movieService.getMovies(sortCriteria, limit, skip),
+            movieService.getMoviesCount()
+        ]);
+
+        res.status(200).json({movies, moviesCount});
     } catch (err) {
         const statusCode = err.statusCode || 400;
         res.status(statusCode).json({errorMessage: err.message, statusCode})
     }
 });
+
+router.get('/count', async (req, res) => {
+    try {
+        const moviesCount = await movieService.getMoviesCount();
+        res.status(200).json({moviesCount});
+    } catch (err) {
+        const statusCode = err.statusCode || 400;
+        res.status(statusCode).json({errorMessage: err.message, statusCode})
+    }
+})
 
 module.exports = router;

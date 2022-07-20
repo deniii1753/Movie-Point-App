@@ -22,3 +22,7 @@
 select.genre-select option:hover {
     background-color: red;
 }
+
+.infinite-scroll {
+    overflow: hidden
+}
