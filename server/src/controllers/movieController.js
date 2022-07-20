@@ -35,6 +35,16 @@ router.get('/count', async (req, res) => {
     }
 });
 
+router.get('/:movieId', async (req, res) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+        res.status(200).json(movie);
+    } catch(err) {
+        const statusCode = err.statusCode || 400;
+        res.status(statusCode).json({errorMessage: err.message, statusCode})
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const movie = await movieService.addMovie(req.body);

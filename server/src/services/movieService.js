@@ -10,6 +10,9 @@ exports.getMovies = (sort, limit, skip) => {
 }
 
 // Should make detailed movie endpoint
+exports.getOne = (movieId) => {
+    return Movie.findById(movieId);
+}
 
 exports.getMoviesCount = () => {
     return Movie.countDocuments()
