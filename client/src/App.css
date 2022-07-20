@@ -1359,6 +1359,13 @@ hr {
     color: #90ee90;
 }
 
+.add-movie button:disabled {
+    cursor: not-allowed;
+    background-color: rgb(206, 109, 109);
+    color: rgb(238, 238, 238);
+    border-color: rgb(206, 109, 109);
+}
+
 .movies-container {
     margin-bottom: 50px;
 }
@@ -1379,4 +1386,8 @@ hr {
 .no-added-movies {
     justify-content: center;
     margin-top: 20px;
+}
+
+.error-message {
+    color: rgb(247, 166, 166);
 }

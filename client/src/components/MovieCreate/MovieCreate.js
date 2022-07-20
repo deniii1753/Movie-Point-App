@@ -5,23 +5,24 @@ import { multiSelectStyles } from './multiSelectStyles';
 
 import * as genreService from '../../services/genreService';
 import { MovieCreateHeader } from './MovieCreateHeader/MovieCreateHeader';
+import { validateField } from '../../utils/validators/createMovieValidations';
 
 export function MovieCreate() {
     const [genres, setGenres] = useState([]);
 
     const [formData, setFormData] = useState({
-        title: '',
-        writer: '',
-        director: '',
-        genres: [],
-        time: '',
-        releaseDate: '',
-        languages: '',
-        trailer: '',
-        imgUrl: '',
-        author: '',
-        authorImg: '',
-        description: '',
+        title: {value: '', error: null},
+        writer: {value: '', error: null},
+        director: {value: '', error: null},
+        genres: {value: [], error: null},
+        time: {value: '', error: null},
+        releaseDate: {value: '', error: null},
+        language: {value: '', error: null},
+        trailer: {value: '', error: null},
+        imgUrl: {value: '', error: null},
+        author: {value: '', error: null},
+        authorImg: {value: '', error: null},
+        description: {value: '', error: null},
     });
 
     useEffect(() => {
@@ -36,23 +37,22 @@ export function MovieCreate() {
     }
 
     function changeHandler(e) {
+        console.log(formData[e.target.name].error);
         setFormData(state => ({
             ...state,
-            [e.target.name]: e.target.value
-        }))
-        console.log(e.target.name + ' - ' + e.target.value);
-    }
-
-    function multiSelectHandler(optionsSelected) {
-        setFormData(state => ({
-            ...state,
-            genres: optionsSelected.map(x => x._id)
+            [e.target.name]: {value: e.target.value, error: validateField(e.target.name, e.target.value)}
         }))
     }
 
+    function multiSelectHandler(selectedOptions) {
+        setFormData(state => ({
+            ...state,
+            genres: {value: selectedOptions.map(x => x._id), error: validateField('genres', selectedOptions)}
+        }))
+    }
+    console.log(formData);
     return (
         <>
-
             <MovieCreateHeader />
 
             <section className="transformers-area">
@@ -66,11 +66,14 @@ export function MovieCreate() {
                             <div className="add-movie col-lg-12">
                                 <form method="POST" onSubmit={submitHandler}>
                                     <label htmlFor="title">Movie Name: </label>
-                                    <input type="text" id="title" name="title" value={formData.title} onChange={changeHandler}/>
+                                    <input type="text" id="title" name="title" value={formData.title.value} onChange={changeHandler}/>
+                                    {formData.title.error && <p className="error-message">❌{formData.title.error}</p>}
                                     <label htmlFor="writer">Writer: </label>
-                                    <input type="text" id="writer" name="writer" value={formData.writer} onChange={changeHandler}/>
+                                    <input type="text" id="writer" name="writer" value={formData.writer.value} onChange={changeHandler}/>
+                                    {formData.writer.error && <p className="error-message">❌{formData.writer.error}</p>}
                                     <label htmlFor="director">Director: </label>
-                                    <input type="text" id="director" name="director" value={formData.director} onChange={changeHandler}/>
+                                    <input type="text" id="director" name="director" value={formData.director.value} onChange={changeHandler}/>
+                                    {formData.director.error && <p className="error-message">❌{formData.director.error}</p>}
                                     <label htmlFor="genres">Genre: </label>
                                     <Select
                                         name="genres"
@@ -80,23 +83,38 @@ export function MovieCreate() {
                                         styles={multiSelectStyles}
                                         isMulti
                                     />
+                                    {formData.genres.error && <p className="error-message">❌{formData.genres.error}</p>}
                                     <label htmlFor="time">Time: </label>
-                                    <input type="Number" id="time" name="time" value={formData.time} onChange={changeHandler}/>
-                                    <label htmlFor="releaseDate">Release date: </label>
-                                    <input type="text" id="releaseDate" name="releaseDate" value={formData.releaseDate} onChange={changeHandler}/>
-                                    <label htmlFor="languages">Languages: </label>
-                                    <input type="text" id="languages" name="languages" value={formData.languages} onChange={changeHandler}/>
+                                    <input type="Number" id="time" name="time" value={formData.time.value} onChange={changeHandler}/>
+                                    {formData.time.error && <p className="error-message">❌{formData.time.error}</p>}
+                                    <label htmlFor="releaseDate">Release date (DD/MM/YYYY): </label>
+                                    <input type="text" id="releaseDate" name="releaseDate" value={formData.releaseDate.value} onChange={changeHandler}/>
+                                    {formData.releaseDate.error && <p className="error-message">❌{formData.releaseDate.error}</p>}
+                                    <label htmlFor="language">Language: </label>
+                                    <input type="text" id="language" name="language" value={formData.language.value} onChange={changeHandler}/>
+                                    {formData.language.error && <p className="error-message">❌{formData.language.error}</p>}
                                     <label htmlFor="trailer">Trailer: </label>
-                                    <input type="text" id="trailer" name="trailer" value={formData.trailer} onChange={changeHandler}/>
+                                    <input type="text" id="trailer" name="trailer" value={formData.trailer.value} onChange={changeHandler}/>
+                                    {formData.trailer.error && <p className="error-message">❌{formData.trailer.error}</p>}
                                     <label htmlFor="imgUrl">Image: </label>
-                                    <input type="text" id="imgUrl" name="imgUrl" value={formData.imgUrl} onChange={changeHandler}/>
-                                    <label htmlFor="author">Author: </label>
-                                    <input type="text" id="author" name="author" value={formData.author} onChange={changeHandler}/>
+                                    <input type="text" id="imgUrl" name="imgUrl" value={formData.imgUrl.value} onChange={changeHandler}/>
+                                    {formData.imgUrl.error && <p className="error-message">❌{formData.imgUrl.error}</p>}
+                                    <label htmlFor="author">Author Name: </label>
+                                    <input type="text" id="author" name="author" value={formData.author.value} onChange={changeHandler}/>
+                                    {formData.author.error && <p className="error-message">❌{formData.author.error}</p>}
                                     <label htmlFor="authorImg">Author Image: </label>
-                                    <input type="text" id="authorImg" name="authorImg" value={formData.authorImg} onChange={changeHandler}/>
+                                    <input type="text" id="authorImg" name="authorImg" value={formData.authorImg.value} onChange={changeHandler}/>
+                                    {formData.authorImg.error && <p className="error-message">❌{formData.authorImg.error}</p>}
                                     <label htmlFor="description">Description:</label>
-                                    <textarea name="description" id="description" className="textarea-container" value={formData.description} onChange={changeHandler} />
-                                    <button>Submit</button>
+                                    <textarea name="description" id="description" className="textarea-container" value={formData.description.value} onChange={changeHandler} />
+                                    {formData.description.error && <p className="error-message">❌{formData.description.error}</p>}
+
+                                    <button 
+                                        disabled={
+                                            !formData.genres.value.length ||
+                                            Object.values(formData).some(x => x.error)
+                                        }
+                                    >Submit</button>
                                 </form>
                             </div>
                         </div>
