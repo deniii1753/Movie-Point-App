@@ -24,3 +24,13 @@ export function getMoviesCount() {
     return fetch(`${BASE_URL}/count`)
         .then(res => res.json());
 }
+
+export function getOne(movieId) {
+    return fetch(`${BASE_URL}/${movieId}`)
+        .then(res => {
+            if(res.ok) {
+                return res.json();
+            }
+            throw new Error(res.json());
+        });
+}

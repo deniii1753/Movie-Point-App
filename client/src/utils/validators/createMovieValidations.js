@@ -11,8 +11,6 @@ export function validateField(key, value) {
             return value.includes(' ') ? null : 'Director should have first and last name!';
         case 'genres':
             return value.length === 0 ? 'Please choose at least one genre!' : null;
-        case 'imgUrl':
-            return !(value.startsWith('https://'));
         case 'time':
             return Number(value) <= 0 ? 'Time should be a positive number!' : null;
         case 'releaseDate':

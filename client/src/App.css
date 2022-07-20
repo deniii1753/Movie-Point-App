@@ -255,6 +255,7 @@ textarea:focus {
 	cursor: pointer;
 	font-weight: 500;
     margin-right: 10px;
+    margin-top: 15px;
 }
 
 .like-btn:hover {
@@ -1390,4 +1391,11 @@ hr {
 
 .error-message {
     color: rgb(247, 166, 166);
+}
+
+.details-image {
+    min-width: 415px;
+    max-width: 415px;
+    min-height: 575px;
+    max-height: 575px;
 }

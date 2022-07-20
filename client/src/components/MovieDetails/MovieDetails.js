@@ -1,17 +1,27 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import * as movieService from '../../services/movieService';
+
+import { DetailsHeader } from "./DetailsHeader/DetailsHeader";
 export function MovieDetails() {
+    const {movieId} = useParams();
+    const navigate = useNavigate();
+    const [movie, setMovie] = useState({});
+
+    useEffect(() => {
+        movieService.getOne(movieId)
+            .then(data => setMovie(data))
+            .catch(err => {
+                // redirect to 404 page
+                console.log(err);
+            });
+
+    }, [movieId]);
     return (
         <>
-            <section className="breadcrumb-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="breadcrumb-area-content">
-                                <h1>Movie Details Page</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+        <DetailsHeader />
 
             <section className="transformers-area">
                 <div className="container">
@@ -19,20 +29,20 @@ export function MovieDetails() {
                         <div className="row flexbox-center">
                             <div className="col-lg-5 text-lg-left text-center">
                                 <div className="transformers-content">
-                                    <img src="/img/slide2.png" alt="about" />
+                                    <img src={movie.imgUrl} alt="about" className="details-image"/>
                                 </div>
                             </div>
                             <div className="col-lg-7">
                                 <div className="transformers-content">
-                                    <h2>The Transformers</h2>
-                                    <p>3D | Animation | Action | Sci-Fi</p>
+                                    <h2>{movie.title}</h2>
+                                    <p>{movie.genres?.join(' | ')}</p>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
-                                                Movie:
+                                                Author:
                                             </div>
                                             <div className="transformers-right">
-                                                <a href="/">Sci-Fic</a>
+                                                {movie.author}
                                             </div>
                                         </li>
                                         <li>
@@ -40,7 +50,7 @@ export function MovieDetails() {
                                                 Writer:
                                             </div>
                                             <div className="transformers-right">
-                                                Stephen McFeely, Christopher Markus
+                                                {movie.writer}
                                             </div>
                                         </li>
                                         <li>
@@ -48,7 +58,7 @@ export function MovieDetails() {
                                                 Director:
                                             </div>
                                             <div className="transformers-right">
-                                                Joe Johnston
+                                                {movie.director}
                                             </div>
                                         </li>
                                         <li>
@@ -56,7 +66,7 @@ export function MovieDetails() {
                                                 Time:
                                             </div>
                                             <div className="transformers-right">
-                                                190m
+                                                {movie.time}m
                                             </div>
                                         </li>
                                         <li>
@@ -64,7 +74,7 @@ export function MovieDetails() {
                                                 Release:
                                             </div>
                                             <div className="transformers-right">
-                                                2018-07-22
+                                                {movie.releaseDate}
                                             </div>
                                         </li>
                                         <li>
@@ -72,7 +82,7 @@ export function MovieDetails() {
                                                 Language:
                                             </div>
                                             <div className="transformers-right">
-                                                English, Russian
+                                                {movie.language}
                                             </div>
                                         </li>
                                     </ul>
@@ -83,7 +93,7 @@ export function MovieDetails() {
                             <a href="/" className="like-btn">👍Like</a>
                             <a href="/" className="dislike-btn">👎Dislike</a>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=LlspjxekvzI" className="theme-btn popup-youtube">Watch Trailer</a>
+                        <a href={movie.trailer} className="theme-btn popup-youtube">Watch Trailer</a>
                     </div>
                 </div>
             </section>

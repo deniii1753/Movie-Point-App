@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         res.status(200).json({movies, moviesCount});
     } catch (err) {
         const statusCode = err.statusCode || 400;
-        res.status(statusCode).json({errorMessage: err.message, statusCode})
+        res.status(statusCode).json({errorMessage: err.message, statusCode});
     }
 });
 
@@ -31,7 +31,7 @@ router.get('/count', async (req, res) => {
         res.status(200).json({moviesCount});
     } catch (err) {
         const statusCode = err.statusCode || 400;
-        res.status(statusCode).json({errorMessage: err.message, statusCode})
+        res.status(statusCode).json({errorMessage: err.message, statusCode});
     }
 });
 
@@ -41,7 +41,7 @@ router.get('/:movieId', async (req, res) => {
         res.status(200).json(movie);
     } catch(err) {
         const statusCode = err.statusCode || 400;
-        res.status(statusCode).json({errorMessage: err.message, statusCode})
+        res.status(statusCode).json({errorMessage: err.message, statusCode});
     }
 });
 
