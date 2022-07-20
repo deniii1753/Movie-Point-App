@@ -33,6 +33,16 @@ router.get('/count', async (req, res) => {
         const statusCode = err.statusCode || 400;
         res.status(statusCode).json({errorMessage: err.message, statusCode})
     }
-})
+});
+
+router.post('/', async (req, res) => {
+    try {
+        const movie = await movieService.addMovie(req.body);
+        res.status(201).json({movie});
+    } catch(err) {
+        const statusCode = err.statusCode || 400;
+        res.status(statusCode).json({errorMessage: err.message, statusCode})
+    }
+});
 
 module.exports = router;
