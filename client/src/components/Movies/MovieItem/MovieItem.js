@@ -4,7 +4,7 @@ export function MovieItem({ movie }) {
         <div className="col-md-3">
             <div className="single-portfolio">
                 <div className="single-portfolio-img">
-                    <img src={movie.imageUrl} alt="portfolio" />
+                    <img src={movie.imgUrl} alt="portfolio" />
 
                     <Link
                         to={`/movies/${movie._id}`}

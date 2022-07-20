@@ -53,9 +53,9 @@ const movieSchema = new Schema({
         required: [true, 'Language is required!'],
         minLength: [5, 'Language should be at least 5 characters long!']
     },
-    imageUrl: {
+    imgUrl: {
         type: String,
-        requred: [true, 'imageUrl is required!'],
+        requred: [true, 'imgUrl is required!'],
         validate: {
             validator(value) {
                 value = value.toLowerCase();

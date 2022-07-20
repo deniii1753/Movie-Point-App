@@ -5,6 +5,7 @@ exports.getMovies = (sort, limit, skip) => {
     return Movie.find()
     .skip(skip)
     .sort(sort)
+    .select('title likes disLikes imgUrl _creationDate description author authorImg')
     .limit(limit);
 }
 

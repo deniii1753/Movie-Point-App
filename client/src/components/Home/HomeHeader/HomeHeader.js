@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getTopRated } from "../../../services/movieService";
+import * as movieService from "../../../services/movieService";
 
 export function HomeHeader() {
     const [movie, setMovie] = useState([]);
     
     useEffect(() => {
-        getTopRated()
+        movieService.getTopRated()
             .then(data => {
                 setMovie(data.movies[0])
             })
@@ -23,7 +23,7 @@ export function HomeHeader() {
                     <div className="row hero-area-slide">
                         <div className="col-lg-6 col-md-5">
                             <div className="hero-area-content">
-                                <img src={movie.imageUrl}
+                                <img src={movie.imgUrl}
                                     alt="about" />
                             </div>
                         </div>
