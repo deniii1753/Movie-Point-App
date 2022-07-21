@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './Movies.module.css';
 
 import { MoviesHeader } from "./MoviesHeader/MoviesHeader";
-import { MovieItem } from './MovieItem/MovieItem';
+import { MovieItem } from '../MovieItem/MovieItem';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
@@ -54,7 +54,7 @@ export function Movies() {
     }, []);
 
     function genreChangeHandler(genre) {
-        console.log(genre);
+        // TODO...
     }
 
     useEffect(() => {

@@ -32,12 +32,10 @@ export function MovieCreate() {
 
     function submitHandler(e) {
         e.preventDefault();
-
-        console.log(formData);
+        //TODO...
     }
 
     function changeHandler(e) {
-        console.log(formData[e.target.name].error);
         setFormData(state => ({
             ...state,
             [e.target.name]: {value: e.target.value, error: validateField(e.target.name, e.target.value)}
@@ -50,7 +48,6 @@ export function MovieCreate() {
             genres: {value: selectedOptions.map(x => x._id), error: validateField('genres', selectedOptions)}
         }))
     }
-    console.log(formData);
     return (
         <>
             <MovieCreateHeader />

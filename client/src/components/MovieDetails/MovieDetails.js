@@ -12,12 +12,9 @@ export function MovieDetails() {
     useEffect(() => {
         movieService.getOne(movieId)
             .then(data => setMovie(data))
-            .catch(err => {
-                // redirect to 404 page
-                console.log(err);
-            });
+            .catch(err => navigate('/404'));
 
-    }, [movieId]);
+    }, [movieId, navigate]);
     return (
         <>
 

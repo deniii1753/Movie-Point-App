@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 
-export function Movie({movie}) {
-    console.log(movie)
+export function MovieItem({ movie }) {
     return (
         <div className="col-md-3">
             <div className="single-portfolio">
                 <div className="single-portfolio-img">
                     <img src={movie.imgUrl} alt="portfolio" />
 
-                    <Link 
-                    to={`/movies/${movie._id}`} 
-                    className="popup-youtube">
-                    <span>Details</span>
+                    <Link
+                        to={`/movies/${movie._id}`}
+                        className="popup-youtube">
+                        <span>Details</span>
                     </Link>
 
                 </div>
@@ -19,7 +18,7 @@ export function Movie({movie}) {
                     <h2>{movie.title}</h2>
                     <div className="review">
                         <div className="author-review">
-                        {/* TODO: Logic for stars */}
+                            {/* TODO: Star logic */}
                             <i className="icofont icofont-star"></i>
                             <i className="icofont icofont-star"></i>
                             <i className="icofont icofont-star"></i>
@@ -31,5 +30,5 @@ export function Movie({movie}) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

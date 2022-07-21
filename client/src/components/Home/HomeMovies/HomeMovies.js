@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as movieService from "../../../services/movieService";
-import { Movie } from './Movie/Movie';
+import { MovieItem } from "../../MovieItem/MovieItem";
 
 export function HomeMovies() {
     const [filteredMovies, setFilteredMovies] = useState({
@@ -15,7 +15,7 @@ export function HomeMovies() {
                 filter: 'Recently Added'
             }))
             .catch(err => {
-                // show error message
+                // redirect to server error page
                 console.log(err);
             })
     }, []);
@@ -40,9 +40,9 @@ export function HomeMovies() {
                     });
             }
 
-        } catch (error) {
-            // show error message
-            console.log(error);
+        } catch (err) {
+            // redirect to server error page
+            console.log(err);
         }
     }
 
@@ -73,7 +73,7 @@ export function HomeMovies() {
                 <hr />
                 <div className={rowStyles}>
                     {!filteredMovies.movies.length && <h3>No movies added yet!</h3>}
-                    {filteredMovies.movies.map(x => <Movie key={x._id} movie={x} />)}
+                    {filteredMovies.movies.map(x => <MovieItem key={x._id} movie={x} />)}
                 </div>
             </div>
         </section>
