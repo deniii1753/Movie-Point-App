@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 
+import { GoSearch } from 'react-icons/go';
+
 export function Header() {
-    const activeClassName = ({isActive}) => isActive ? 'active' : undefined;
+    const activeClassName = ({ isActive }) => isActive ? 'active' : undefined;
 
     return (
         <header className="header">
@@ -13,7 +15,7 @@ export function Header() {
                     <div className="header-right mainnav">
                         <form action="#">
                             <input type="text" placeholder="Home Alone 2" />
-                            <button><i className="icofont icofont-search"></i></button>
+                            <button><GoSearch size={22}/></button>
                         </form>
                         <ul>
                             <li>Welcome Guest!</li>

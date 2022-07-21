@@ -1,8 +1,10 @@
+import { AiOutlineClose } from 'react-icons/ai';
+
 export function Register() {
     return (
         <div className="login-area">
             <div className="login-box">
-                <a href="/"><i className="icofont icofont-close"></i></a>
+                <a href="/"><AiOutlineClose /></a>
                 <h2>REGISTER</h2>
                 <form action="#" className="auth-form">
                     <h6>First Name:</h6>

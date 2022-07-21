@@ -10,6 +10,8 @@ import { MovieItem } from '../MovieItem/MovieItem';
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
+import { BiMoviePlay } from 'react-icons/bi';
+
 const MOVIES_PER_REQUEST = 16;
 
 const selectStyles = {
@@ -42,7 +44,7 @@ export function Movies() {
 
         movieService.getMovies(0, MOVIES_PER_REQUEST)
             .then(data => setMovies(state => ({
-                ...state, 
+                ...state,
                 movies: data.movies,
                 totalMoviesInDB: data.moviesCount,
             })))
@@ -50,7 +52,7 @@ export function Movies() {
                 // redirect to server error page
                 console.log(err);
             });
-    
+
     }, []);
 
     function genreChangeHandler(genre) {
@@ -80,15 +82,16 @@ export function Movies() {
     }
 
     function loadNextMovies() {
-        if(movies.movies.length < MOVIES_PER_REQUEST) return;
+        if (movies.movies.length < MOVIES_PER_REQUEST) return;
 
         movieService.getMovies(movies.movies.length, MOVIES_PER_REQUEST)
             .then(data => setMovies(state => {
                 return {
-                ...state,
-                movies: [...state.movies, ...data.movies],
-                sortBy: ''
-            }}))
+                    ...state,
+                    movies: [...state.movies, ...data.movies],
+                    sortBy: ''
+                }
+            }))
     }
     return (
         <>
@@ -99,7 +102,7 @@ export function Movies() {
                     <div className="row flexbox-center">
                         <div className="col-lg-6 text-center text-lg-left">
                             <div className="section-title">
-                                <h1><i className="icofont icofont-movie"></i> {movies.sortBy || 'All Movies'}</h1>
+                                <h1><BiMoviePlay className="movies-list-header-image" /> {movies.sortBy || 'All Movies'}</h1>
                             </div>
                         </div>
                         <div className="col-lg-6 text-center text-lg-right">
@@ -127,7 +130,7 @@ export function Movies() {
                         </div>
                     </div>
                     <hr />
-                    
+                    {!movies.movies.length && <h3 className="no-added-movies">No movies added yet!</h3>}
                     <InfiniteScroll
                         dataLength={movies.movies.length}
                         next={loadNextMovies}

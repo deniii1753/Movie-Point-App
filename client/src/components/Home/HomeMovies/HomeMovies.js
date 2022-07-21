@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import * as movieService from "../../../services/movieService";
 import { MovieItem } from "../../MovieItem/MovieItem";
 
+import { BiMoviePlay } from 'react-icons/bi';
+
 export function HomeMovies() {
     const [filteredMovies, setFilteredMovies] = useState({
         movies: [],
@@ -48,7 +50,7 @@ export function HomeMovies() {
 
     let rowStyles = 'row ';
 
-    if(filteredMovies.movies.length === 0) {
+    if (filteredMovies.movies.length === 0) {
         rowStyles += 'no-added-movies';
     }
 
@@ -58,7 +60,7 @@ export function HomeMovies() {
                 <div className="row flexbox-center">
                     <div className="col-lg-6 text-center text-lg-left">
                         <div className="section-title">
-                            <h1><i className="icofont icofont-movie"></i>{filteredMovies.filter}</h1>
+                            <h1><BiMoviePlay className="movies-list-header-image" /> {filteredMovies.filter}</h1>
                         </div>
                     </div>
                     <div className="col-lg-6 text-center text-lg-right">

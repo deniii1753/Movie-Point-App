@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as movieService from "../../../services/movieService";
 import {BsStarFill, BsStar} from "react-icons/bs";
 
 export function HomeHeader() {
     const [movie, setMovie] = useState([]);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
         movieService.getTopRated()
             .then(data => {
                 setMovie(data.movies[0])
             })
-            .catch(err => {
-                // redirect to 404 page
-                console.log(err);
-            })
-    }, []);
+            .catch(() => navigate('/500'));
+            
+    }, [navigate]);
 
     return (
         <section className="hero-area" id="home">

@@ -402,7 +402,8 @@ input::-webkit-input-placeholder {
     background: transparent;
     color: #fff;
     border: none;
-    padding-right: 10px;
+    padding-right: 15px;
+    padding-bottom: 5px;
 }
 option {
 	color: #000;
@@ -1388,6 +1389,7 @@ hr {
 .no-added-movies {
     justify-content: center;
     margin-top: 20px;
+    text-align: center;
 }
 
 .error-message {
@@ -1399,4 +1401,8 @@ hr {
     max-width: 415px;
     min-height: 575px;
     max-height: 575px;
+}
+
+.movies-list-header-image {
+    color: #ffc107;
 }
