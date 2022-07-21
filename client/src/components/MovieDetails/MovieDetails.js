@@ -140,26 +140,6 @@ export function MovieDetails() {
                                     <a className="theme-btn theme-btn2" href="/">Post Comment</a>
                                     <p>You may use these HTML tags and attributes: You may use these HTML tags and attributes: You may use these HTML tags and attributes: </p>
                                 </div> */}
-                                {/* <div className="details-thumb">
-                                    <div className="details-thumb-prev">
-                                        <div className="thumb-icon">
-                                            <i className="icofont icofont-simple-left"></i>
-                                        </div>
-                                        <div className="thumb-text">
-                                            <h4>Previous Post</h4>
-                                            <p>Standard Post With Gallery</p>
-                                        </div>
-                                    </div>
-                                    <div className="details-thumb-next">
-                                        <div className="thumb-text">
-                                            <h4>Next Post</h4>
-                                            <p>Standard Post With Preview Image</p>
-                                        </div>
-                                        <div className="thumb-icon">
-                                            <i className="icofont icofont-simple-right"></i>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>
