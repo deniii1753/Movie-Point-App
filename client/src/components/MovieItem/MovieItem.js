@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BsStarFill, BsStar } from "react-icons/bs";
 
 export function MovieItem({ movie }) {
     return (
@@ -19,11 +20,11 @@ export function MovieItem({ movie }) {
                     <div className="review">
                         <div className="author-review">
                             {/* TODO: Star logic */}
-                            <i className="icofont icofont-star"></i>
-                            <i className="icofont icofont-star"></i>
-                            <i className="icofont icofont-star"></i>
-                            <i className="icofont icofont-star"></i>
-                            <i className="icofont icofont-star"></i>
+                            <BsStarFill size={18} />
+                            <BsStarFill size={18} />
+                            <BsStarFill size={18} />
+                            <BsStarFill size={18} />
+                            <BsStar size={18} />
                         </div>
                         <h4>{movie.likes.length + movie.disLikes.length} voters</h4>
                     </div>

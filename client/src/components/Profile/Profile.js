@@ -1,3 +1,4 @@
+import {AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram} from 'react-icons/ai'
 export function Profile() {
     return (
         <>
@@ -87,10 +88,10 @@ export function Profile() {
                                                 Follow:
                                             </div>
                                             <div className="transformers-right follow-social-media-profile">
-                                                <a href="/"><i className="icofont icofont-social-facebook"></i></a>
-                                                <a href="/"><i className="icofont icofont-social-twitter"></i></a>
-                                                <a href="/"><i className="icofont icofont-social-google-plus"></i></a>
-                                                <a href="/"><i className="icofont icofont-youtube-play"></i></a>
+                                                <a href="/"><AiFillTwitterCircle size={20} /></a>
+                                                <a href="/"><AiFillFacebook size={20} /></a>
+                                                <a href="/"><AiFillInstagram size={20}/></a>
+                                                <a href="/"><AiFillYoutube size={20} /></a>
                                             </div>
                                         </li>
                                     </ul>

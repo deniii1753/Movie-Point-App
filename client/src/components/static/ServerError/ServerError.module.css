@@ -84,26 +84,6 @@
     animation: colorSplit 1.25s steps(1, end) infinite;
 }
 
-/* @-webkit-keyframes colorSplit {
-    25% {
-        text-shadow: -0.02em 0 0 #ED008C, 0.025em 0 0 #0087EF;
-    }
-
-    75% {
-        text-shadow: -0.035em 0 0 #ED008C, 0.04em 0 0 #0087EF;
-    }
-} */
-
-/* @keyframes colorSplit {
-    25% {
-        text-shadow: -0.02em 0 0 #ED008C, 0.025em 0 0 #0087EF;
-    }
-
-    75% {
-        text-shadow: -0.035em 0 0 #ED008C, 0.04em 0 0 #0087EF;
-    }
-} */
-
 .error-num__clip,
 .error-num__clip-left,
 .error-num__clip-left::before,

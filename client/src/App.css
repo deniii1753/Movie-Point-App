@@ -466,12 +466,13 @@ option {
 }
 
 .author-review {
+    display: flex;
     color: #fece50;
     float: left;
 }
 
 .review h4 {
-    padding-left: 25px;
+    padding-left: 15px;
     overflow: hidden;
 }
 

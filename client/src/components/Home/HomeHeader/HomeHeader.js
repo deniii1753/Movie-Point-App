@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as movieService from "../../../services/movieService";
+import {BsStarFill, BsStar} from "react-icons/bs";
 
 export function HomeHeader() {
     const [movie, setMovie] = useState([]);
@@ -33,11 +34,11 @@ export function HomeHeader() {
                                 <div className="review">
                                     <div className="author-review">
                                         {/* TODO: Stars logic */}
-                                        <i className="icofont icofont-star"></i>
-                                        <i className="icofont icofont-star"></i>
-                                        <i className="icofont icofont-star"></i>
-                                        <i className="icofont icofont-star"></i>
-                                        <i className="icofont icofont-star"></i>
+                                        <BsStarFill size={20}/>
+                                        <BsStarFill size={20}/>
+                                        <BsStarFill size={20}/>
+                                        <BsStarFill size={20}/>
+                                        <BsStar size={20} />
                                     </div>
                                     <h4>{movie?.likes?.length + movie?.disLikes?.length} voters</h4>
                                 </div>
