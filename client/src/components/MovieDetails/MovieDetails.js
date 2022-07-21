@@ -5,14 +5,15 @@ import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from "./DetailsHeader/DetailsHeader";
 export function MovieDetails() {
+    const [movie, setMovie] = useState({});
+
     const {movieId} = useParams();
     const navigate = useNavigate();
-    const [movie, setMovie] = useState({});
 
     useEffect(() => {
         movieService.getOne(movieId)
             .then(data => setMovie(data))
-            .catch(err => navigate('/404'));
+            .catch(() => navigate('/404'));
 
     }, [movieId, navigate]);
     return (
