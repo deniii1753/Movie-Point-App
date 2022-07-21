@@ -1,5 +1,4 @@
 export function validateField(key, value) {
-    console.log(key, value);
     if(key !== 'genres') value = value.trim();
     // eslint-disable-next-line
     switch (key) {
