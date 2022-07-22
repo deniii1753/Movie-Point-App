@@ -1,36 +1,10 @@
+import requester from "./requester";
+
 const BASE_URL = 'http://localhost:3030/api/movies';
 
-export function getRecent(from = 0, to = 8) {
-    return fetch(`${BASE_URL}?skip=${from}&sort=_creationDate&order=desc&limit=${to}`)
-        .then(res => res.json());
-}
-
-export function getTopFive() {
-    return fetch(`${BASE_URL}?sort=likes&order=desc&limit=5`)
-        .then(res => res.json());
-}
-
-export function getTopRated() {
-    return fetch(`${BASE_URL}?sort=likes&order=desc&limit=1`)
-        .then(res => res.json());
-}
-
-export function getMovies(from = 0, to = 8) {
-    return fetch(`${BASE_URL}?skip=${from}&limit=${to}`)
-        .then(res => res.json());
-}
-
-export function getMoviesCount() {
-    return fetch(`${BASE_URL}/count`)
-        .then(res => res.json());
-}
-
-export function getOne(movieId) {
-    return fetch(`${BASE_URL}/${movieId}`)
-        .then(res => {
-            if(res.ok) {
-                return res.json();
-            }
-            throw new Error(res.json());
-        });
-}
+export const getRecent = (from = 0, to = 0) => requester(`${BASE_URL}?skip=${from}&sort=_creationDate&order=desc&limit=${to}`, 'GET');
+export const getTopFive = () => requester(`${BASE_URL}?sort=likes&order=desc&limit=5`, 'GET');
+export const getTopRated = () => requester(`${BASE_URL}?sort=likes&order=desc&limit=1`, 'GET');
+export const getMovies = (from = 0, to = 8) => requester(`${BASE_URL}?skip=${from}&limit=${to}`, 'GET');
+export const getMoviesCount = () => requester(`${BASE_URL}/count`, 'GET');
+export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}`, 'GET');
