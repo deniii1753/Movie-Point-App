@@ -1,12 +1,44 @@
+import { useState, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-export function Login({closeModalHandler}) {
+import styles from './Login.module.css';
+
+import * as authService from '../../services/authService';
+import UserContext from '../../contexts/UserContext';
+
+export function Login({ closeModalHandler }) {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+    const [error, setError] = useState(null);
+
+    const { updateUser } = useContext(UserContext);
 
     function closeHandler(e) {
         e.preventDefault();
 
-        if(e.target.className !== 'login-area') return;
+        if (e.target.className !== 'login-area') return;
         closeModalHandler('login');
+    }
+
+    function loginClickHandler() {
+        if (Object.values(formData).includes('')) return setError('Please fill both fields before trying to login!');
+
+        authService.login(formData)
+            .then(data => {
+                updateUser(data);
+                closeModalHandler('login');
+
+            })
+            .catch(err => {
+                setError(err.message);
+                setFormData(state => ({ ...state, password: '' }))
+            });
+    }
+
+    function changeHandler(e) {
+        setFormData(state => ({ ...state, [e.target.name]: e.target.value }));
     }
 
     return (
@@ -14,19 +46,13 @@ export function Login({closeModalHandler}) {
             <div className="login-box">
                 <button onClick={closeModalHandler.bind(null, 'login')}><AiOutlineClose /></button>
                 <h2>LOGIN</h2>
-                <form action="#">
+                <form method="POST">
                     <h6>Username:</h6>
-                    <input type="text" />
+                    <input name="username" type="text" value={formData.username} onChange={changeHandler} />
                     <h6>Password:</h6>
-                    <input type="text" />
-                    {/* <div className="login-remember">
-                        <input type="checkbox" />
-                        <span>Remember Me</span>
-                    </div> */}
-                    {/* <div className="login-signup">
-                        <span>SIGNUP</span>
-                    </div> */}
-                    <button className="theme-btn auth-button">LOG IN</button>
+                    <input name="password" type="password" value={formData.password} onChange={changeHandler} />
+                    <button className="theme-btn auth-button" onClick={loginClickHandler}>LOG IN</button>
+                    {error && <p className={styles['error-message']}>❌{error}</p>}
                 </form>
             </div>
         </div>
