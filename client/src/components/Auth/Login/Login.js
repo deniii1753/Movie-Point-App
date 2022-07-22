@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import styles from './Login.module.css';
+import styles from '../Auth.module.css';
 
-import * as authService from '../../services/authService';
-import UserContext from '../../contexts/UserContext';
+import * as authService from '../../../services/authService';
+import UserContext from '../../../contexts/UserContext';
 
 export function Login({ closeModalHandler }) {
     const [formData, setFormData] = useState({

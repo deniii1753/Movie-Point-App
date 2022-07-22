@@ -748,11 +748,11 @@ hr {
 
 .login-box h6 {
     color: #03090e;
+    margin-top: 20px;
     margin-bottom: 12px;
 }
 
 .login-box input {
-    margin-bottom: 20px;
 	background: transparent;
 	border: 1px solid #ddd;
 }
@@ -777,8 +777,14 @@ hr {
     margin-top: 5px;
 }
 
-.login-box form .theme-btn:hover {
+.login-box form .theme-btn:hover:enabled {
 	color: #eb315a;
+}
+
+.login-box form .theme-btn:disabled {
+    cursor: not-allowed;
+    background-color: #000;
+    border: none;
 }
 
 .login-box form .theme-btn + span {
