@@ -17,6 +17,9 @@ exports.register = async (user) => {
     return newUser.save();
 }
 
-exports.update = (userId, data) => {
-    return User.findByIdAndUpdate(userId, data, { runValidators: true, new: true });
+exports.update = async (userId, data) => {
+    if(data.hasOwnProperty('password')) {
+        data.password = await bcrypt.hash(data.password, saltRounds); 
+    }
+    return User.findByIdAndUpdate(userId, data, { runValidators: true, new: true }).select('-password');
 }

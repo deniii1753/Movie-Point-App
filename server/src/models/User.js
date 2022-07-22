@@ -4,7 +4,7 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: [true, 'Username is required!'],
-        minLength: [5, 'Title should be at least 5 characters long!'],
+        minLength: [5, 'Username should be at least 5 characters long!'],
         maxLength: [15, 'Username should be maximum 15 characters long!']
     },
     firstName: {
@@ -36,9 +36,13 @@ const userSchema = new Schema({
     },
     height: {
         type: Number,
+        min: [50, 'Height cannot be under 50!'],
+        max: [250, 'Height cannot be over 250!']
     },
     weight: {
-        type: Number
+        type: Number,
+        min: [20, 'Weight cannot be under 20!'],
+        max: [500, 'Weight cannot be over 500!']
     },
     eyeColor: {
         type: String
@@ -47,7 +51,8 @@ const userSchema = new Schema({
         type: String
     },
     birthday: {
-        type: String
+        type: String,
+        match: [/(?:0?[1-9]|1[012])[-/.](?:0?[1-9]|[12][0-9]|3[01])[-/.](?:19\d{2}|20[01][0-9]|2999)\b/, 'Please Enter a valid date!']
     },
     language: {
         type: String
