@@ -39,6 +39,17 @@ router.patch('/updateUser', isAuth, async (req, res, next) => {
 
 });
 
+router.post('/login', async (req, res, next) => {
+    try {
+        const user = await authService.login(req.body);
+        const token = await generateAuthToken(user._id);
+
+        res.status(200).json({ _id: user._id, username: user.username, 'X-Auth-Token': token });
+    } catch (err) {
+        next(err);
+    }
+});
+
 function generateAuthToken(userId) {
     return new Promise((resolve, reject) => {
         jwt.sign({_id: userId}, secret, { expiresIn: '24h' }, (err, token) => {

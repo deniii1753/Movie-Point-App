@@ -17,6 +17,17 @@ exports.register = async (user) => {
     return newUser.save();
 }
 
+exports.login = async ({username, password}) => {
+    const user = await User.findOne({username});
+    if(!user) throw {status: 400, message: 'Wrong username or password!'};
+
+    const result = await bcrypt.compare(password, user.password);
+
+    if(!result) throw {status: 400, message: 'Wrong username or password!'}
+
+    return user;
+}
+
 exports.update = async (userId, data) => {
     if(data.hasOwnProperty('password')) {
         data.password = await bcrypt.hash(data.password, saltRounds); 
