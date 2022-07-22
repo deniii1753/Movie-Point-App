@@ -44,6 +44,17 @@ const userSchema = new Schema({
         min: [20, 'Weight cannot be under 20!'],
         max: [500, 'Weight cannot be over 500!']
     },
+    imgUrl: {
+        type: String,
+        required: [true, 'imgUrl is required!'],
+        validate: {
+            validator(value) {
+                value = value.toLowerCase();
+                return value.startsWith('http://') || value.startsWith('https://');
+            },
+            message: 'Image URL should start with http:// or https://'
+        }
+    },
     eyeColor: {
         type: String
     },
