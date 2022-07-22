@@ -1,18 +1,12 @@
 import { NavLink } from 'react-router-dom';
 
 import { GoSearch } from 'react-icons/go';
+import { UserLinks } from './UserLinks';
+import { GuestLinks } from './GuestLinks';
 
-export function Header({openModal}) {
+export function Header({user}) {
     
     const activeClassName = ({ isActive }) => isActive ? 'active' : undefined;
-
-    function clickHandler(e) {
-        e.preventDefault();
-
-        if(e.target.href.endsWith('login')) openModal('login');
-        if(e.target.href.endsWith('register')) openModal('register');
-
-    }
     
     return (
         <header className="header">
@@ -27,14 +21,14 @@ export function Header({openModal}) {
                             <button><GoSearch size={22}/></button>
                         </form>
                         <ul>
-                            <li>Welcome Guest!</li>
+            
+                            {user?.username && <li>Welcome {user.username}!</li>}
                             <li><NavLink to="/" className={activeClassName}>Home</NavLink></li>
                             <li><NavLink to="/movies" className={activeClassName} end>Movies</NavLink></li>
-                            <li><NavLink to="/movies/create" className={activeClassName}>Add Movie</NavLink></li>
-                            <li><NavLink to="/profile" className={activeClassName}>Profile</NavLink></li>
-                            <li><a href="/login" onClick={clickHandler}>Login</a></li>
-                            <li><a href="/register" onClick={clickHandler}>Register</a></li>
-                            <li><NavLink to="/logout" className={activeClassName}>Logout</NavLink></li>
+                            {user?.username
+                                ? <UserLinks activeClassName={activeClassName}/>
+                                : <GuestLinks />
+                            }
                         </ul>
                     </div>
                 </div>

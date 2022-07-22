@@ -380,14 +380,6 @@ option {
     -webkit-transform: rotateY(2deg);
     transform-style: preserve-3d;
     transform: rotateY(2deg);
-    cursor: pointer;
-}
-.hero-area-slide {
-    -webkit-transform-style: preserve-3d;
-    -webkit-transform: rotateY(-2deg);
-    transform-style: preserve-3d;
-    transform: rotateY(-2deg);
-    cursor: pointer;
 }
 /*----------------------------------
 --------- HERO AREA CSS END --------
