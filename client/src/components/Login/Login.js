@@ -1,10 +1,18 @@
 import { AiOutlineClose } from 'react-icons/ai';
 
-export function Login() {
+export function Login({closeModalHandler}) {
+
+    function closeHandler(e) {
+        e.preventDefault();
+
+        if(e.target.className !== 'login-area') return;
+        closeModalHandler('login');
+    }
+
     return (
-        <div className="login-area">
+        <div className="login-area" onClick={closeHandler}>
             <div className="login-box">
-                <a href="/"><AiOutlineClose /></a>
+                <button onClick={closeModalHandler.bind(null, 'login')}><AiOutlineClose /></button>
                 <h2>LOGIN</h2>
                 <form action="#">
                     <h6>Username:</h6>

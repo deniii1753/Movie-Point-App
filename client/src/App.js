@@ -1,5 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
+import { useState } from 'react';
 
+import { Route, Routes } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -16,17 +17,35 @@ import { NotFound } from './components/static/NotFound/NotFound';
 import { ServerError } from './components/static/ServerError/ServerError';
 
 function App() {
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+    function openModal(modalName) {
+        if(modalName === 'login') setIsLoginModalOpen(true);
+        if(modalName === 'register') setIsRegisterModalOpen(true);
+    }
+
+    function closeModal(modalName) {
+        if(modalName === 'login') setIsLoginModalOpen(false);
+        if(modalName === 'register') setIsRegisterModalOpen(false);
+    }
+
+    function closeModalHandler(modalName) {
+        closeModal(modalName)
+    }
     return (
         <div className="App">
-            <Header />
+            <Header openModal={openModal} />
+
+            {isLoginModalOpen && <Login closeModalHandler={closeModalHandler}/>}
+            {isRegisterModalOpen && <Register closeModalHandler={closeModalHandler}/>}
+
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/movies" element={<Movies />} />
                 <Route path="/movies/create" element={<MovieCreate />} />
                 <Route path="/movies/:movieId" element={<MovieDetails />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
                 <Route path="/500" element={<ServerError />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

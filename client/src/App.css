@@ -272,9 +272,11 @@ option {
     margin-left: 20px;
 }
 
-.header-right ul li a:hover {
+.header-right ul li a:hover,
+.header-right ul li a.active {
 	color: #eb315a;
 }
+
 .header-right ul li {
     padding: 8px 0 0;
     margin-left: 15px;
@@ -727,7 +729,8 @@ hr {
     color: #03090e;
 }
 
-.login-box > a {
+
+.login-box > button {
     position: absolute;
     right: 0;
     top: 0;
@@ -738,6 +741,11 @@ hr {
     height: 35px;
     text-align: center;
     line-height: 35px;
+    border: none;
+}
+
+.login-box > button > svg {
+    display: flex;
 }
 
 .login-box h2 {
