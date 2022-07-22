@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
     username: {
@@ -60,7 +60,7 @@ const userSchema = new Schema({
     },
     moviesCreate: [{
         type: Schema.Types.ObjectId,
-        ref: 'movie'   
+        ref: 'movie'
     }],
     likedMovies: [{
         type: Schema.Types.ObjectId,
@@ -68,7 +68,7 @@ const userSchema = new Schema({
     }],
     dislikedMovies: [{
         type: Schema.Types.ObjectId,
-        ref: 'movie'  
+        ref: 'movie'
     }]
 });
 
