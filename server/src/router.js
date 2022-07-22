@@ -7,5 +7,6 @@ const authController = require('./controllers/authController');
 
 router.use('/movies', movieController);
 router.use('/genre', genreController);
+router.use('/auth', authController);
 
 module.exports = router;
