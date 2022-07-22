@@ -1,12 +1,16 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const { saltRounds } = require('../../config/settings.json');
 
-exports.register = (user) => {
+exports.register = async (user) => {
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+
     const newUser = new User({
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        password: user.password,
+        password: hashedPassword,
         bio: user.bio
     });
 
@@ -14,5 +18,5 @@ exports.register = (user) => {
 }
 
 exports.update = (userId, data) => {
-    return User.findByIdAndUpdate(userId, data, {runValidators: true, new: true});
+    return User.findByIdAndUpdate(userId, data, { runValidators: true, new: true });
 }
