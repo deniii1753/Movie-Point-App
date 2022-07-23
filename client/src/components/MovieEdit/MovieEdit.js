@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
-import { MovieCreateHeader } from './MovieCreateHeader/MovieCreateHeader';
-
 import { multiSelectStyles } from '../../utils/multiSelectStyles';
+
+import { MovieEditHeader } from './MovieEditHeader/MovieEditHeader';
 import { validateField } from '../../utils/validators/createMovieValidations';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
-export function MovieCreate() {
+export function MovieEdit() {
     const [genres, setGenres] = useState([]);
     const [formData, setFormData] = useState({
         title: { value: '', error: null },
@@ -30,28 +30,40 @@ export function MovieCreate() {
     });
     const [serverErrorMessage, setServerErrorMessage] = useState(null);
     const navigate = useNavigate();
-
+    const { movieId } = useParams();
     const { user } = useContext(UserContext);
 
     useEffect(() => {
         genreService.getAll()
             .then(data => setGenres(data.genres));
-    }, []);
+
+        movieService.getOne(movieId)
+            .then(data => setFormData({
+                title: { value: data.title, error: null },
+                writer: { value: data.writer, error: null },
+                director: { value: data.director, error: null },
+                genres: { value: data.genres, error: null },
+                time: { value: data.time, error: null },
+                releaseDate: { value: data.releaseDate, error: null },
+                language: { value: data.language, error: null },
+                trailer: { value: data.trailer, error: null },
+                imgUrl: { value: data.imgUrl, error: null },
+                author: { value: data.author, error: null },
+                authorImg: { value: data.authorImg, error: null },
+                description: { value: data.description, error: null },
+            }))
+            .catch(() => navigate('/404'));
+    }, [movieId, navigate]);
 
     function submitHandler(e) {
         e.preventDefault();
 
         const movie = Object.entries(formData).reduce((acc, x) => {
-            const [key, {value}] = x;
-            const data = {[key]: value};
+            const [key, { value }] = x;
+            const data = { [key]: value };
             return Object.assign(acc, data);
         }, {});
 
-        movie.postCreator = user._id;
-        console.log(movie);
-        movieService.addMovie(movie, user['X-Auth-Token'])
-            .then(data => navigate(`/movies/${data._id}`))
-            .catch(err => setServerErrorMessage(err.message));
     }
 
     function changeHandler(e) {
@@ -64,19 +76,20 @@ export function MovieCreate() {
     function multiSelectHandler(selectedOptions) {
         setFormData(state => ({
             ...state,
-            genres: { value: selectedOptions.map(x => x._id), error: validateField('genres', selectedOptions) }
-        }))
+            genres: { value: selectedOptions, error: validateField('genres', selectedOptions) }
+        }));
     }
+
     return (
         <>
-            <MovieCreateHeader />
+            <MovieEditHeader />
 
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box movies-container">
                         <div className="row justify-content-md-center">
                             <div className="col-md-auto">
-                                <h2>Add Movie</h2>
+                                <h2>Edit Movie</h2>
                             </div>
 
                             <div className="add-movie col-lg-12">
@@ -91,9 +104,11 @@ export function MovieCreate() {
                                     <input type="text" id="director" name="director" value={formData.director.value} onChange={changeHandler} />
                                     {formData.director.error && <p className="error-message">❌{formData.director.error}</p>}
                                     <label htmlFor="genres">Genre*: </label>
+
                                     <Select
                                         name="genres"
                                         options={genres}
+                                        value={formData.genres.value}
                                         onChange={multiSelectHandler}
                                         placeholder={''}
                                         styles={multiSelectStyles}

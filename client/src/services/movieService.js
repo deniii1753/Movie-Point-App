@@ -7,5 +7,6 @@ export const getTopFive = () => requester(`${BASE_URL}?sort=likes&order=desc&lim
 export const getTopRated = () => requester(`${BASE_URL}?sort=likes&order=desc&limit=1`, 'GET');
 export const getMovies = (from = 0, to = 8) => requester(`${BASE_URL}?skip=${from}&limit=${to}`, 'GET');
 export const getMoviesCount = () => requester(`${BASE_URL}/count`, 'GET');
-export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}`, 'GET');
+export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}?genres=true`, 'GET');
 export const addMovie = (movie, authToken) => requester(`${BASE_URL}`, 'POST', movie, authToken);
+export const editMovie = (movieId, updatedMovie, authToken) => requester(`${BASE_URL}/${movieId}`, 'PUT', updatedMovie, authToken);

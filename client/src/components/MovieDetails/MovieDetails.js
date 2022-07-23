@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AiFillDislike, AiFillLike, AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import UserContext from '../../contexts/UserContext';
 
@@ -21,6 +21,7 @@ export function MovieDetails() {
             .catch(() => navigate('/404'));
 
     }, [movieId, navigate]);
+
     return (
         <>
 
@@ -96,7 +97,7 @@ export function MovieDetails() {
                             <div className="movie-details-buttons">
                                 {user._id === movie.postCreator
                                     ? <div className="movie-owner-buttons">
-                                        <a href="/" className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</a>
+                                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                                         <a href="/" className={styles["delete-btn"]}><AiFillDelete size={20} /> Delete</a>
                                     </div>
                                     : <div className="movie-rate-buttons">
