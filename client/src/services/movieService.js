@@ -8,3 +8,4 @@ export const getTopRated = () => requester(`${BASE_URL}?sort=likes&order=desc&li
 export const getMovies = (from = 0, to = 8) => requester(`${BASE_URL}?skip=${from}&limit=${to}`, 'GET');
 export const getMoviesCount = () => requester(`${BASE_URL}/count`, 'GET');
 export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}`, 'GET');
+export const addMovie = (movie, authToken) => requester(`${BASE_URL}`, 'POST', movie, authToken);

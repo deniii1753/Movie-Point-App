@@ -108,7 +108,8 @@ const movieSchema = new Schema({
     },
     postCreator: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: [true, 'postCreator field is required!']
     },
     likes: [{
         type: Schema.Types.ObjectId,
