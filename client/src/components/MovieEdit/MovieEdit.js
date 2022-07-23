@@ -117,6 +117,7 @@ export function MovieEdit() {
                                         styles={multiSelectStyles}
                                         isMulti
                                     />
+                                    
                                     {formData.genres.error && <p className="error-message">❌{formData.genres.error}</p>}
                                     <label htmlFor="time">Time*: </label>
                                     <input type="Number" id="time" name="time" value={formData.time.value} onChange={changeHandler} />

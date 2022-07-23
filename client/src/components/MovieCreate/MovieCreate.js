@@ -48,7 +48,7 @@ export function MovieCreate() {
         }, {});
 
         movie.postCreator = user._id;
-        console.log(movie);
+
         movieService.addMovie(movie, user['X-Auth-Token'])
             .then(data => navigate(`/movies/${data._id}`))
             .catch(err => setServerErrorMessage(err.message));

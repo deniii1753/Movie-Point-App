@@ -8,9 +8,11 @@ import styles from './MovieDetails.module.css';
 import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
+import { MovieDelete } from "../MovieDelete/MovieDelete";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
+    const [isOpenedDelete, setisOpenedDelete] = useState(true);
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -22,11 +24,15 @@ export function MovieDetails() {
 
     }, [movieId, navigate]);
 
+    function openModal(e) {
+        e.preventDefault();
+        console.log('open');
+    }
     return (
         <>
 
             <DetailsHeader />
-
+            {isOpenedDelete && <MovieDelete />}
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box">
@@ -98,7 +104,7 @@ export function MovieDetails() {
                                 {user._id === movie.postCreator
                                     ? <div className="movie-owner-buttons">
                                         <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
-                                        <a href="/" className={styles["delete-btn"]}><AiFillDelete size={20} /> Delete</a>
+                                        <a href="/delete" className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</a>
                                     </div>
                                     : <div className="movie-rate-buttons">
                                         <a href="/" className={styles["like-btn"]}><AiFillLike size={20} /> Like</a>
