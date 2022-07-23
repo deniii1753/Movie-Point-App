@@ -18,6 +18,10 @@ exports.getMoviesCount = () => {
     return Movie.countDocuments()
 }
 
+exports.updateMovie = (movieId, updatedData) => {
+    return Movie.findOneAndUpdate({_id: movieId}, updatedData);
+}
+
 exports.addMovie = (movie) => {
 
     const newMovie = new Movie({

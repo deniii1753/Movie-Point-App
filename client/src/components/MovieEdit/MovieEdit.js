@@ -39,31 +39,34 @@ export function MovieEdit() {
 
         movieService.getOne(movieId)
             .then(data => setFormData({
-                title: { value: data.title, error: null },
-                writer: { value: data.writer, error: null },
-                director: { value: data.director, error: null },
-                genres: { value: data.genres, error: null },
-                time: { value: data.time, error: null },
-                releaseDate: { value: data.releaseDate, error: null },
-                language: { value: data.language, error: null },
-                trailer: { value: data.trailer, error: null },
-                imgUrl: { value: data.imgUrl, error: null },
-                author: { value: data.author, error: null },
-                authorImg: { value: data.authorImg, error: null },
-                description: { value: data.description, error: null },
-            }))
+                    title: { value: data.title, error: null },
+                    writer: { value: data.writer, error: null },
+                    director: { value: data.director, error: null },
+                    genres: { value: data.genres, error: null },
+                    time: { value: data.time, error: null },
+                    releaseDate: { value: data.releaseDate, error: null },
+                    language: { value: data.language, error: null },
+                    trailer: { value: data.trailer, error: null },
+                    imgUrl: { value: data.imgUrl, error: null },
+                    author: { value: data.author, error: null },
+                    authorImg: { value: data.authorImg, error: null },
+                    description: { value: data.description, error: null },
+                }))
             .catch(() => navigate('/404'));
     }, [movieId, navigate]);
 
     function submitHandler(e) {
         e.preventDefault();
 
-        const movie = Object.entries(formData).reduce((acc, x) => {
+        const updatedData = Object.entries(formData).reduce((acc, x) => {
             const [key, { value }] = x;
             const data = { [key]: value };
             return Object.assign(acc, data);
         }, {});
 
+        movieService.editMovie(movieId, updatedData, user['X-Auth-Token'])
+            .then(data => navigate(`/movies/${data._id}`))
+            .catch(err => setServerErrorMessage(err.message));
     }
 
     function changeHandler(e) {

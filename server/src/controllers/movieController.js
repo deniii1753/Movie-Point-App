@@ -61,4 +61,19 @@ router.post('/', isAuth, async (req, res, next) => {
     }
 });
 
+router.put('/:movieId', isAuth, async (req, res, next) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+        if(!movie) throw {status: 404, message: 'Movie not found!'};
+        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to change this data!'};
+
+        const updatedMovie = await movieService.updateMovie(movie._id, req.body);
+        res.status(200).json(updatedMovie);
+    } catch (err) {
+      next(err);
+    }
+
+
+});
+
 module.exports = router;
