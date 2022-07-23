@@ -41,8 +41,8 @@
 }
 
 .edit-btn {
-	background: #d3e4d3;
-    border: 1px solid #d3e4d3;
+	background: #1cd6d1;
+    border: 1px solid #1cd6d1;
     color: rgb(41, 40, 40);
 	border-radius: 35px;
     padding: 5px 25px;
@@ -55,9 +55,9 @@
 }
 
 .edit-btn:hover {
-    border: 1px solid #d3e4d3;
+    border: 1px solid #1cd6d1;
 	background: transparent;
-    color: #d3e4d3;
+    color: #1cd6d1;
 }
 
 .delete-btn {

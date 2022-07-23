@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { AiFillDislike, AiFillLike, AiFillEdit, AiFillDelete } from 'react-icons/ai'
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import { AiFillDislike, AiFillLike, AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import UserContext from '../../contexts/UserContext';
 
 import styles from './MovieDetails.module.css';
 
 import * as movieService from '../../services/movieService';
 
-import { DetailsHeader } from "./DetailsHeader/DetailsHeader";
+import { DetailsHeader } from './DetailsHeader/DetailsHeader';
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
-
     const { movieId } = useParams();
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         movieService.getOne(movieId)
-            .then(data => {
-                console.log(data);
-                setMovie(data)
-            })
+            .then(data => setMovie(data))
             .catch(() => navigate('/404'));
 
     }, [movieId, navigate]);
@@ -94,16 +92,21 @@ export function MovieDetails() {
                                 </div>
                             </div>
                         </div>
+                        {user &&
                             <div className="movie-details-buttons">
-                                <div className="movie-owner-buttons">
-                                    <a href="/" className={styles["edit-btn"]}><AiFillEdit size={20}/> Edit</a>
-                                    <a href="/" className={styles["delete-btn"]}><AiFillDelete size={20}/> Delete</a>
-                                </div>
-                                <div className="movie-rate-buttons">
-                                    <a href="/" className={styles["like-btn"]}><AiFillLike size={20}/> Like</a>
-                                    <a href="/" className={styles["dislike-btn"]}><AiFillDislike size={20}/> Dislike</a>
-                                </div>
+                                {user._id === movie.postCreator
+                                    ? <div className="movie-owner-buttons">
+                                        <a href="/" className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</a>
+                                        <a href="/" className={styles["delete-btn"]}><AiFillDelete size={20} /> Delete</a>
+                                    </div>
+                                    : <div className="movie-rate-buttons">
+                                        <a href="/" className={styles["like-btn"]}><AiFillLike size={20} /> Like</a>
+                                        <a href="/" className={styles["dislike-btn"]}><AiFillDislike size={20} /> Dislike</a>
+                                    </div>
+                                }
+
                             </div>
+                        }
                         <a href={movie.trailer} className="theme-btn popup-youtube">Watch Trailer</a>
                     </div>
                 </div>

@@ -22,10 +22,10 @@ export function Header({user}) {
                         </form>
                         <ul>
             
-                            {user?.username && <li>Welcome {user.username}!</li>}
+                            {user && <li>Welcome {user.username}!</li>}
                             <li><NavLink to="/" className={activeClassName}>Home</NavLink></li>
                             <li><NavLink to="/movies" className={activeClassName} end>Movies</NavLink></li>
-                            {user?.username
+                            {user
                                 ? <UserLinks activeClassName={activeClassName}/>
                                 : <GuestLinks />
                             }

@@ -45,7 +45,7 @@ function App() {
                 {isLoginModalOpen && <Login closeModalHandler={closeModalHandler} />}
                 {isRegisterModalOpen && <Register closeModalHandler={closeModalHandler} />}
 
-                <Routing isAuth={user?.username ? true : false}/>
+                <Routing isAuth={user ? true : false}/>
 
                 <Footer />
             </div>
