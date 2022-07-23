@@ -50,7 +50,7 @@ const movieSchema = new Schema({
         match: [/(?:0?[1-9]|1[012])[-/.](?:0?[1-9]|[12][0-9]|3[01])[-/.](?:19\d{2}|20[01][0-9]|2999)\b/, 'Please Enter a valid date!']
     },
     language: {
-        type: Array,
+        type: String,
         required: [true, 'Language is required!'],
         minLength: [5, 'Language should be at least 5 characters long!']
     },
