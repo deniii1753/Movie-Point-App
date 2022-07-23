@@ -28,8 +28,8 @@ const movieSchema = new Schema({
             message: 'Director should have first and last name!'
         },
     },
-    genres: {
-        type: Array,
+    genres: [{
+        type: Schema.Types.ObjectId,
         required: [true, 'Genre is required!'],
         validate: {
             validator(value) {
@@ -37,7 +37,8 @@ const movieSchema = new Schema({
             },
             message: 'There should be at least 1 genre!'
         },
-    },
+        ref: 'genre'
+    }],
     time: {
         type: Number,
         requred: [true, 'Time is required!'],

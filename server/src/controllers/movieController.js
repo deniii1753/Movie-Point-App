@@ -37,9 +37,12 @@ router.get('/count', async (req, res, next) => {
 });
 
 router.get('/:movieId', async (req, res, next) => {
+    const populateGenres = req.query?.genres || false;
+    const populateGenresDetailed = req.query?.detailedGenres || false;
+
     try {
-        const movie = await movieService.getOne(req.params.movieId);
-        
+
+        const movie = await movieService.getOne(req.params.movieId, populateGenres, populateGenresDetailed);
         if(!movie) throw {status: 404, message: 'Movie not found!'};
 
         res.status(200).json(movie);
@@ -49,6 +52,7 @@ router.get('/:movieId', async (req, res, next) => {
 });
 
 router.post('/', isAuth, async (req, res, next) => {
+    //TODO: add movie to genres too
     try {
         const movie = await movieService.addMovie(req.body);
         res.status(201).json(movie);

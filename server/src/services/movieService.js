@@ -1,7 +1,6 @@
 const Movie = require('../models/Movie');
 
 exports.getMovies = (sort, limit, skip) => {
-    // this should return only likes, dislikes, imgUrl, title and id
     return Movie.find()
     .skip(skip)
     .sort(sort)
@@ -9,8 +8,9 @@ exports.getMovies = (sort, limit, skip) => {
     .limit(limit);
 }
 
-// Should make detailed movie endpoint
-exports.getOne = (movieId) => {
+exports.getOne = (movieId, populateGenres, populateGenresDetailed) => {
+    if(populateGenresDetailed) return Movie.findById(movieId).populate('genres');
+    if(populateGenres) return Movie.findById(movieId).populate('genres', '-movies');
     return Movie.findById(movieId);
 }
 
