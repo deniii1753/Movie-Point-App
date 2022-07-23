@@ -1,23 +1,16 @@
 import { useState } from 'react';
 
-import { Route, Routes } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import { Header } from './components/static/Header/Header';
 import { Footer } from './components/static/Footer';
-import { Home } from './components/Home/Home';
-import { Movies } from './components/Movies/Movies';
-import { MovieDetails } from './components/MovieDetails/MovieDetails';
-import { Profile } from './components/Profile/Profile';
 import { Login } from './components/Auth/Login/Login';
 import { Register } from './components/Auth/Register/Register';
-import { MovieCreate } from './components/MovieCreate/MovieCreate';
-import { NotFound } from './components/static/NotFound/NotFound';
-import { ServerError } from './components/static/ServerError/ServerError';
 
 import UserContext from './contexts/UserContext';
 import UserModalContext from './contexts/UserModalContext';
+import { Routing } from './components/Routing/Routing';
 
 function App() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -35,7 +28,7 @@ function App() {
     }
 
     function closeModalHandler(modalName) {
-        closeModal(modalName)
+        closeModal(modalName);
     }
 
     function updateUser(userData) {
@@ -52,15 +45,8 @@ function App() {
                 {isLoginModalOpen && <Login closeModalHandler={closeModalHandler} />}
                 {isRegisterModalOpen && <Register closeModalHandler={closeModalHandler} />}
 
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/movies" element={<Movies />} />
-                    <Route path="/movies/create" element={<MovieCreate />} />
-                    <Route path="/movies/:movieId" element={<MovieDetails />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/500" element={<ServerError />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                <Routing isAuth={user?.username ? true : false}/>
+
                 <Footer />
             </div>
         </UserContext.Provider>
