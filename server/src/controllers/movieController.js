@@ -81,7 +81,7 @@ router.delete('/:movieId', isAuth, async (req, res, next) => {
         if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to delete this movie!'};
 
         await movieService.deleteMovie(movie._id);
-        res.status(204);
+        res.status(204).json({});
     } catch (err) {
       next(err);
     }
