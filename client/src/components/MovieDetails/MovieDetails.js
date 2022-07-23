@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AiFillDislike, AiFillLike, AiFillEdit, AiFillDelete } from 'react-icons/ai'
+
+import styles from './MovieDetails.module.css';
 
 import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from "./DetailsHeader/DetailsHeader";
+
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
 
-    const {movieId} = useParams();
+    const { movieId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +26,7 @@ export function MovieDetails() {
     return (
         <>
 
-        <DetailsHeader />
+            <DetailsHeader />
 
             <section className="transformers-area">
                 <div className="container">
@@ -30,7 +34,7 @@ export function MovieDetails() {
                         <div className="row flexbox-center">
                             <div className="col-lg-5 text-lg-left text-center">
                                 <div className="transformers-content">
-                                    <img src={movie.imgUrl} alt="about" className="details-image"/>
+                                    <img src={movie.imgUrl} alt="about" className="details-image" />
                                 </div>
                             </div>
                             <div className="col-lg-7">
@@ -90,10 +94,16 @@ export function MovieDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <a href="/" className="like-btn">👍Like</a>
-                            <a href="/" className="dislike-btn">👎Dislike</a>
-                        </div>
+                            <div className="movie-details-buttons">
+                                <div className="movie-owner-buttons">
+                                    <a href="/" className={styles["edit-btn"]}><AiFillEdit size={20}/> Edit</a>
+                                    <a href="/" className={styles["delete-btn"]}><AiFillDelete size={20}/> Delete</a>
+                                </div>
+                                <div className="movie-rate-buttons">
+                                    <a href="/" className={styles["like-btn"]}><AiFillLike size={20}/> Like</a>
+                                    <a href="/" className={styles["dislike-btn"]}><AiFillDislike size={20}/> Dislike</a>
+                                </div>
+                            </div>
                         <a href={movie.trailer} className="theme-btn popup-youtube">Watch Trailer</a>
                     </div>
                 </div>

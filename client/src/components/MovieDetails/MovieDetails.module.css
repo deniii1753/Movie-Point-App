@@ -1,0 +1,83 @@
+.like-btn {
+	background: #90ee90;
+    border: 1px solid #90ee90;
+    color: rgb(41, 40, 40);
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.like-btn svg {
+    margin-bottom: 3px;
+}
+
+.like-btn:hover {
+    border: 1px solid #90ee90;
+	background: transparent;
+    color: #90ee90;
+}
+
+.dislike-btn {
+	background: #eb315a;
+    border: 1px solid #eb315a;
+    color: rgb(20, 20, 20);
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.dislike-btn:hover {
+    border: 1px solid #eb315a;
+	background: transparent;
+    color: #eb315a;
+}
+
+.edit-btn {
+	background: #d3e4d3;
+    border: 1px solid #d3e4d3;
+    color: rgb(41, 40, 40);
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.edit-btn:hover {
+    border: 1px solid #d3e4d3;
+	background: transparent;
+    color: #d3e4d3;
+}
+
+.delete-btn {
+	background: #eb315a;
+    border: 1px solid #eb315a;
+    color: rgb(20, 20, 20);
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.delete-btn svg {
+    margin-bottom: 3px;
+}
+
+.delete-btn:hover {
+    border: 1px solid #eb315a;
+	background: transparent;
+    color: #eb315a;
+}
