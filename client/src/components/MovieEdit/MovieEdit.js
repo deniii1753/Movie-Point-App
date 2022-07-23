@@ -1,3 +1,4 @@
+/*eslint eqeqeq: 0*/
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -55,7 +56,7 @@ export function MovieEdit() {
                     description: { value: data.description, error: null },
                 })})
             .catch(() => navigate('/404'));
-    }, [movieId, navigate]);
+    }, [movieId, navigate, user._id]);
 
     function submitHandler(e) {
         e.preventDefault();

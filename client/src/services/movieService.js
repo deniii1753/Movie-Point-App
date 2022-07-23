@@ -10,3 +10,4 @@ export const getMoviesCount = () => requester(`${BASE_URL}/count`, 'GET');
 export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}?genres=true`, 'GET');
 export const addMovie = (movie, authToken) => requester(`${BASE_URL}`, 'POST', movie, authToken);
 export const editMovie = (movieId, updatedMovie, authToken) => requester(`${BASE_URL}/${movieId}`, 'PUT', updatedMovie, authToken);
+export const deleteMovie = (movieId, authToken) => requester(`${BASE_URL}/${movieId}`, 'DELETE', null, authToken);

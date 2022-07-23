@@ -19,6 +19,7 @@ async function requester(url, method, data, token) {
         throw error;
     }
 
+    if(res.status === 204) return res;
     return res.json();
 }
 

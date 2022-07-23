@@ -1,13 +1,34 @@
+import { useContext, useState } from "react";
 import { AiOutlineClose, AiFillCloseCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
+import UserContext from "../../contexts/UserContext";
+import * as movieService from "../../services/movieService";
 import styles from './MovieDelete.module.css';
 
-export function MovieDelete() {
-    console.log('DELETE');
+
+export function MovieDelete({ closeHandler, creatorId, movieId }) {
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [serverErrorMessage, setServerErrorMessage] = useState(null);
+
+    function clickCloseHandler(e) {
+        if (e.target.className !== styles.modal) return;
+        closeHandler();
+    }
+
+    function deleteHandler() {
+        if(user?._id !== creatorId) return closeHandler();
+
+        movieService.deleteMovie(movieId, user['X-Auth-Token'])
+            .then(() => navigate('/movies', {replace: true}))
+            .catch(err => setServerErrorMessage(err.message));
+    }
     return (
-        <div className={styles.modal}>
+        <div className={styles.modal} onClick={clickCloseHandler}>
             <div className={styles["modal-confirm"]}>
                 <div className={styles["modal-content"]}>
-                        <button className={styles["close"]} ><AiFillCloseCircle size={20} /></button>
+                    <button className={styles["close"]} onClick={closeHandler}><AiFillCloseCircle size={20} /></button>
                     <div className={styles["modal-header"]}>
                         <div className={styles["icon-box"]}>
                             <i className={styles["material-icons"]}><AiOutlineClose /></i>
@@ -18,8 +39,9 @@ export function MovieDelete() {
                         <p>Do you really want to delete this movie? This process cannot be undone.</p>
                     </div>
                     <div className={styles["modal-footer"]}>
-                        <button className={`${styles["btn"]} ${styles["btn-info"]}`}>Cancel</button>
-                        <button className={`${styles["btn"]} ${styles["btn-danger"]}`}>Delete</button>
+                        <button className={`${styles["btn"]} ${styles["btn-info"]}`} onClick={closeHandler}>Cancel</button>
+                        <button className={`${styles["btn"]} ${styles["btn-danger"]}`} onClick={deleteHandler}>Delete</button>
+                        {serverErrorMessage && <p className={styles["error-message"]}>❌{serverErrorMessage}</p>}
                     </div>
                 </div>
             </div>

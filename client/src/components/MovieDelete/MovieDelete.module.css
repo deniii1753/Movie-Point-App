@@ -116,3 +116,10 @@
 .modal-title {
     color: #636363;
 }
+
+.error-message {
+    color: red;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}

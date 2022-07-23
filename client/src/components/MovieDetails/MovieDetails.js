@@ -26,13 +26,18 @@ export function MovieDetails() {
 
     function openModal(e) {
         e.preventDefault();
-        console.log('open');
+        setisOpenedDelete(true);
+    }
+
+    function closeHandler() {
+        setisOpenedDelete(false);
     }
     return (
         <>
 
             <DetailsHeader />
-            {isOpenedDelete && <MovieDelete />}
+            {isOpenedDelete && <MovieDelete closeHandler={closeHandler} creatorId={movie.postCreator} movieId={movieId}/>}
+
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box">
@@ -99,11 +104,11 @@ export function MovieDetails() {
                                 </div>
                             </div>
                         </div>
-                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                         {user &&
                             <div className="movie-details-buttons">
                                 {user._id === movie.postCreator
                                     ? <div className="movie-owner-buttons">
+                                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                                         <a href="/delete" className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</a>
                                     </div>
                                     : <div className="movie-rate-buttons">
