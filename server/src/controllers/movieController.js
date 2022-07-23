@@ -65,15 +65,26 @@ router.put('/:movieId', isAuth, async (req, res, next) => {
     try {
         const movie = await movieService.getOne(req.params.movieId);
         if(!movie) throw {status: 404, message: 'Movie not found!'};
-        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to change this data!'};
+        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to edit this movie!'};
 
         const updatedMovie = await movieService.updateMovie(movie._id, req.body);
         res.status(200).json(updatedMovie);
     } catch (err) {
       next(err);
     }
+});
 
+router.delete('/:movieId', isAuth, async (req, res, next) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+        if(!movie) throw {status: 404, message: 'Movie not found!'};
+        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to delete this movie!'};
 
+        await movieService.deleteMovie(movie._id);
+        res.status(204);
+    } catch (err) {
+      next(err);
+    }
 });
 
 module.exports = router;
