@@ -12,7 +12,7 @@ import { MovieDelete } from "../MovieDelete/MovieDelete";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
-    const [isOpenedDelete, setisOpenedDelete] = useState(true);
+    const [isOpenedDelete, setisOpenedDelete] = useState(false);
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -99,11 +99,11 @@ export function MovieDetails() {
                                 </div>
                             </div>
                         </div>
+                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                         {user &&
                             <div className="movie-details-buttons">
                                 {user._id === movie.postCreator
                                     ? <div className="movie-owner-buttons">
-                                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                                         <a href="/delete" className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</a>
                                     </div>
                                     : <div className="movie-rate-buttons">

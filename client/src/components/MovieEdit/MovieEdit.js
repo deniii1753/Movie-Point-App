@@ -38,7 +38,9 @@ export function MovieEdit() {
             .then(data => setGenres(data.genres));
 
         movieService.getOne(movieId)
-            .then(data => setFormData({
+            .then(data => {
+                if(data.postCreator != user._id) return navigate('/');
+                setFormData({
                     title: { value: data.title, error: null },
                     writer: { value: data.writer, error: null },
                     director: { value: data.director, error: null },
@@ -51,7 +53,7 @@ export function MovieEdit() {
                     author: { value: data.author, error: null },
                     authorImg: { value: data.authorImg, error: null },
                     description: { value: data.description, error: null },
-                }))
+                })})
             .catch(() => navigate('/404'));
     }, [movieId, navigate]);
 
