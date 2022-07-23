@@ -39,7 +39,7 @@ export function MovieDetails() {
                             <div className="col-lg-7">
                                 <div className="transformers-content">
                                     <h2>{movie.title}</h2>
-                                    <p>{movie.genres?.join(' | ')}</p>
+                                    <p>{movie.genres?.map(x => x.label).join(' | ')}</p>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
