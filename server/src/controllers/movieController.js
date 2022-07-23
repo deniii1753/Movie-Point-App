@@ -39,6 +39,9 @@ router.get('/count', async (req, res, next) => {
 router.get('/:movieId', async (req, res, next) => {
     try {
         const movie = await movieService.getOne(req.params.movieId);
+        
+        if(!movie) throw {status: 404, message: 'Movie not found!'};
+
         res.status(200).json(movie);
     } catch (err) {
         next(err);
