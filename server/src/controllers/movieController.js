@@ -55,7 +55,7 @@ router.get('/:movieId', async (req, res, next) => {
 router.post('/', isAuth, async (req, res, next) => {
     try {
         const movie = await movieService.addMovie(req.body);
-        await genreService.addMovie(req.body.genres, movie._id);
+
         res.status(201).json(movie);
     } catch (err) {
         next(err);
@@ -63,7 +63,7 @@ router.post('/', isAuth, async (req, res, next) => {
 });
 
 router.put('/:movieId', isAuth, async (req, res, next) => {
-    // Should update movie in genres too
+
     try {
         const movie = await movieService.getOne(req.params.movieId);
         if(!movie) throw {status: 404, message: 'Movie not found!'};
@@ -77,7 +77,7 @@ router.put('/:movieId', isAuth, async (req, res, next) => {
 });
 
 router.delete('/:movieId', isAuth, async (req, res, next) => {
-    // Should delete movie in genres too
+
     try {
         const movie = await movieService.getOne(req.params.movieId);
         if(!movie) throw {status: 404, message: 'Movie not found!'};
