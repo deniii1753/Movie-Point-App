@@ -28,7 +28,7 @@ export function MovieItem({ movie }) {
                             <BsStarFill size={18} />
                             <BsStar size={18} />
                         </div>
-                        <h4>{movie.likes.length + movie.disLikes.length} voters</h4>
+                        <h4>{movie.likes.length + movie.dislikes.length} voters</h4>
                     </div>
                 </div>
             </div>

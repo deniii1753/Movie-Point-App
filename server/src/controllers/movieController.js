@@ -102,8 +102,27 @@ router.post('/:movieId/like', isAuth, async (req, res, next) => {
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
         if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
-        const movieDislikeIndex = movie.disLikes.indexOf(req.verifiedUserId);
-        if(movieDislikeIndex !== -1) movie.disLikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
+        const movieDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
+        if(movieDislikeIndex !== -1) movie.dislikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
+
+        movie.likes.push(req.verifiedUserId);
+        await movieService.saveMovie(movie);
+        res.status(201).json({});
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
+
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
+        if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
+        const movieDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
+        if(movieDislikeIndex !== -1) movie.dislikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
         
         movie.likes.push(req.verifiedUserId);
         await movieService.saveMovie(movie);

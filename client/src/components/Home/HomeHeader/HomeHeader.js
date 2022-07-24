@@ -39,7 +39,7 @@ export function HomeHeader() {
                                         <BsStarFill size={20}/>
                                         <BsStar size={20} />
                                     </div>
-                                    <h4>{movie?.likes?.length + movie?.disLikes?.length} voters</h4>
+                                    <h4>{movie?.likes?.length + movie?.dislikes?.length} voters</h4>
                                 </div>
                                 <p>{movie.description}</p>
                                 <h3>Author:</h3>

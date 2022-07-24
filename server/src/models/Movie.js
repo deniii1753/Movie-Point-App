@@ -116,7 +116,7 @@ const movieSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
-    disLikes: [{
+    dislikes: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }]
