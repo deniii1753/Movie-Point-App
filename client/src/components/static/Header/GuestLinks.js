@@ -2,20 +2,20 @@ import { useContext } from "react";
 import UserModalContext from "../../../contexts/UserModalContext";
 
 export function GuestLinks() {
-    const openModal = useContext(UserModalContext);
+    const [openLoginModal, openRegisterModal] = useContext(UserModalContext);
+    console.log(openLoginModal);
+    // function clickHandler(e) {
+    //     e.preventDefault();
 
-    function clickHandler(e) {
-        e.preventDefault();
+    //     if(e.target.href.endsWith('login')) openModal('login');
+    //     if(e.target.href.endsWith('register')) openModal('register');
 
-        if(e.target.href.endsWith('login')) openModal('login');
-        if(e.target.href.endsWith('register')) openModal('register');
-
-    }
+    // }
 
     return (
         <>
-            <li><a href="/login" onClick={clickHandler}>Login</a></li>
-            <li><a href="/register" onClick={clickHandler}>Register</a></li>
+            <li><button href="/login" onClick={openLoginModal}>Login</button></li>
+            <li><button href="/register" onClick={openRegisterModal}>Register</button></li>
         </>
     )
 }

@@ -10,10 +10,11 @@ import * as movieService from '../../services/movieService';
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
 import { MovieDelete } from "../MovieDelete/MovieDelete";
 import { Trailer } from "./Trailer/Trailer";
+import { useModal } from "../../hooks/useModal";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
-    const [isOpenedDelete, setisOpenedDelete] = useState(false);
+    const {isModalOpened, openModal, closeModal} = useModal();
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -25,19 +26,11 @@ export function MovieDetails() {
 
     }, [movieId, navigate]);
 
-    function openModal(e) {
-        e.preventDefault();
-        setisOpenedDelete(true);
-    }
-
-    function closeHandler() {
-        setisOpenedDelete(false);
-    }
     return (
         <>
 
             <DetailsHeader />
-            {isOpenedDelete && <MovieDelete closeHandler={closeHandler} creatorId={movie.postCreator} movieId={movieId}/>}
+            {isModalOpened && <MovieDelete closeHandler={closeModal} creatorId={movie.postCreator} movieId={movieId}/>}
 
             <section className="transformers-area">
                 <div className="container">

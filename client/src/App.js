@@ -11,25 +11,12 @@ import { Register } from './components/Auth/Register/Register';
 import UserContext from './contexts/UserContext';
 import UserModalContext from './contexts/UserModalContext';
 import { Routing } from './components/Routing/Routing';
+import { useModal } from './hooks/useModal';
 
 function App() {
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+    const { isModalOpened: isLoginModalOpened, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
+    const { isModalOpened: isRegisterModalOpened, openModal: openRegisterModal, closeModal: closeRegisterModal } = useModal();
     const [user, setUser] = useState();
-
-    function openModal(modalName) {
-        if (modalName === 'login') setIsLoginModalOpen(true);
-        if (modalName === 'register') setIsRegisterModalOpen(true);
-    }
-
-    function closeModal(modalName) {
-        if (modalName === 'login') setIsLoginModalOpen(false);
-        if (modalName === 'register') setIsRegisterModalOpen(false);
-    }
-
-    function closeModalHandler(modalName) {
-        closeModal(modalName);
-    }
 
     function updateUser(userData) {
         setUser(userData);
@@ -38,14 +25,14 @@ function App() {
     return (
         <UserContext.Provider value={{ user, updateUser }} >
             <div className="App">
-                <UserModalContext.Provider value={openModal}>
+                <UserModalContext.Provider value={[openLoginModal, openRegisterModal]}>
                     <Header user={user} />
                 </UserModalContext.Provider>
 
-                {isLoginModalOpen && <Login closeModalHandler={closeModalHandler} />}
-                {isRegisterModalOpen && <Register closeModalHandler={closeModalHandler} />}
+                {isLoginModalOpened && <Login closeModalHandler={closeLoginModal} />}
+                {isRegisterModalOpened && <Register closeModalHandler={closeRegisterModal} />}
 
-                <Routing isAuth={user ? true : false}/>
+                <Routing isAuth={user ? true : false} />
 
                 <Footer />
             </div>

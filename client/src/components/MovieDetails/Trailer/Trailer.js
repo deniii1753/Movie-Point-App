@@ -1,23 +1,13 @@
-import { useState } from "react";
+import { useModal } from "../../../hooks/useModal";
 import { TrailerModal } from "./TrailerModal";
 
 export function Trailer({ trailerUrl }) {
-    const [isModalOpened, setIsModalOpened] = useState(false);
-
-    function clickHandler(e) {
-        e.preventDefault();
-
-        setIsModalOpened(true);
-    }
-
-    function closeHandler() {
-        setIsModalOpened(false);
-    }
+    const {isModalOpened, openModal, closeModal } = useModal();
 
     return (
         <>
-            {isModalOpened && <TrailerModal trailerUrl={trailerUrl} closeHandler={closeHandler}/>}
-            <button href="watch-trailer" className="theme-btn popup-youtube" onClick={clickHandler}>Watch Trailer</button>
+            {isModalOpened && <TrailerModal trailerUrl={trailerUrl} closeHandler={closeModal}/>}
+            <button href="watch-trailer" className="theme-btn popup-youtube" onClick={openModal}>Watch Trailer</button>
         </>
     )
 }
