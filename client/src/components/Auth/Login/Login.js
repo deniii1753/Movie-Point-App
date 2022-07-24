@@ -23,8 +23,6 @@ export function Login({ closeModalHandler }) {
     }
 
     function loginClickHandler() {
-        if (Object.values(formData).includes('')) return setError('Please fill both fields before trying to login!');
-
         authService.login(formData)
             .then(data => {
                 updateUser(data);
@@ -51,7 +49,7 @@ export function Login({ closeModalHandler }) {
                     <input name="username" type="text" value={formData.username} onChange={changeHandler} />
                     <h6>Password:</h6>
                     <input name="password" type="password" value={formData.password} onChange={changeHandler} />
-                    <button className="theme-btn auth-button" onClick={loginClickHandler}>LOG IN</button>
+                    <button className="theme-btn auth-button" onClick={loginClickHandler} disabled={Object.values(formData).includes('')}>LOG IN</button>
                     {error && <p className={styles['error-message']}>❌{error}</p>}
                 </form>
             </div>

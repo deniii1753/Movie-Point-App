@@ -110,11 +110,11 @@ export function MovieDetails() {
                                 {user._id === movie.postCreator
                                     ? <div className="movie-owner-buttons">
                                         <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
-                                        <a href="/delete" className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</a>
+                                        <button className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</button>
                                     </div>
                                     : <div className="movie-rate-buttons">
-                                        <a href="/" className={styles["like-btn"]}><AiFillLike size={20} /> Like</a>
-                                        <a href="/" className={styles["dislike-btn"]}><AiFillDislike size={20} /> Dislike</a>
+                                        <button className={styles["like-btn"]}><AiFillLike size={20} /> Like</button>
+                                        <button className={styles["dislike-btn"]}><AiFillDislike size={20} /> Dislike</button>
                                     </div>
                                 }
                             </div>

@@ -48,6 +48,9 @@ h6 {
 a {
     transition: 0.6s;
 }
+button {
+    transition: 0.6s;
+}
 a,
 a:hover {
     color: #fff;

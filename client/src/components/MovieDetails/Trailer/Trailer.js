@@ -17,7 +17,7 @@ export function Trailer({ trailerUrl }) {
     return (
         <>
             {isModalOpened && <TrailerModal trailerUrl={trailerUrl} closeHandler={closeHandler}/>}
-            <a href="watch-trailer" className="theme-btn popup-youtube" onClick={clickHandler}>Watch Trailer</a>
+            <button href="watch-trailer" className="theme-btn popup-youtube" onClick={clickHandler}>Watch Trailer</button>
         </>
     )
 }
