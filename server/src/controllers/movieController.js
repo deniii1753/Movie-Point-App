@@ -102,8 +102,9 @@ router.post('/:movieId/like', isAuth, async (req, res, next) => {
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
         if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
-        const movieDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
-        if(movieDislikeIndex !== -1) movie.dislikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
+        const userDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
+        if(userDislikeIndex !== -1) movie.dislikes.splice(userDislikeIndex, userDislikeIndex + 1);
+        console.log(userDislikeIndex);
 
         movie.likes.push(req.verifiedUserId);
         await movieService.saveMovie(movie);
@@ -119,12 +120,12 @@ router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
         const movie = await movieService.getOne(req.params.movieId);
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
-        if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
-        if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
-        const movieDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
-        if(movieDislikeIndex !== -1) movie.dislikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
+        if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot dislike your own movie!' };
+        if (movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already disliked this movie!' };
+        const userLikeIndex = movie.likes.indexOf(req.verifiedUserId);
+        if(userLikeIndex !== -1) movie.likes.splice(userLikeIndex, userLikeIndex + 1);
         
-        movie.likes.push(req.verifiedUserId);
+        movie.dislikes.push(req.verifiedUserId);
         await movieService.saveMovie(movie);
         res.status(201).json({});
     } catch (err) {
