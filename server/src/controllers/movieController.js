@@ -31,6 +31,7 @@ router.get('/', async (req, res, next) => {
 router.get('/count', async (req, res, next) => {
     try {
         const moviesCount = await movieService.getMoviesCount();
+
         res.status(200).json({ moviesCount });
     } catch (err) {
         next(err);
@@ -44,7 +45,8 @@ router.get('/:movieId', async (req, res, next) => {
     try {
 
         const movie = await movieService.getOne(req.params.movieId, populateGenres, populateGenresDetailed);
-        if(!movie) throw {status: 404, message: 'Movie not found!'};
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
 
         res.status(200).json(movie);
     } catch (err) {
@@ -66,13 +68,14 @@ router.put('/:movieId', isAuth, async (req, res, next) => {
 
     try {
         const movie = await movieService.getOne(req.params.movieId);
-        if(!movie) throw {status: 404, message: 'Movie not found!'};
-        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to edit this movie!'};
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to edit this movie!' };
 
         const updatedMovie = await movieService.updateMovie(movie._id, req.body);
         res.status(200).json(updatedMovie);
     } catch (err) {
-      next(err);
+        next(err);
     }
 });
 
@@ -80,13 +83,33 @@ router.delete('/:movieId', isAuth, async (req, res, next) => {
 
     try {
         const movie = await movieService.getOne(req.params.movieId);
-        if(!movie) throw {status: 404, message: 'Movie not found!'};
-        if(req.verifiedUserId != movie.postCreator) throw {status: 401, message: 'You are not authorized to delete this movie!'};
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to delete this movie!' };
 
         await movieService.deleteMovie(movie._id);
         res.status(204).json({});
     } catch (err) {
-      next(err);
+        next(err);
+    }
+});
+
+router.post('/:movieId/like', isAuth, async (req, res, next) => {
+
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
+        if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
+        const movieDislikeIndex = movie.disLikes.indexOf(req.verifiedUserId);
+        if(movieDislikeIndex !== -1) movie.disLikes.splice(movieDislikeIndex, movieDislikeIndex + 1);
+        
+        movie.likes.push(req.verifiedUserId);
+        await movieService.saveMovie(movie);
+        res.status(201).json({});
+    } catch (err) {
+        next(err);
     }
 });
 

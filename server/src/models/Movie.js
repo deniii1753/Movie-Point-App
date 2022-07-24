@@ -47,7 +47,7 @@ const movieSchema = new Schema({
     releaseDate: {
         type: String,
         required: [true, 'ReleaseDate is required!'],
-        match: [/(?:0?[1-9]|1[012])[-/.](?:0?[1-9]|[12][0-9]|3[01])[-/.](?:19\d{2}|20[01][0-9]|2999)\b/, 'Please Enter a valid date!']
+        match: [/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/, 'Please Enter a valid date!']
     },
     language: {
         type: String,
@@ -102,7 +102,7 @@ const movieSchema = new Schema({
         type: String,
         required: [true, 'Description is required!'],
         minLength: [50, 'Description should be at least 50 characters long!'],
-        maxLength: [200, 'Description should be less than 200 characters long!']
+        maxLength: [500, 'Description should be less than 500 characters long!']
     },
     _creationDate: {
         type: Number

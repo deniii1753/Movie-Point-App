@@ -13,7 +13,7 @@ export function validateField(key, value) {
         case 'time':
             return Number(value) <= 0 ? 'Time should be a positive number!' : null;
         case 'releaseDate':
-            const regex = /(?:0?[1-9]|1[012])[-/.](?:0?[1-9]|[12][0-9]|3[01])[-/.](?:19\d{2}|20[01][0-9]|2999)\b/;
+            const regex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
 
             return regex.test(value) ? null : 'Please enter a valid date!';
         case 'language':
@@ -31,7 +31,7 @@ export function validateField(key, value) {
             return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
         case 'description':
             if(value.length < 50) return 'Description should be at least 50 characters long!';
-            if(value.length > 200) return 'Description should be less than 200 characters long!'
+            if(value.length > 500) return 'Description should be less than 500 characters long!'
 
     }
 }

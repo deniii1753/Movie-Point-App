@@ -47,3 +47,7 @@ exports.updateMovie = (movieId, updatedData) => {
 exports.deleteMovie = (movieId) => {
     return Movie.findOneAndDelete({_id: movieId});
 }
+
+exports.saveMovie = (movie) => {
+    return movie.save();
+}
