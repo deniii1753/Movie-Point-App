@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
-
 import { GoSearch } from 'react-icons/go';
+
+import './Header.css';
+
 import { UserLinks } from './UserLinks';
 import { GuestLinks } from './GuestLinks';
 

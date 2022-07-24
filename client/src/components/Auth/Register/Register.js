@@ -54,7 +54,7 @@ export function Register({ closeModalHandler }) {
             <div className="login-box">
                 <button onClick={closeModalHandler.bind(null, 'register')}><AiOutlineClose /></button>
                 <h2>REGISTER</h2>
-                <form action="#" className="auth-form">
+                <form method="POST">
                     <h6>First Name*:</h6>
                     <input type="text" name="firstName" value={formData.firstName.value} onChange={changeHandler} />
                     {formData.firstName.error && <p className={styles['error-message']}>❌{formData.firstName.error}</p>}

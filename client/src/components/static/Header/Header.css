@@ -1,0 +1,63 @@
+.header {
+    padding: 18px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.header-area {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+}
+
+.logo {
+    grid-column: span 2;
+    grid-row: span 2;
+    padding-right: 15px;
+}
+
+.header-right {
+    grid-column: span 10;
+    text-align: right;
+    display: flex;
+    align-items: center;
+}
+
+.header-right form {
+    display: flex;
+    max-width: 380px;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    margin-left: auto;
+}
+
+.header-right form button {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding-right: 15px;
+    padding-bottom: 5px;
+}
+
+.header-right form input {
+    width: auto;
+    background: transparent;
+    color: #fff;
+    border: none;
+    margin: 0;
+    margin-left: 20px;
+}
+
+.header-right ul li a:hover,
+.header-right ul li a.active {
+    color: #eb315a;
+}
+
+.header-right ul li {
+    padding: 8px 0 0;
+    margin-left: 15px;
+    display: inline-block;
+}

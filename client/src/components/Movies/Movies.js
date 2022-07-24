@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+import './Movies.css';
 import styles from './Movies.module.css';
 
 import { MoviesHeader } from "./MoviesHeader/MoviesHeader";

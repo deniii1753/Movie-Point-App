@@ -81,3 +81,11 @@
 	background: transparent;
     color: #eb315a;
 }
+
+.details-image {
+    min-width: 415px;
+    max-width: 415px;
+    min-height: 575px;
+    max-height: 575px;
+}
+

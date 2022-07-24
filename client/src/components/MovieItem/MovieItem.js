@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { BsStarFill, BsStar } from "react-icons/bs";
 
+import './MovieItem.css';
+
 export function MovieItem({ movie }) {
     return (
         <div className="col-md-3">

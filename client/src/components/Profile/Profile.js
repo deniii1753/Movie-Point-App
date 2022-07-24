@@ -1,4 +1,7 @@
-import {AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram} from 'react-icons/ai'
+import {AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram} from 'react-icons/ai';
+
+import './Profile.css';
+
 export function Profile() {
     return (
         <>
@@ -111,37 +114,6 @@ export function Profile() {
                                     <h2>Overview</h2>
                                     <p>Humans are at war with the Transformers, and Optimus Prime is gone. The key to saving the future lies buried in the secrets of the past and the hidden history of Transformers on Earth. Now it's up to the unlikely alliance of inventor Cade Yeager, Bumblebee, a n English lord and an Oxford professor to save the world. Transformers: The Last Knight has a deeper mythos and bigger spectacle than its predecessors, yet still ends up being mostly hollow and cacophonous. The first "Transformers" movie that could actually be characterized as badass. Which isn't a bad thing. It may, in fact, be better.</p>
                                 </div>
-                                {/* <div className="details-reply">
-                                    <h2>Leave a Reply</h2>
-                                    <form action="/">
-                                        <div className="row">
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Name" />
-                                                    <i className="icofont icofont-ui-user"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Email" />
-                                                    <i className="icofont icofont-envelope"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Phone" />
-                                                    <i className="icofont icofont-phone"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="textarea-container">
-                                                    <textarea placeholder="Type Here Message"></textarea>
-                                                    <button><i className="icofont icofont-send-mail"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> */}
                             </div>
                         </div>
                     </div>

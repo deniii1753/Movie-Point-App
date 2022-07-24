@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 
+import './MovieCreate.css';
 import UserContext from '../../contexts/UserContext';
 
 import { MovieCreateHeader } from './MovieCreateHeader/MovieCreateHeader';

@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
+import '../Auth.css';
 import styles from '../Auth.module.css';
 
 import * as authService from '../../../services/authService';

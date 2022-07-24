@@ -1,0 +1,81 @@
+.hero-area {
+    position: relative;
+    background-image: url('../../../public/img/hero-area.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.hero-area-slide {
+    background: #13151f;
+    margin: 320px 15px 50px;
+    padding-top: 52px;
+    box-shadow: 0 0 20px #000000;
+}
+
+.hero-area-content>img {
+    position: relative;
+    margin-top: -120px;
+}
+
+.hero-area-slider {
+    margin: auto;
+    max-width: 950px;
+}
+
+.hero-area-content h3 {
+    margin-top: 35px;
+}
+
+.single-slide-cast {
+    display: flex;
+    width: 11.5%;
+    margin-top: 10px;
+    float: left;
+}
+
+.single-slide-cast img {
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 55px;
+    max-height: 55px;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+
+.single-slide-cast.text-center {
+    height: 45px;
+    line-height: 45px;
+    border-radius: 100%;
+    max-width: 45px;
+    border: 2px solid #eb315a;
+    color: #eb315a;
+}
+
+.pr-50 {
+    padding-right: 10px;
+    margin-left: -15px;
+}
+
+.slide-trailor {
+    overflow: hidden;
+    margin-top: 75px;
+}
+
+.slide-cast {
+    overflow: hidden;
+}
+
+.slide-trailor h3 {
+    float: left;
+    margin: 0;
+    margin-right: 25px;
+}
+
+.hero-area-slide {
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: rotateY(2deg);
+    transform-style: preserve-3d;
+    transform: rotateY(2deg);
+}

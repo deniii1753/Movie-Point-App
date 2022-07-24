@@ -38,7 +38,7 @@ export function MovieDetails() {
                         <div className="row flexbox-center">
                             <div className="col-lg-5 text-lg-left text-center">
                                 <div className="transformers-content">
-                                    <img src={movie.imgUrl} alt="about" className="details-image" />
+                                    <img src={movie.imgUrl} alt="about" className={styles["details-image"]} />
                                 </div>
                             </div>
                             <div className="col-lg-7">
@@ -126,41 +126,6 @@ export function MovieDetails() {
                                     <h2>Overview</h2>
                                     <p>{movie.description}</p>
                                 </div>
-                                {/* <div className="details-reply">
-                                    <h2>Leave a Reply</h2>
-                                    <form action="/">
-                                        <div className="row">
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Name" />
-                                                    <i className="icofont icofont-ui-user"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Email" />
-                                                    <i className="icofont icofont-envelope"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-4">
-                                                <div className="select-container">
-                                                    <input type="text" placeholder="Phone" />
-                                                    <i className="icofont icofont-phone"></i>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="textarea-container">
-                                                    <textarea placeholder="Type Here Message"></textarea>
-                                                    <button><i className="icofont icofont-send-mail"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div className="details-comment">
-                                    <a className="theme-btn theme-btn2" href="/">Post Comment</a>
-                                    <p>You may use these HTML tags and attributes: You may use these HTML tags and attributes: You may use these HTML tags and attributes: </p>
-                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,35 @@
+.portfolio-content h2 {
+    margin-top: 20px;
+}
+
+.single-portfolio {
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.single-portfolio-img {
+    overflow: hidden;
+    position: relative;
+}
+
+.single-portfolio-img:hover .popup-youtube span {
+    opacity: 1;
+}
+
+.single-portfolio-img .popup-youtube span {
+    opacity: 0;
+}
+
+.single-portfolio-img img {
+    width: 255px;
+    height: 410px;
+    transition: 0.9s;
+}
+
+.single-portfolio:hover img {
+    transform: scale(1.2);
+}
+
+.single-portfolio .review {
+    margin-bottom: 0;
+}
