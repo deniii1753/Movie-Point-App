@@ -74,15 +74,7 @@ const userSchema = new Schema({
     socials: {
         type: Object
     },
-    moviesCreate: [{
-        type: Schema.Types.ObjectId,
-        ref: 'movie'
-    }],
-    likedMovies: [{
-        type: Schema.Types.ObjectId,
-        ref: 'movie'
-    }],
-    dislikedMovies: [{
+    createdMovies: [{
         type: Schema.Types.ObjectId,
         ref: 'movie'
     }]
