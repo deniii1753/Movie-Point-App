@@ -9,6 +9,7 @@ import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
 import { MovieDelete } from "../MovieDelete/MovieDelete";
+import { Trailer } from "./Trailer/Trailer";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
@@ -116,10 +117,9 @@ export function MovieDetails() {
                                         <a href="/" className={styles["dislike-btn"]}><AiFillDislike size={20} /> Dislike</a>
                                     </div>
                                 }
-
                             </div>
                         }
-                        <a href={movie.trailer} className="theme-btn popup-youtube">Watch Trailer</a>
+                        <Trailer trailerUrl={movie.trailer}/>
                     </div>
                 </div>
             </section>
