@@ -71,9 +71,9 @@ const movieSchema = new Schema({
         validate: {
             validator(value) {
                 value = value.toLowerCase();
-                return value.startsWith('http://') || value.startsWith('https://');
+                return value.startsWith('https://www.youtube.com') || value.startsWith('www.youtube.com') || value.startsWith('https://youtube.com');
             },
-            message: 'Trailer should start with http:// or https://'
+            message: 'Trailer should be valid youtube link!'
         },
     },
     author: {

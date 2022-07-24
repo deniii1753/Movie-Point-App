@@ -25,7 +25,5 @@ function getParsedYoutubeLink(link) {
     const tokens = link.split('?');
 
     const videoId = tokens.find(x => x.startsWith('v='))?.split('v=').pop() || '';
-    console.log(`https://youtube.com/embed/${videoId}?autoplay=1`);
     return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    // const videoId = tokens.find()
 }

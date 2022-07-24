@@ -19,7 +19,10 @@ export function validateField(key, value) {
         case 'language':
             return value.length < 5 ? 'Language should be at least 5 characters long!' : null;
         case 'trailer':
-            return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
+            if(value.startsWith('https://www.youtube.com') || value.startsWith('www.youtube.com') || value.startsWith('https://youtube.com')) {
+                return null;
+            }
+            return 'Please enter a valid youtube link! (e.g: https://youtube.com/watch?v=EXAMPLE)';
         case 'imgUrl':
             return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
         case 'author':
