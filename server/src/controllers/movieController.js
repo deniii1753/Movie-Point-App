@@ -133,4 +133,36 @@ router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
     }
 });
 
+router.delete('/:movieId/like', isAuth, async (req, res, next) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (!movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not liked this movie!' };
+        const userLikeIndex = movie.likes.indexOf(req.verifiedUserId);
+        if(userLikeIndex !== -1) movie.likes.splice(userLikeIndex, userLikeIndex + 1);
+
+        await movieService.saveMovie(movie);
+        res.status(204).json({});
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:movieId/dislike', isAuth, async (req, res, next) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
+
+        if (!movie) throw { status: 404, message: 'Movie not found!' };
+        if (!movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not disliked this movie!' };
+        const userLikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
+        if(userLikeIndex !== -1) movie.dislikes.splice(userLikeIndex, userLikeIndex + 1);
+
+        await movieService.saveMovie(movie);
+        res.status(204).json({});
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;
