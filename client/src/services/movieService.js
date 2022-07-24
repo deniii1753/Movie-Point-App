@@ -11,3 +11,8 @@ export const getOne = (movieId) => requester(`${BASE_URL}/${movieId}?genres=true
 export const addMovie = (movie, authToken) => requester(`${BASE_URL}`, 'POST', movie, authToken);
 export const editMovie = (movieId, updatedMovie, authToken) => requester(`${BASE_URL}/${movieId}`, 'PUT', updatedMovie, authToken);
 export const deleteMovie = (movieId, authToken) => requester(`${BASE_URL}/${movieId}`, 'DELETE', null, authToken);
+export const like = (movieId, authToken) => requester(`${BASE_URL}/${movieId}/like`, 'POST', null, authToken);
+export const removeLike = (movieId, authToken) => requester(`${BASE_URL}/${movieId}/like`, 'DELETE', null, authToken);
+export const dislike = (movieId, authToken) => requester(`${BASE_URL}/${movieId}/dislike`, 'POST', null, authToken);
+export const removeDislike = (movieId, authToken) => requester(`${BASE_URL}/${movieId}/dislike`, 'DELETE', null, authToken);
+

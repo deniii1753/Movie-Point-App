@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AiFillDislike, AiFillLike, AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import UserContext from '../../contexts/UserContext';
 
 import styles from './MovieDetails.module.css';
@@ -10,27 +10,38 @@ import * as movieService from '../../services/movieService';
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
 import { MovieDelete } from "../MovieDelete/MovieDelete";
 import { Trailer } from "./Trailer/Trailer";
+import { RateButtons } from "./RateButtons/RateButtons";
+
 import { useModal } from "../../hooks/useModal";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({});
-    const {isModalOpened, openModal, closeModal} = useModal();
+    const [rate, setRate] = useState({});
+    const { isModalOpened, openModal, closeModal } = useModal();
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
 
     useEffect(() => {
         movieService.getOne(movieId)
-            .then(data => setMovie(data))
+            .then(data => {
+                if(data.likes.includes(user?._id)) setRate({isLiked: true, isDisliked: false})
+                if(data.dislikes.includes(user?._id)) setRate({isLiked: false, isDisliked: true})
+                setMovie(data);
+            })
             .catch(() => navigate('/404'));
 
-    }, [movieId, navigate]);
+    }, [movieId, navigate, user?._id]);
+
+    function changeRate(newRate) {
+        setRate(newRate);
+    }
 
     return (
         <>
 
             <DetailsHeader />
-            {isModalOpened && <MovieDelete closeHandler={closeModal} creatorId={movie.postCreator} movieId={movieId}/>}
+            {isModalOpened && <MovieDelete closeHandler={closeModal} creatorId={movie.postCreator} movieId={movieId} />}
 
             <section className="transformers-area">
                 <div className="container">
@@ -105,14 +116,11 @@ export function MovieDetails() {
                                         <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
                                         <button className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</button>
                                     </div>
-                                    : <div className="movie-rate-buttons">
-                                        <button className={styles["like-btn"]}><AiFillLike size={20} /> Like</button>
-                                        <button className={styles["dislike-btn"]}><AiFillDislike size={20} /> Dislike</button>
-                                    </div>
+                                    : <RateButtons rate={rate} changeRate={changeRate} movieId={movieId}/>
                                 }
                             </div>
                         }
-                        <Trailer trailerUrl={movie.trailer}/>
+                        <Trailer trailerUrl={movie.trailer} />
                     </div>
                 </div>
             </section>
