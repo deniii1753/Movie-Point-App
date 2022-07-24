@@ -52,7 +52,8 @@
 }
 
 .header-right ul li a:hover,
-.header-right ul li a.active {
+.header-right ul li a.active,
+.header-right ul li button:hover {
     color: #eb315a;
 }
 
