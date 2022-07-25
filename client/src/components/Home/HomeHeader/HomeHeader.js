@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as movieService from "../../../services/movieService";
-import {BsStarFill, BsStar} from "react-icons/bs";
+import { BsStarFill, BsStar } from "react-icons/bs";
 
 export function HomeHeader() {
     const [movie, setMovie] = useState([]);
@@ -13,7 +13,7 @@ export function HomeHeader() {
                 setMovie(data.movies[0])
             })
             .catch(() => navigate('/500'));
-            
+
     }, [navigate]);
 
     return (
@@ -32,12 +32,11 @@ export function HomeHeader() {
                                 <h2>{movie.title}</h2>
                                 <div className="review">
                                     <div className="author-review">
-                                        {/* TODO: Stars logic */}
-                                        <BsStarFill size={20}/>
-                                        <BsStarFill size={20}/>
-                                        <BsStarFill size={20}/>
-                                        <BsStarFill size={20}/>
-                                        <BsStar size={20} />
+                                        {movie._ratingStars > 0 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                        {movie._ratingStars > 1 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                        {movie._ratingStars > 2 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                        {movie._ratingStars > 3 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                        {movie._ratingStars > 4 ? <BsStarFill size={18} /> : <BsStar size={18} />}
                                     </div>
                                     <h4>{movie?.likes?.length + movie?.dislikes?.length} voters</h4>
                                 </div>

@@ -58,7 +58,7 @@ router.get('/:movieId', async (req, res, next) => {
 
 router.post('/', isAuth, async (req, res, next) => {
     try {
-        if(req.body.hasOwnProperty('_ratingStars')) throw {status: 400, message: 'You cannot modify _ratingStars property!'};
+        if (req.body.hasOwnProperty('_ratingStars')) throw { status: 400, message: 'You cannot modify _ratingStars property!' };
 
         const movie = await movieService.addMovie(req.body);
         await userService.addMovie(req.verifiedUserId, movie._id);
@@ -72,7 +72,7 @@ router.post('/', isAuth, async (req, res, next) => {
 router.put('/:movieId', isAuth, async (req, res, next) => {
 
     try {
-        if(req.body.hasOwnProperty('_ratingStars')) throw {status: 400, message: 'You cannot modify _ratingStars property!'};
+        if (req.body.hasOwnProperty('_ratingStars')) throw { status: 400, message: 'You cannot modify _ratingStars property!' };
 
         const movie = await movieService.getOne(req.params.movieId);
 
@@ -116,8 +116,8 @@ router.post('/:movieId/like', isAuth, async (req, res, next) => {
         movie.dislikes = movie.dislikes.filter(x => x != req.verifiedUserId);
 
         movie.likes.push(req.verifiedUserId);
-
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
+
         await movieService.saveMovie(movie);
         res.status(201).json({});
     } catch (err) {
@@ -134,8 +134,9 @@ router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
         if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot dislike your own movie!' };
         if (movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already disliked this movie!' };
         movie.likes = movie.likes.filter(x => x != req.verifiedUserId);
-        
+
         movie.dislikes.push(req.verifiedUserId);
+        movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
 
         await movieService.saveMovie(movie);
         res.status(201).json({});
@@ -153,6 +154,8 @@ router.delete('/:movieId/like', isAuth, async (req, res, next) => {
         movie.likes = movie.likes.filter(x => x != req.verifiedUserId);
 
         await movieService.saveMovie(movie);
+        movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
+
         res.status(204).json({});
     } catch (err) {
         next(err);
@@ -168,6 +171,8 @@ router.delete('/:movieId/dislike', isAuth, async (req, res, next) => {
         movie.dislikes = movie.dislikes.filter(x => x != req.verifiedUserId);
 
         await movieService.saveMovie(movie);
+        movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
+
         res.status(204).json({});
     } catch (err) {
         next(err);

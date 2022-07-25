@@ -19,7 +19,6 @@ export function TrailerModal({ trailerUrl, closeHandler }) {
         </div>
     )
 }
-// TODO: fix black bars
 
 function getParsedYoutubeLink(link) {
     const tokens = link.split('?');
