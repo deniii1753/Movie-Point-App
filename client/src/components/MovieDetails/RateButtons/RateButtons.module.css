@@ -1,4 +1,22 @@
 .like-btn {
+	background: transparent;
+    border: 1px solid #90ee90;
+    color: #90ee90;
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.like-btn:focus {
+    border: 1px solid #90ee90;
+}
+
+.liked-btn {
 	background: #90ee90;
     border: 1px solid #90ee90;
     color: rgb(41, 40, 40);
@@ -18,14 +36,14 @@
 
 .like-btn:hover {
     border: 1px solid #90ee90;
-	background: transparent;
-    color: #90ee90;
+	background: #90ee90;
+    color: rgb(41, 40, 40);
 }
 
 .dislike-btn {
-	background: #eb315a;
+	background: transparent;
     border: 1px solid #eb315a;
-    color: rgb(20, 20, 20);
+    color: #eb315a;
 	border-radius: 35px;
     padding: 5px 25px;
     display: inline-block;
@@ -34,8 +52,24 @@
 	font-weight: 500;
 }
 
+.dislike-btn:focus {
+    border: 1px solid #eb315a;
+}
+
 .dislike-btn:hover {
     border: 1px solid #eb315a;
-	background: transparent;
-    color: #eb315a;
+	background-color: #eb315a;
+    color: rgb(41, 40, 40);
+}
+
+.disliked-btn {
+    background: #eb315a;
+    border: 1px solid #eb315a;
+    color: #000;
+	border-radius: 35px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
 }

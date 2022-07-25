@@ -31,12 +31,13 @@ export function MovieDetails() {
 
                 setMovie({
                     movie: rest,
-                    rating: { 
+                    rating: {
                         likesCount: data.likes.length,
-                        dislikesCount: data.dislikes.length, 
-                        _ratingStars, 
-                        isLiked, 
-                        isDisliked}
+                        dislikesCount: data.dislikes.length,
+                        _ratingStars,
+                        isLiked,
+                        isDisliked
+                    }
                 })
             })
             .catch(() => navigate('/404'));
@@ -49,7 +50,7 @@ export function MovieDetails() {
         console.log(data);
         setMovie(state => ({
             ...state,
-            rating: {...data}
+            rating: { ...data }
         }))
     }
 
@@ -130,6 +131,22 @@ export function MovieDetails() {
                                                 {movie.movie.language}
                                             </div>
                                         </li>
+                                        <li>
+                                            <div className="transformers-left">
+                                                Likes:
+                                            </div>
+                                            <div className={`transformers-right ${styles["rating-box"]}`}>
+                                                {movie.rating.likesCount}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="transformers-left">
+                                                Dislikes:
+                                            </div>
+                                            <div className={`transformers-right ${styles["rating-box"]}`}>
+                                                {movie.rating.dislikesCount}
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -138,7 +155,7 @@ export function MovieDetails() {
                             <div className="movie-details-buttons">
                                 {user._id === movie.movie.postCreator
                                     ? <OwnerButtons movieId={movieId} postCreator={movie.movie.postCreator} />
-                                    : <RateButtons rate={{isLiked: movie.rating.isLiked, isDisliked: movie.rating.isDisliked}} changeRate={changeRate} movieId={movieId} />
+                                    : <RateButtons rating={{isLiked: movie.rating.isLiked, isDisliked: movie.rating.isDisliked}} changeRate={changeRate} movieId={movieId} />
                                 }
                             </div>
                         }

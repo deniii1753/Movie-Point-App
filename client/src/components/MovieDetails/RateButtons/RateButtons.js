@@ -7,7 +7,7 @@ import styles from './RateButtons.module.css';
 
 import * as movieService from '../../../services/movieService';
 
-export function RateButtons({ rate, changeRate, movieId }) {
+export function RateButtons({ rating, changeRate, movieId }) {
     const { user } = useContext(UserContext);
 
     function clickHandler(e) {
@@ -17,13 +17,13 @@ export function RateButtons({ rate, changeRate, movieId }) {
         if (buttonName === 'Like') {
             movieService.like(movieId, user['X-Auth-Token'])
                 .then(data => changeRate({...data, isLiked: true, isDisliked: false}))
-        } else if (buttonName === 'Remove Like') {
+        } else if (buttonName === 'Liked') {
             movieService.removeLike(movieId, user['X-Auth-Token'])
                 .then(data => changeRate({...data, isLiked: false, isDisliked: false}));
         } else if (buttonName === 'Dislike') {
             movieService.dislike(movieId, user['X-Auth-Token'])
                 .then(data => changeRate({...data, isLiked: false, isDisliked: true}));
-        } else if (buttonName === 'Remove Dislike') {
+        } else if (buttonName === 'Disliked') {
             movieService.removeDislike(movieId, user['X-Auth-Token'])
                 .then(data => changeRate({...data, isLiked: false, isDisliked: false}));
         }
@@ -31,12 +31,12 @@ export function RateButtons({ rate, changeRate, movieId }) {
 
     return (
         <>
-            {rate.isLiked
-                ? <button className={styles["like-btn"]} onClick={clickHandler}><IoMdRemoveCircle size={20} /> Remove Like</button>
+            {rating.isLiked
+                ? <button className={styles["liked-btn"]} onClick={clickHandler}><IoMdRemoveCircle size={20} /> Liked</button>
                 : <button className={styles["like-btn"]} onClick={clickHandler}><AiFillLike size={20} /> Like</button>
             }
-            {rate.isDisliked
-                ? <button className={styles["dislike-btn"]} onClick={clickHandler}><IoMdRemoveCircle size={20} /> Remove Dislike</button>
+            {rating.isDisliked
+                ? <button className={styles["disliked-btn"]} onClick={clickHandler} active="true"><IoMdRemoveCircle size={20}/> Disliked</button>
                 : <button className={styles["dislike-btn"]} onClick={clickHandler}><AiFillDislike size={20} /> Dislike</button>
             }
         </>
