@@ -16,6 +16,16 @@
     border: 1px solid #90ee90;
 }
 
+.like-btn svg {
+    margin-bottom: 3px;
+}
+
+.like-btn:hover {
+    border: 1px solid #90ee90;
+	background: #90ee90;
+    color: rgb(41, 40, 40);
+}
+
 .liked-btn {
 	background: #90ee90;
     border: 1px solid #90ee90;
@@ -30,14 +40,8 @@
     margin-top: 15px;
 }
 
-.like-btn svg {
-    margin-bottom: 3px;
-}
-
-.like-btn:hover {
-    border: 1px solid #90ee90;
-	background: #90ee90;
-    color: rgb(41, 40, 40);
+.liked-btn svg {
+    margin-bottom: 2px;
 }
 
 .dislike-btn {
@@ -72,4 +76,8 @@
     font-size: 16px;
 	cursor: pointer;
 	font-weight: 500;
+}
+
+.disliked-btn svg {
+    margin-bottom: 2.5px;
 }
