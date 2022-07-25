@@ -3,7 +3,9 @@ export function validateField(key, value) {
     // eslint-disable-next-line
     switch (key) {
         case 'title':
-            return value.length < 2 ? 'Title should be at least 2 characters long!' : null;
+            if(value.length < 2) return 'Title should be at least 2 characters long!';
+            if(value.length > 20) return 'Title should be maximum 20 characters long!';
+            return null;
         case 'writer':
             return value.includes(' ') ? null : 'Writer should have first and last name!';
         case 'director':
@@ -31,7 +33,7 @@ export function validateField(key, value) {
             return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
         case 'description':
             if(value.length < 50) return 'Description should be at least 50 characters long!';
-            if(value.length > 500) return 'Description should be less than 500 characters long!'
-
+            if(value.length > 500) return 'Description should be less than 500 characters long!';
+            return null;
     }
 }

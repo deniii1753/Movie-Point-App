@@ -6,7 +6,7 @@ import styles from '../Auth.module.css';
 import * as authService from '../../../services/authService';
 
 import { comparePasswords } from '../../../utils/validators/comparePasswords';
-import { registerValidation } from '../../../utils/validators/registerValidation';
+import { registerValidation } from '../../../utils/validators/registerValidations';
 
 import UserContext from '../../../contexts/UserContext';
 

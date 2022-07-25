@@ -8,7 +8,7 @@ import UserContext from '../../contexts/UserContext';
 import { MovieCreateHeader } from './MovieCreateHeader/MovieCreateHeader';
 
 import { multiSelectStyles } from '../../utils/multiSelectStyles';
-import { validateField } from '../../utils/validators/createMovieValidations';
+import { validateField } from '../../utils/validators/movieValidations';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
