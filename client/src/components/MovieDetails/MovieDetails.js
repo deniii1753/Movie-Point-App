@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import { useNavigate, useParams } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 
 import styles from './MovieDetails.module.css';
@@ -8,16 +7,17 @@ import styles from './MovieDetails.module.css';
 import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
-import { MovieDelete } from "../MovieDelete/MovieDelete";
 import { Trailer } from "./Trailer/Trailer";
 import { RateButtons } from "./RateButtons/RateButtons";
 
-import { useModal } from "../../hooks/useModal";
+import { OwnerButtons } from "./OwnerButtons/OwnerButtons";
+import { BsStar, BsStarFill } from "react-icons/bs";
 
 export function MovieDetails() {
-    const [movie, setMovie] = useState({});
-    const [rate, setRate] = useState({});
-    const { isModalOpened, openModal, closeModal } = useModal();
+    const [movie, setMovie] = useState({
+        movie: {},
+        rating: {}
+    });
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -25,23 +25,38 @@ export function MovieDetails() {
     useEffect(() => {
         movieService.getOne(movieId)
             .then(data => {
-                if(data.likes.includes(user?._id)) setRate({isLiked: true, isDisliked: false})
-                if(data.dislikes.includes(user?._id)) setRate({isLiked: false, isDisliked: true})
-                setMovie(data);
+                const { _ratingStars, ...rest } = data;
+                const isLiked = data.likes.includes(user?._id) ?? false;
+                const isDisliked = data.dislikes.includes(user?._id) ?? false;
+
+                setMovie({
+                    movie: rest,
+                    rating: { 
+                        likesCount: data.likes.length,
+                        dislikesCount: data.dislikes.length, 
+                        _ratingStars, 
+                        isLiked, 
+                        isDisliked}
+                })
             })
             .catch(() => navigate('/404'));
 
     }, [movieId, navigate, user?._id]);
 
-    function changeRate(newRate) {
-        setRate(newRate);
+
+
+    function changeRate(data) {
+        console.log(data);
+        setMovie(state => ({
+            ...state,
+            rating: {...data}
+        }))
     }
 
     return (
         <>
 
             <DetailsHeader />
-            {isModalOpened && <MovieDelete closeHandler={closeModal} creatorId={movie.postCreator} movieId={movieId} />}
 
             <section className="transformers-area">
                 <div className="container">
@@ -49,20 +64,30 @@ export function MovieDetails() {
                         <div className="row flexbox-center">
                             <div className="col-lg-5 text-lg-left text-center">
                                 <div className="transformers-content">
-                                    <img src={movie.imgUrl} alt="about" className={styles["details-image"]} />
+                                    <img src={movie.movie.imgUrl} alt="about" className={styles["details-image"]} />
                                 </div>
                             </div>
                             <div className="col-lg-7">
                                 <div className="transformers-content">
-                                    <h2>{movie.title}</h2>
-                                    <p>{movie.genres?.map(x => x.label).join(' | ')}</p>
+                                    <h2>{movie.movie.title}</h2>
+                                    <p>{movie.movie.genres?.map(x => x.label).join(' | ')}</p>
+                                    <div className="review">
+                                        <div className="author-review">
+                                            {movie.rating._ratingStars > 0 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                            {movie.rating._ratingStars > 1 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                            {movie.rating._ratingStars > 2 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                            {movie.rating._ratingStars > 3 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                            {movie.rating._ratingStars > 4 ? <BsStarFill size={18} /> : <BsStar size={18} />}
+                                        </div>
+                                        <h4>{movie.rating.likesCount + movie.rating.dislikesCount} voters</h4>
+                                    </div>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
                                                 Author:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.author}
+                                                {movie.movie.author}
                                             </div>
                                         </li>
                                         <li>
@@ -70,7 +95,7 @@ export function MovieDetails() {
                                                 Writer:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.writer}
+                                                {movie.movie.writer}
                                             </div>
                                         </li>
                                         <li>
@@ -78,7 +103,7 @@ export function MovieDetails() {
                                                 Director:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.director}
+                                                {movie.movie.director}
                                             </div>
                                         </li>
                                         <li>
@@ -86,7 +111,7 @@ export function MovieDetails() {
                                                 Time:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.time}m
+                                                {movie.movie.time}m
                                             </div>
                                         </li>
                                         <li>
@@ -94,7 +119,7 @@ export function MovieDetails() {
                                                 Release:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.releaseDate}
+                                                {movie.movie.releaseDate}
                                             </div>
                                         </li>
                                         <li>
@@ -102,7 +127,7 @@ export function MovieDetails() {
                                                 Language:
                                             </div>
                                             <div className="transformers-right">
-                                                {movie.language}
+                                                {movie.movie.language}
                                             </div>
                                         </li>
                                     </ul>
@@ -111,16 +136,13 @@ export function MovieDetails() {
                         </div>
                         {user &&
                             <div className="movie-details-buttons">
-                                {user._id === movie.postCreator
-                                    ? <div className="movie-owner-buttons">
-                                        <Link to={`/movies/${movie._id}/edit`} className={styles["edit-btn"]}><AiFillEdit size={20} /> Edit</Link>
-                                        <button className={styles["delete-btn"]} onClick={openModal}><AiFillDelete size={20} /> Delete</button>
-                                    </div>
-                                    : <RateButtons rate={rate} changeRate={changeRate} movieId={movieId}/>
+                                {user._id === movie.movie.postCreator
+                                    ? <OwnerButtons movieId={movieId} postCreator={movie.movie.postCreator} />
+                                    : <RateButtons rate={{isLiked: movie.rating.isLiked, isDisliked: movie.rating.isDisliked}} changeRate={changeRate} movieId={movieId} />
                                 }
                             </div>
                         }
-                        <Trailer trailerUrl={movie.trailer} />
+                        <Trailer trailerUrl={movie.movie.trailer} />
                     </div>
                 </div>
             </section>
@@ -132,7 +154,7 @@ export function MovieDetails() {
                             <div className="details-content">
                                 <div className="details-overview">
                                     <h2>Overview</h2>
-                                    <p>{movie.description}</p>
+                                    <p>{movie.movie.description}</p>
                                 </div>
                             </div>
                         </div>

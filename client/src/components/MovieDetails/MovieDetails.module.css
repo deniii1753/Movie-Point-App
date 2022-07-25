@@ -1,49 +1,6 @@
-.edit-btn {
-	background: #1cd6d1;
-    border: 1px solid #1cd6d1;
-    color: rgb(41, 40, 40);
-	border-radius: 35px;
-    padding: 5px 25px;
-    display: inline-block;
-    font-size: 16px;
-	cursor: pointer;
-	font-weight: 500;
-    margin-right: 10px;
-    margin-top: 15px;
-}
-
-.edit-btn:hover {
-    border: 1px solid #1cd6d1;
-	background: transparent;
-    color: #1cd6d1;
-}
-
-.delete-btn {
-	background: #eb315a;
-    border: 1px solid #eb315a;
-    color: rgb(20, 20, 20);
-	border-radius: 35px;
-    padding: 5px 25px;
-    display: inline-block;
-    font-size: 16px;
-	cursor: pointer;
-	font-weight: 500;
-}
-
-.delete-btn svg {
-    margin-bottom: 3px;
-}
-
-.delete-btn:hover {
-    border: 1px solid #eb315a;
-	background: transparent;
-    color: #eb315a;
-}
-
 .details-image {
     min-width: 415px;
     max-width: 415px;
     min-height: 575px;
     max-height: 575px;
 }
-

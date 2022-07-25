@@ -4,7 +4,6 @@ import { BsStarFill, BsStar } from "react-icons/bs";
 import './MovieItem.css';
 
 export function MovieItem({ movie }) {
-    console.log(movie);
     return (
         <div className="col-md-3">
             <div className="single-portfolio">

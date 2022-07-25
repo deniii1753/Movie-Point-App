@@ -119,7 +119,11 @@ router.post('/:movieId/like', isAuth, async (req, res, next) => {
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
 
         await movieService.saveMovie(movie);
-        res.status(201).json({});
+        res.status(201).json({
+            likesCount: movie.likes.length,
+            dislikesCount: movie.dislikes.length,
+            _ratingStars: movie._ratingStars
+        });
     } catch (err) {
         next(err);
     }
@@ -139,7 +143,11 @@ router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
 
         await movieService.saveMovie(movie);
-        res.status(201).json({});
+        res.status(201).json({
+            likesCount: movie.likes.length,
+            dislikesCount: movie.dislikes.length,
+            _ratingStars: movie._ratingStars
+        });
     } catch (err) {
         next(err);
     }
@@ -156,7 +164,11 @@ router.delete('/:movieId/like', isAuth, async (req, res, next) => {
         await movieService.saveMovie(movie);
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
 
-        res.status(204).json({});
+        res.status(200).json({
+            likesCount: movie.likes.length,
+            dislikesCount: movie.dislikes.length,
+            _ratingStars: movie._ratingStars
+        });
     } catch (err) {
         next(err);
     }
@@ -173,7 +185,11 @@ router.delete('/:movieId/dislike', isAuth, async (req, res, next) => {
         await movieService.saveMovie(movie);
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
 
-        res.status(204).json({});
+        res.status(200).json({
+            likesCount: movie.likes.length,
+            dislikesCount: movie.dislikes.length,
+            _ratingStars: movie._ratingStars
+        });
     } catch (err) {
         next(err);
     }
