@@ -5,6 +5,7 @@ const userService = require('../services/userService');
 
 
 const { isAuth } = require('../middlewares/authMiddleware');
+const { calculateRatingStars } = require('../utils/calculateRatingStars');
 
 
 router.get('/', async (req, res, next) => {
@@ -57,6 +58,8 @@ router.get('/:movieId', async (req, res, next) => {
 
 router.post('/', isAuth, async (req, res, next) => {
     try {
+        if(req.body.hasOwnProperty('_ratingStars')) throw {status: 400, message: 'You cannot modify _ratingStars property!'};
+
         const movie = await movieService.addMovie(req.body);
         await userService.addMovie(req.verifiedUserId, movie._id);
 
@@ -69,6 +72,8 @@ router.post('/', isAuth, async (req, res, next) => {
 router.put('/:movieId', isAuth, async (req, res, next) => {
 
     try {
+        if(req.body.hasOwnProperty('_ratingStars')) throw {status: 400, message: 'You cannot modify _ratingStars property!'};
+
         const movie = await movieService.getOne(req.params.movieId);
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
@@ -89,6 +94,7 @@ router.delete('/:movieId', isAuth, async (req, res, next) => {
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to delete this movie!' };
 
+
         await Promise.all([
             movieService.deleteMovie(movie._id),
             userService.deleteMovie(req.verifiedUserId, movie._id)
@@ -107,10 +113,11 @@ router.post('/:movieId/like', isAuth, async (req, res, next) => {
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot like your own movie!' };
         if (movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already liked this movie!' };
-        const userDislikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
-        if(userDislikeIndex !== -1) movie.dislikes.splice(userDislikeIndex, userDislikeIndex + 1);
+        movie.dislikes = movie.dislikes.filter(x => x != req.verifiedUserId);
 
         movie.likes.push(req.verifiedUserId);
+
+        movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
         await movieService.saveMovie(movie);
         res.status(201).json({});
     } catch (err) {
@@ -126,10 +133,10 @@ router.post('/:movieId/dislike', isAuth, async (req, res, next) => {
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (req.verifiedUserId == movie.postCreator) throw { status: 400, message: 'You cannot dislike your own movie!' };
         if (movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You already disliked this movie!' };
-        const userLikeIndex = movie.likes.indexOf(req.verifiedUserId);
-        if(userLikeIndex !== -1) movie.likes.splice(userLikeIndex, userLikeIndex + 1);
+        movie.likes = movie.likes.filter(x => x != req.verifiedUserId);
         
         movie.dislikes.push(req.verifiedUserId);
+
         await movieService.saveMovie(movie);
         res.status(201).json({});
     } catch (err) {
@@ -143,8 +150,7 @@ router.delete('/:movieId/like', isAuth, async (req, res, next) => {
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (!movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not liked this movie!' };
-        const userLikeIndex = movie.likes.indexOf(req.verifiedUserId);
-        if(userLikeIndex !== -1) movie.likes.splice(userLikeIndex, userLikeIndex + 1);
+        movie.likes = movie.likes.filter(x => x != req.verifiedUserId);
 
         await movieService.saveMovie(movie);
         res.status(204).json({});
@@ -159,8 +165,7 @@ router.delete('/:movieId/dislike', isAuth, async (req, res, next) => {
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
         if (!movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not disliked this movie!' };
-        const userLikeIndex = movie.dislikes.indexOf(req.verifiedUserId);
-        if(userLikeIndex !== -1) movie.dislikes.splice(userLikeIndex, userLikeIndex + 1);
+        movie.dislikes = movie.dislikes.filter(x => x != req.verifiedUserId);
 
         await movieService.saveMovie(movie);
         res.status(204).json({});

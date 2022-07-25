@@ -104,9 +104,6 @@ const movieSchema = new Schema({
         minLength: [50, 'Description should be at least 50 characters long!'],
         maxLength: [500, 'Description should be less than 500 characters long!']
     },
-    _creationDate: {
-        type: Number
-    },
     postCreator: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -119,7 +116,14 @@ const movieSchema = new Schema({
     dislikes: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }]
+    }],
+    _ratingStars: {
+        type: Number,
+        required: true
+    },
+    _creationDate: {
+        type: Number
+    },
 });
 
 const Movie = model('movie', movieSchema);

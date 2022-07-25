@@ -34,6 +34,7 @@ exports.addMovie = (movie) => {
         authorImg: movie.authorImg,
         description: movie.description,
         postCreator: movie.postCreator,
+        _ratingStars: 0,
         _creationDate: new Date().getTime()
     });
     
