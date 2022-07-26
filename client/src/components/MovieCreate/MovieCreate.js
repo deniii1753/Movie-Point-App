@@ -130,7 +130,7 @@ export function MovieCreate() {
                                     <button
                                         disabled={
                                             !formData.genres.value.length ||
-                                            Object.values(formData).some(x => x.error)
+                                            Object.values(formData).some(x => x.error || x.value === '')
                                         }
                                     >Submit</button>
                                 </form>
