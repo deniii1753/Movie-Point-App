@@ -27,10 +27,8 @@ const selectStyles = {
 
 export function Movies() {
     const [genres, setGenres] = useState([]);
-    const [movies, setMovies] = useState({
-        movies: [],
-        sortBy: ''
-    });
+    const [movies, setMovies] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState(null);
     const navigate = useNavigate();
 
     //      TODO:
@@ -39,63 +37,65 @@ export function Movies() {
     // genre filter
 
     useEffect(() => {
-        genreService.getAll()
-            .then(data => setGenres(data.genres))
+        Promise.all([
+            genreService.getAll(),
+            movieService.getMovies(0, MOVIES_PER_REQUEST)
+        ])
+            .then(([genres, movies]) => {
+                setGenres(genres);
+                setMovies(movies);
+            })
             .catch(err => {
                 toast.error(err.message);
                 navigate('/500');
-            });
-
-        movieService.getMovies(0, MOVIES_PER_REQUEST)
-            .then(data => {
-                setMovies(state => ({
-                ...state,
-                movies: data
-            }))})
-            .catch(err => {
-                toast.error(err.message);
-                navigate('/500');
-            });
+            })
 
     }, [navigate]);
 
     function genreChangeHandler(genre) {
-        // TODO...
+        movieService.getMovies(0, MOVIES_PER_REQUEST, genre._id)
+            .then(data => {
+                setMovies(data);
+                setSelectedGenre(genre);
+            })
+            .catch(err => {
+                toast.error(err.message);
+                navigate('/500');
+            })
     }
 
-    useEffect(() => {
-        setMovies(oldMovies => {
-            let newMovies = [...oldMovies.movies];
+    // useEffect(() => {
+    //     setMovies(oldMovies => {
+    //         let newMovies = [...oldMovies.movies];
 
-            if (movies.sortBy === 'Latest Added') {
-                newMovies = oldMovies.movies.sort((a, b) => b._creationDate - a._creationDate);
-            }
+    //         if (movies.sortBy === 'Latest Added') {
+    //             newMovies = oldMovies.movies.sort((a, b) => b._creationDate - a._creationDate);
+    //         }
 
-            return {
-                ...oldMovies,
-                movies: newMovies,
-                sortBy: movies.sortBy
-            }
-        });
-    }, [movies.sortBy]);
+    //         return {
+    //             ...oldMovies,
+    //             movies: newMovies,
+    //             sortBy: movies.sortBy
+    //         }
+    //     });
+    // }, [movies.sortBy]);
 
-    function sortClickHandler(e) {
-        const sortCriteria = e.target.textContent;
+    // function sortClickHandler(e) {
+    //     const sortCriteria = e.target.textContent;
 
-        setMovies(state => ({ ...state, sortBy: sortCriteria }));
-    }
+    //     setMovies(state => ({ ...state, sortBy: sortCriteria }));
+    // }
 
     function loadNextMovies() {
-        if (movies.movies.length < MOVIES_PER_REQUEST) return;
+        if (movies.length === 0) return;
 
-        movieService.getMovies(movies.movies.length, MOVIES_PER_REQUEST)
-            .then(data => setMovies(state => {
-                return {
-                    ...state,
-                    movies: [...state.movies, ...data.movies],
-                    sortBy: ''
-                }
-            }))
+        if(selectedGenre) {
+            movieService.getMovies(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
+            .then(data => setMovies(state => [...state, ...data]));
+        } else {
+            movieService.getMovies(movies.length, MOVIES_PER_REQUEST)
+                .then(data => setMovies(state => [...state, ...data]));
+        }
     }
     return (
         <>
@@ -124,24 +124,24 @@ export function Movies() {
 
                                 </div>
 
-                                <span>Sort  by:</span>
+                                {/* <span>Sort  by:</span>
                                 <ul className={styles["sort-by-ul"]}>
                                     <li className={movies.sortBy === 'Latest Added' ? 'active' : undefined} onClick={sortClickHandler}>Latest Added</li>
                                     <li className={movies.sortBy === 'Release Date' ? 'active' : undefined} onClick={sortClickHandler}>Release Date</li>
                                     <li className={movies.sortBy === 'Rating' ? 'active' : undefined} onClick={sortClickHandler}>Rating</li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </div>
                     </div>
                     <hr />
-                    {!movies.movies.length && <h3 className="no-added-movies">No movies added yet!</h3>}
+                    {!movies.length && <h3 className="no-added-movies">No movies found!</h3>}
                     <InfiniteScroll
-                        dataLength={movies.movies.length}
+                        dataLength={movies.length}
                         next={loadNextMovies}
                         hasMore={true}
                         className='row portfolio-item'
                     >
-                        {movies.movies.map(x => <MovieItem key={x._id} movie={x} />)}
+                        {movies.map(x => <MovieItem key={x._id} movie={x} />)}
                     </InfiniteScroll>
 
                 </div>

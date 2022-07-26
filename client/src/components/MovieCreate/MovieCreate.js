@@ -36,7 +36,7 @@ export function MovieCreate() {
 
     useEffect(() => {
         genreService.getAll()
-            .then(data => setGenres(data.genres));
+            .then(data => setGenres(data));
     }, []);
 
     function submitHandler(e) {

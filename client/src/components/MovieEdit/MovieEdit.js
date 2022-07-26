@@ -36,7 +36,7 @@ export function MovieEdit() {
 
     useEffect(() => {
         genreService.getAll()
-            .then(data => setGenres(data.genres));
+            .then(data => setGenres(data));
 
         movieService.getOne(movieId)
             .then(data => {

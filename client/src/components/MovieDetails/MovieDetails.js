@@ -12,6 +12,7 @@ import { RateButtons } from "./RateButtons/RateButtons";
 
 import { OwnerButtons } from "./OwnerButtons/OwnerButtons";
 import { BsStar, BsStarFill } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({
@@ -40,7 +41,10 @@ export function MovieDetails() {
                     }
                 })
             })
-            .catch(() => navigate('/404'));
+            .catch(err => {
+                toast.error(err.message);
+                navigate('/404');
+            });
 
     }, [movieId, navigate, user?._id]);
 
