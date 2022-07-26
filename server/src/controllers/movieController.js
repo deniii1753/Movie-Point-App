@@ -9,20 +9,18 @@ const { calculateRatingStars } = require('../utils/calculateRatingStars');
 
 
 router.get('/', async (req, res, next) => {
-    const limit = req?.query?.limit || 8;
-    const skip = req?.query?.skip || 0;
-    const sort = req?.query?.sort;
-    const order = req?.query?.order;
+    const limit = req.query?.limit || 8;
+    const skip = req.query?.skip || 0;
+    const sort = req.query?.sort;
+    const order = req.query?.order;
+    const genres = req.query?.genres ? {genres: req.query.genres} : {};
 
     const sortCriteria = {};
 
     if (sort && order) sortCriteria[sort] = order;
 
     try {
-        const [movies, moviesCount] = await Promise.all([
-            movieService.getMovies(sortCriteria, limit, skip),
-            movieService.getMoviesCount()
-        ]);
+        const movies = await movieService.getMovies(genres, sortCriteria, limit, skip);
 
         res.status(200).json({ movies, moviesCount });
     } catch (err) {
