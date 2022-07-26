@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-import { Header } from './components/static/Header/Header';
+import { Header } from './components/Header/Header';
 import { Footer } from './components/static/Footer';
 import { Login } from './components/Auth/Login/Login';
 import { Register } from './components/Auth/Register/Register';

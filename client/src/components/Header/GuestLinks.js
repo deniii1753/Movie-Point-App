@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import UserModalContext from "../../../contexts/UserModalContext";
+import UserModalContext from "../../contexts/UserModalContext";
 
 import styles from './GuestLinks.module.css';
 
