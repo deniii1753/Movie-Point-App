@@ -15,13 +15,16 @@ import { MovieItem } from '../MovieItem/MovieItem';
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
-
 const MOVIES_PER_REQUEST = 16;
 
 const selectStyles = {
     option: (provided) => ({
         ...provided,
         color: 'black'
+    }),
+    menu: (provided) => ({
+        ...provided,
+        width: 'max-content'
     })
 }
 
@@ -31,18 +34,13 @@ export function Movies() {
     const [selectedGenre, setSelectedGenre] = useState(null);
     const navigate = useNavigate();
 
-    //      TODO:
-    // release date filter
-    // rating filter
-    // genre filter
-
     useEffect(() => {
         Promise.all([
             genreService.getAll(),
             movieService.getMovies(0, MOVIES_PER_REQUEST)
         ])
             .then(([genres, movies]) => {
-                setGenres(genres);
+                setGenres([{label: 'All', value: 'all'}, ...genres]);
                 setMovies(movies);
             })
             .catch(err => {
@@ -53,7 +51,7 @@ export function Movies() {
     }, [navigate]);
 
     function genreChangeHandler(genre) {
-        movieService.getMovies(0, MOVIES_PER_REQUEST, genre._id)
+        movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre._id)
             .then(data => {
                 setMovies(data);
                 setSelectedGenre(genre);
@@ -64,34 +62,12 @@ export function Movies() {
             })
     }
 
-    // useEffect(() => {
-    //     setMovies(oldMovies => {
-    //         let newMovies = [...oldMovies.movies];
-
-    //         if (movies.sortBy === 'Latest Added') {
-    //             newMovies = oldMovies.movies.sort((a, b) => b._creationDate - a._creationDate);
-    //         }
-
-    //         return {
-    //             ...oldMovies,
-    //             movies: newMovies,
-    //             sortBy: movies.sortBy
-    //         }
-    //     });
-    // }, [movies.sortBy]);
-
-    // function sortClickHandler(e) {
-    //     const sortCriteria = e.target.textContent;
-
-    //     setMovies(state => ({ ...state, sortBy: sortCriteria }));
-    // }
-
     function loadNextMovies() {
         if (movies.length === 0) return;
 
-        if(selectedGenre) {
-            movieService.getMovies(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
-            .then(data => setMovies(state => [...state, ...data]));
+        if (selectedGenre) {
+            movieService.getMoviesByGenre(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
+                .then(data => setMovies(state => [...state, ...data]));
         } else {
             movieService.getMovies(movies.length, MOVIES_PER_REQUEST)
                 .then(data => setMovies(state => [...state, ...data]));
@@ -106,7 +82,7 @@ export function Movies() {
                     <div className="row flexbox-center">
                         <div className="col-lg-6 text-center text-lg-left">
                             <div className="section-title">
-                                <h1><BiMoviePlay className="movies-list-header-image" /> {movies.sortBy || 'All Movies'}</h1>
+                                <h1><BiMoviePlay className="movies-list-header-image" /> {selectedGenre?.label || 'All'} Movies</h1>
                             </div>
                         </div>
                         <div className="col-lg-6 text-center text-lg-right">
