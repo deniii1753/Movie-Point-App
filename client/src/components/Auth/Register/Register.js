@@ -9,6 +9,7 @@ import { comparePasswords } from '../../../utils/validators/comparePasswords';
 import { registerValidation } from '../../../utils/validators/registerValidations';
 
 import UserContext from '../../../contexts/UserContext';
+import { toast } from 'react-toastify';
 
 
 export function Register({ closeModalHandler }) {
@@ -21,8 +22,6 @@ export function Register({ closeModalHandler }) {
         rePassword: { value: '', error: null },
         bio: { value: '', error: null }
     });
-    const [errorFromServer, setErrorFromServer] = useState(null);
-    
     const { updateUser } = useContext(UserContext);
 
     function closeHandler(e) {
@@ -44,9 +43,10 @@ export function Register({ closeModalHandler }) {
         authService.register(Object.fromEntries(entries))
             .then(data => {
                 updateUser(data);
+                toast.success('You successfully registered!');
                 closeModalHandler('register');
             })
-            .catch(err => setErrorFromServer(err.message));
+            .catch(err => toast.error(err.message));
     }
 
     return (
@@ -84,7 +84,6 @@ export function Register({ closeModalHandler }) {
                     >
                         REGISTER
                     </button>
-                    {errorFromServer && <p className={styles['error-message']}>❌{errorFromServer}</p>}
                 </form>
             </div>
         </div>

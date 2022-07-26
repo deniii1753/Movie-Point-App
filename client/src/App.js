@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 import { Header } from './components/static/Header/Header';
@@ -35,7 +37,10 @@ function App() {
                 <Routing isAuth={user ? true : false} />
 
                 <Footer />
+
+                <ToastContainer theme='dark' style={{userSelect: 'none'}}/>
             </div>
+
         </UserContext.Provider>
     );
 }

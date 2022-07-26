@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import '../Auth.css';
@@ -27,6 +28,7 @@ export function Login({ closeModalHandler }) {
         authService.login(formData)
             .then(data => {
                 updateUser(data);
+                toast.success('You successfully logged in!');
                 closeModalHandler('login');
 
             })

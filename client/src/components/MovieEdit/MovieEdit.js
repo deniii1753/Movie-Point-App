@@ -12,6 +12,7 @@ import { validateField } from '../../utils/validators/movieValidations';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
+import { toast } from 'react-toastify';
 
 export function MovieEdit() {
     const [genres, setGenres] = useState([]);
@@ -29,7 +30,6 @@ export function MovieEdit() {
         authorImg: { value: '', error: null },
         description: { value: '', error: null },
     });
-    const [serverErrorMessage, setServerErrorMessage] = useState(null);
     const navigate = useNavigate();
     const { movieId } = useParams();
     const { user } = useContext(UserContext);
@@ -68,8 +68,11 @@ export function MovieEdit() {
         }, {});
 
         movieService.editMovie(movieId, updatedData, user['X-Auth-Token'])
-            .then(data => navigate(`/movies/${data._id}`))
-            .catch(err => setServerErrorMessage(err.message));
+            .then(data => {
+                toast.success('You successfully edited your movie!');
+                return navigate(`/movies/${data._id}`)
+            })
+            .catch(err => toast.error(err.message));
     }
 
     function changeHandler(e) {
@@ -146,7 +149,6 @@ export function MovieEdit() {
                                     <label htmlFor="description">Description*:</label>
                                     <textarea name="description" id="description" className="textarea-container" value={formData.description.value} onChange={changeHandler} />
                                     {formData.description.error && <p className="error-message">❌{formData.description.error}</p>}
-                                    {serverErrorMessage && <p className="error-message">❌{serverErrorMessage}</p>}
 
                                     <button
                                         disabled={
