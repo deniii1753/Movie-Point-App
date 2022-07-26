@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { BiMoviePlay } from 'react-icons/bi';
+
 
 import './Movies.css';
 import styles from './Movies.module.css';
@@ -11,7 +15,6 @@ import { MovieItem } from '../MovieItem/MovieItem';
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
-import { BiMoviePlay } from 'react-icons/bi';
 
 const MOVIES_PER_REQUEST = 16;
 
@@ -26,9 +29,9 @@ export function Movies() {
     const [genres, setGenres] = useState([]);
     const [movies, setMovies] = useState({
         movies: [],
-        totalMoviesInDB: null,
         sortBy: ''
     });
+    const navigate = useNavigate();
 
     //      TODO:
     // release date filter
@@ -39,22 +42,22 @@ export function Movies() {
         genreService.getAll()
             .then(data => setGenres(data.genres))
             .catch(err => {
-                // redirect to server error page
-                console.log(err);
+                toast.error(err.message);
+                navigate('/500');
             });
 
         movieService.getMovies(0, MOVIES_PER_REQUEST)
-            .then(data => setMovies(state => ({
+            .then(data => {
+                setMovies(state => ({
                 ...state,
-                movies: data.movies,
-                totalMoviesInDB: data.moviesCount,
-            })))
+                movies: data
+            }))})
             .catch(err => {
-                // redirect to server error page
-                console.log(err);
+                toast.error(err.message);
+                navigate('/500');
             });
 
-    }, []);
+    }, [navigate]);
 
     function genreChangeHandler(genre) {
         // TODO...

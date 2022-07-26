@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
+import { BiMoviePlay } from 'react-icons/bi';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import * as movieService from "../../../services/movieService";
 import { MovieItem } from "../../MovieItem/MovieItem";
 
-import { BiMoviePlay } from 'react-icons/bi';
 
 export function HomeMovies() {
     const [filteredMovies, setFilteredMovies] = useState({
         movies: [],
         filter: 'Recently Added'
     });
+    const navigate = useNavigate();
 
     useEffect(() => {
         movieService.getRecent()
-            .then((data) => setFilteredMovies({
-                movies: data.movies,
+            .then(data => setFilteredMovies({
+                movies: data,
                 filter: 'Recently Added'
             }))
             .catch(err => {
-                // redirect to server error page
-                console.log(err);
+                toast.error(err.message);
+                navigate('/500');
             })
-    }, []);
+    }, [navigate]);
 
     async function clickHandler(e) {
         const filter = e.target.textContent;
@@ -29,22 +33,22 @@ export function HomeMovies() {
             if (filter === 'Recently Added') {
                 movieService.getRecent()
                     .then(data => setFilteredMovies({
-                        movies: data.movies,
+                        movies: data,
                         filter: 'Recently Added'
                     }))
             } else if (filter === 'Top 5') {
                 movieService.getTopFive()
                     .then(data => {
                         setFilteredMovies({
-                            movies: data.movies,
+                            movies: data,
                             filter: 'Top 5'
                         })
                     });
             }
 
         } catch (err) {
-            // redirect to server error page
-            console.log(err);
+            toast.error(err.message);
+            navigate('/500');
         }
     }
 

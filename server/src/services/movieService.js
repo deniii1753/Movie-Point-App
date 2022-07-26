@@ -1,7 +1,7 @@
 const Movie = require('../models/Movie');
 
-exports.getMovies = (sort, limit, skip) => {
-    return Movie.find()
+exports.getMovies = (genre, sort, limit, skip) => {
+    return Movie.find(genre)
     .skip(skip)
     .sort({...sort, _id: 1})
     .select('title likes dislikes imgUrl _creationDate description author authorImg _ratingStars')

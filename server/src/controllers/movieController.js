@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
     try {
         const movies = await movieService.getMovies(genres, sortCriteria, limit, skip);
 
-        res.status(200).json({ movies, moviesCount });
+        res.status(200).json(movies);
     } catch (err) {
         next(err);
     }

@@ -10,7 +10,7 @@ export function HomeHeader() {
     useEffect(() => {
         movieService.getTopRated()
             .then(data => {
-                setMovie(data.movies[0])
+                setMovie(data[0])
             })
             .catch(() => navigate('/500'));
 
