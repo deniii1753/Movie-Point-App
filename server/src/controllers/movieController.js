@@ -159,8 +159,8 @@ router.delete('/:movieId/like', isAuth, async (req, res, next) => {
         if (!movie.likes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not liked this movie!' };
         movie.likes = movie.likes.filter(x => x != req.verifiedUserId);
 
-        await movieService.saveMovie(movie);
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
+        await movieService.saveMovie(movie);
 
         res.status(200).json({
             likesCount: movie.likes.length,
@@ -180,8 +180,8 @@ router.delete('/:movieId/dislike', isAuth, async (req, res, next) => {
         if (!movie.dislikes.includes(req.verifiedUserId)) throw { status: 400, message: 'You have not disliked this movie!' };
         movie.dislikes = movie.dislikes.filter(x => x != req.verifiedUserId);
 
-        await movieService.saveMovie(movie);
         movie._ratingStars = calculateRatingStars(movie.likes.length, movie.dislikes.length);
+        await movieService.saveMovie(movie);
 
         res.status(200).json({
             likesCount: movie.likes.length,
