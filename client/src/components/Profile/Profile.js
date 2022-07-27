@@ -17,7 +17,6 @@ export function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(userData['X-Auth-Token']);
         userService.getUser(userData['X-Auth-Token'])
             .then(data => setUser(data))
             .catch(err => {
@@ -29,7 +28,7 @@ export function Profile() {
     return (
         <>
             <ProfileHeader />
-            
+
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box">
@@ -41,14 +40,14 @@ export function Profile() {
                             </div>
                             <div className="col-lg-7">
                                 <div className="transformers-content mtr-30">
-                                    <h2>{user.firstName} {user.lastName} <Link to={"/profile/edit"}><IoMdSettings size={20} color={'white'}/></Link></h2>
+                                    <h2>{user.firstName} {user.lastName} <Link to={"/profile/edit"}><IoMdSettings size={20} color={'white'} /></Link></h2>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
                                                 Height:
                                             </div>
                                             <div className="transformers-right">
-                                                {user.height || 'N/A'}
+                                                {`${user.height}cm` || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -56,7 +55,7 @@ export function Profile() {
                                                 Weight:
                                             </div>
                                             <div className="transformers-right">
-                                                {user.weight || 'N/A'}
+                                                {`${user.weight}kg` || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -99,7 +98,7 @@ export function Profile() {
                                                 {user.hobbies ? user.hobbies : "N/A"}
                                             </div>
                                         </li>
-                                        {user.socials &&
+                                        {Object.values(user.socials || {}).some(x => x !== '') &&
                                             <li>
                                                 <div className="transformers-left">
                                                     Follow:

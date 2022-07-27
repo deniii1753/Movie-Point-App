@@ -10,11 +10,12 @@ export function profileEditValidations(key, value) {
             if (value.length > 10) return 'Last name should be maximum 10 characters long!';
             return null;
         case 'height':
-            console.log(Number(value));
+            if (value === '') return null;
             if (Number(value) < 50) return 'Height should be higher than 50cm!';
             if (Number(value) > 250) return 'Height should be lower than 250cm!';
             return null;
         case 'weight':
+            if (value === '') return null;
             if (Number(value) < 20) return 'Weight should be higher than 20 kilograms!';
             if (Number(value) > 500) return 'Weight should be lower than 500 kilograms!';
             return null;
@@ -25,13 +26,13 @@ export function profileEditValidations(key, value) {
         case 'imgUrl':
             return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
         case 'twitter':
-            return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
+            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'facebook':
-            return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
+            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'instagram':
-            return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
+            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'youtube':
-            return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
+            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'bio':
             if (value.length < 50) return 'Bio should be at least 50 characters long!';
             return null;

@@ -1,4 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
 import userContext from '../../contexts/UserContext';
 
 import * as userService from '../../services/userService';
@@ -6,10 +9,12 @@ import * as userService from '../../services/userService';
 import { profileEditValidations } from '../../utils/validators/profileEditValidations';
 import { ProfileEditHeader } from "./ProfileEditHeader/ProfileEditHeader";
 
+let _id;
 export function ProfileEdit() {
     const [formData, setFormData] = useState({
         firstName: { value: '', error: null },
         lastName: { value: '', error: null },
+        imgUrl: { value: '', error: null },
         height: { value: '', error: null },
         weight: { value: '', error: null },
         eyeColor: { value: '', error: null },
@@ -17,36 +22,84 @@ export function ProfileEdit() {
         birthday: { value: '', error: null },
         language: { value: '', error: null },
         hobbies: { value: '', error: null },
-        imgUrl: { value: '', error: null },
         bio: { value: '', error: null },
-
+        twitter: { value: '', error: null },
+        facebook: { value: '', error: null },
+        instagram: { value: '', error: null },
+        youtube: { value: '', error: null },
     });
     const { user } = useContext(userContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         userService.getUser(user['X-Auth-Token'])
             .then(data => {
-                // set data in form data
+                _id = data._id;
+                setFormData(state => ({
+                    ...state,
+                    firstName: { value: data.firstName, error: null },
+                    lastName: { value: data.lastName, error: null },
+                    imgUrl: { value: data.imgUrl, error: null },
+                    height: { value: data.height, error: null },
+                    weight: { value: data.weight, error: null },
+                    eyeColor: { value: data.eyeColor, error: null },
+                    hairColor: { value: data.hairColor, error: null },
+                    birthday: { value: data.birthday, error: null },
+                    language: { value: data.language, error: null },
+                    hobbies: { value: data.hobbies, error: null },
+                    bio: { value: data.bio, error: null },
+                    twitter: { value: data.socials.twitter || '', error: null },
+                    facebook: { value: data.socials.facebook || '', error: null },
+                    instagram: { value: data.socials.instagram || '', error: null },
+                    youtube: { value: data.socials.youtube || '', error: null }
+                }))
             })
             .catch(err => {
-                // error handling
-            })
-    }, [user])
+                toast.error(err.message);
+                navigate('/profile');
+            });
+
+    }, [user, navigate])
 
     function changeHandler(e) {
-        const fieldName = e.target.name.trim();
-        const fieldValue = e.target.value.trim();
+        const fieldName = e.target.name;
+        const fieldValue = e.target.value;
 
         setFormData(state => ({
             ...state,
-            [fieldName]: { value: fieldValue, error: profileEditValidations(fieldName, fieldValue) }
+            [fieldName]: { value: fieldValue, error: profileEditValidations(fieldName.trim(), fieldValue.trim()) }
         }))
 
     }
 
     function submitHandler(e) {
         e.preventDefault();
-        console.log(formData);
+
+        userService.editUser({
+            _id,
+            firstName: formData.firstName.value,
+            lastName: formData.lastName.value,
+            imgUrl: formData.imgUrl.value,
+            height: formData.height.value,
+            weight: formData.weight.value,
+            eyeColor: formData.eyeColor.value,
+            hairColor: formData.hairColor.value,
+            birthday: formData.birthday.value,
+            language: formData.language.value,
+            hobbies: formData.hobbies.value,
+            socials: {
+                twitter: formData.twitter.value,
+                facebook: formData.facebook.value,
+                instagram: formData.instagram.value,
+                youtube: formData.youtube.value,
+            },
+            bio: formData.bio.value
+        }, user["X-Auth-Token"])
+            .then(() => {
+                toast.success('You successfully edit your profile!');
+                navigate('/profile');
+            })
+            .catch(err => toast.error(err.message));
     }
 
     return (
@@ -105,7 +158,7 @@ export function ProfileEdit() {
                                     <label htmlFor="youtube">YouTube: </label>
                                     <input type="text" id="youtube" name="youtube" value={formData.youtube?.value} onChange={changeHandler} />
                                     {formData.youtube?.error && <p className="error-message">❌{formData.youtube?.error}</p>}
-                                    <label htmlFor="bio">Biography:</label>
+                                    <label htmlFor="bio">Biography*:</label>
                                     <textarea name="bio" id="bio" className="textarea-container" value={formData.bio?.value} onChange={changeHandler} />
                                     {formData.bio?.error && <p className="error-message">❌{formData.bio?.error}</p>}
 

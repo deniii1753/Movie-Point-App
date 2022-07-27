@@ -4,6 +4,8 @@ const { isAuth } = require('../middlewares/authMiddleware');
 
 const userService = require('../services/userService');
 
+const { checkUsernameAvailability, editPasswordValidator: patchPasswordValidator } = require('../utils/validations');
+
 router.get('/', isAuth, async (req, res, next) => {
 
     try {
@@ -15,14 +17,14 @@ router.get('/', isAuth, async (req, res, next) => {
     }
 });
 
-router.patch('/updateUser', isAuth, async (req, res, next) => {
+router.put('/', isAuth, async (req, res, next) => {
     if (req.verifiedUserId != req.body._id) return next({ status: 401, message: 'You are not authorized to change this data!' });
 
     try {
-        if (req.body.data.hasOwnProperty('username')) await checkUsernameAvailability(req.body.data.username);
-        if (req.body.data.hasOwnProperty('password')) passwordValidator(req.body.data.password, req.body.data.rePassword);
+        if (req.body.hasOwnProperty('username')) await checkUsernameAvailability(req.body.data.username);
+        if (req.body.hasOwnProperty('password')) patchPasswordValidator(req.body.data.password, req.body.data.rePassword);
 
-        const user = await authService.update(req.body._id, req.body.data);
+        const user = await userService.update(req.body._id, req.body);
 
         res.status(200).json(user);
     } catch (err) {

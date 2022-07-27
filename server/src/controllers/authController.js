@@ -2,10 +2,8 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
 const authService = require('../services/authService');
-const userService = require('../services/userService');
-const { isAuth } = require('../middlewares/authMiddleware');
 
-const { passwordValidator } = require('../utils/validations');
+const { passwordValidator, checkUsernameAvailability } = require('../utils/validations');
 
 const { secret } = require('../../config/settings.json');
 
@@ -43,14 +41,6 @@ function generateAuthToken(userId) {
             resolve(token);
         });
     });
-}
-
-async function checkUsernameAvailability(username) {
-    const result = await userService.getUsername(username);
-
-    if (result === null) return;
-
-    throw { status: 409, message: 'Username already exist!' };
 }
 
 module.exports = router;
