@@ -1,5 +1,9 @@
 const User = require('../models/User');
 
+exports.getUser = (userId) => {
+    return User.findOne({_id: userId}).select('-password');
+}
+
 exports.getUsername = (username) => {
     return User.findOne({ username: { $regex: `${username}$`, $options: 'i' } }).select('username');
 }
