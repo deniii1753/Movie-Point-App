@@ -48,10 +48,10 @@ export function ProfileEdit() {
                     language: { value: data.language, error: null },
                     hobbies: { value: data.hobbies, error: null },
                     bio: { value: data.bio, error: null },
-                    twitter: { value: data.socials.twitter || '', error: null },
-                    facebook: { value: data.socials.facebook || '', error: null },
-                    instagram: { value: data.socials.instagram || '', error: null },
-                    youtube: { value: data.socials.youtube || '', error: null }
+                    twitter: { value: data.socials?.twitter || '', error: null },
+                    facebook: { value: data.socials?.facebook || '', error: null },
+                    instagram: { value: data.socials?.instagram || '', error: null },
+                    youtube: { value: data.socials?.youtube || '', error: null }
                 }))
             })
             .catch(err => {

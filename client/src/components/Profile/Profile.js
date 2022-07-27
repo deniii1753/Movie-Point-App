@@ -47,7 +47,7 @@ export function Profile() {
                                                 Height:
                                             </div>
                                             <div className="transformers-right">
-                                                {`${user.height}cm` || 'N/A'}
+                                                {user.height ? `${user.height}cm` : 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -55,7 +55,7 @@ export function Profile() {
                                                 Weight:
                                             </div>
                                             <div className="transformers-right">
-                                                {`${user.weight}kg` || 'N/A'}
+                                                {user.weight ? `${user.weight}kg` : 'N/A'}
                                             </div>
                                         </li>
                                         <li>
