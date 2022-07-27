@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,15 +13,12 @@ import UserContext from './contexts/UserContext';
 import UserModalContext from './contexts/UserModalContext';
 import { Routing } from './components/Routing/Routing';
 import { useModal } from './hooks/useModal';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
     const { isModalOpened: isLoginModalOpened, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
     const { isModalOpened: isRegisterModalOpened, openModal: openRegisterModal, closeModal: closeRegisterModal } = useModal();
-    const [user, setUser] = useState();
-
-    function updateUser(userData) {
-        setUser(userData);
-    }
+    const [user, updateUser] = useLocalStorage('user', null);
 
     return (
         <UserContext.Provider value={{ user, updateUser }} >
