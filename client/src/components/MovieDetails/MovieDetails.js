@@ -51,7 +51,6 @@ export function MovieDetails() {
 
 
     function changeRate(data) {
-        console.log(data);
         setMovie(state => ({
             ...state,
             rating: { ...data }
@@ -121,7 +120,7 @@ export function MovieDetails() {
                                         </li>
                                         <li>
                                             <div className="transformers-left">
-                                                Release:
+                                                Release Date:
                                             </div>
                                             <div className="transformers-right">
                                                 {movie.movie.releaseDate}

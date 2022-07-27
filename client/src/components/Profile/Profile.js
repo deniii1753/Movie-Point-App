@@ -1,8 +1,30 @@
-import {AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram} from 'react-icons/ai';
+import { useContext, useEffect, useState } from 'react';
+import { AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { IoMdSettings } from 'react-icons/io';
 
 import './Profile.css';
 
+import UserContext from '../../contexts/UserContext';
+
+import * as userService from '../../services/userService';
+
 export function Profile() {
+    const [user, setUser] = useState({});
+    const { user: userData } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(userData['X-Auth-Token']);
+        userService.getUser(userData['X-Auth-Token'])
+            .then(data => setUser(data))
+            .catch(err => {
+                toast.error(err.message);
+                navigate('/500');
+            });
+    }, [navigate, userData]);
+
     return (
         <>
             <section className="breadcrumb-area">
@@ -23,19 +45,19 @@ export function Profile() {
                         <div className="row flexbox-center">
                             <div className="col-lg-5 text-lg-left text-center">
                                 <div className="transformers-content">
-                                    <img src="/img/slide4.jpg" alt="about" />
+                                    <img src={user.imgUrl} alt="about" />
                                 </div>
                             </div>
                             <div className="col-lg-7">
                                 <div className="transformers-content mtr-30">
-                                    <h2>Alex Px.</h2>
+                                    <h2>{user.firstName} {user.lastName} <IoMdSettings size={20} color={'white'} /></h2>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
                                                 Height:
                                             </div>
                                             <div className="transformers-right">
-                                                5.7”
+                                                {user.height || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -43,7 +65,7 @@ export function Profile() {
                                                 Weight:
                                             </div>
                                             <div className="transformers-right">
-                                                1136LB
+                                                {user.weight || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -51,7 +73,7 @@ export function Profile() {
                                                 Eye Color:
                                             </div>
                                             <div className="transformers-right">
-                                                Black
+                                                {user.eyeColor || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -59,7 +81,7 @@ export function Profile() {
                                                 Hair Color:
                                             </div>
                                             <div className="transformers-right">
-                                                Black
+                                                {user.hairColor || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -67,7 +89,7 @@ export function Profile() {
                                                 Birthday:
                                             </div>
                                             <div className="transformers-right">
-                                                1985.Jun.20
+                                                {user.birthday || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -75,7 +97,7 @@ export function Profile() {
                                                 Language:
                                             </div>
                                             <div className="transformers-right">
-                                                English, Russian
+                                            {user.language || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
@@ -83,7 +105,7 @@ export function Profile() {
                                                 Hobby:
                                             </div>
                                             <div className="transformers-right">
-                                                Base Ball, Gaming, Exploring, Baook Reading
+                                            {user.hobbies?.length ? user.hobbies.join(' | ') : "N/A"}
                                             </div>
                                         </li>
                                         <li>
@@ -93,7 +115,7 @@ export function Profile() {
                                             <div className="transformers-right follow-social-media-profile">
                                                 <a href="/"><AiFillTwitterCircle size={20} /></a>
                                                 <a href="/"><AiFillFacebook size={20} /></a>
-                                                <a href="/"><AiFillInstagram size={20}/></a>
+                                                <a href="/"><AiFillInstagram size={20} /></a>
                                                 <a href="/"><AiFillYoutube size={20} /></a>
                                             </div>
                                         </li>
@@ -112,7 +134,7 @@ export function Profile() {
                             <div className="details-content">
                                 <div className="details-overview">
                                     <h2>Overview</h2>
-                                    <p>Humans are at war with the Transformers, and Optimus Prime is gone. The key to saving the future lies buried in the secrets of the past and the hidden history of Transformers on Earth. Now it's up to the unlikely alliance of inventor Cade Yeager, Bumblebee, a n English lord and an Oxford professor to save the world. Transformers: The Last Knight has a deeper mythos and bigger spectacle than its predecessors, yet still ends up being mostly hollow and cacophonous. The first "Transformers" movie that could actually be characterized as badass. Which isn't a bad thing. It may, in fact, be better.</p>
+                                    <p>{user.bio}</p>
                                 </div>
                             </div>
                         </div>
