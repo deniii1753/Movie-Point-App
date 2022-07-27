@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AiFillTwitterCircle, AiFillFacebook, AiFillYoutube, AiFillInstagram } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { IoMdSettings } from 'react-icons/io';
 
@@ -9,6 +9,7 @@ import './Profile.css';
 import UserContext from '../../contexts/UserContext';
 
 import * as userService from '../../services/userService';
+import { ProfileHeader } from './ProfileHeader/ProfileHeader';
 
 export function Profile() {
     const [user, setUser] = useState({});
@@ -27,18 +28,8 @@ export function Profile() {
 
     return (
         <>
-            <section className="breadcrumb-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="breadcrumb-area-content">
-                                <h1>Celebrities Page</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+            <ProfileHeader />
+            
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box">
@@ -50,7 +41,7 @@ export function Profile() {
                             </div>
                             <div className="col-lg-7">
                                 <div className="transformers-content mtr-30">
-                                    <h2>{user.firstName} {user.lastName} <IoMdSettings size={20} color={'white'} /></h2>
+                                    <h2>{user.firstName} {user.lastName} <Link to={"/profile/edit"}><IoMdSettings size={20} color={'white'}/></Link></h2>
                                     <ul>
                                         <li>
                                             <div className="transformers-left">
@@ -97,28 +88,30 @@ export function Profile() {
                                                 Language:
                                             </div>
                                             <div className="transformers-right">
-                                            {user.language || 'N/A'}
+                                                {user.language || 'N/A'}
                                             </div>
                                         </li>
                                         <li>
                                             <div className="transformers-left">
-                                                Hobby:
+                                                Hobbies:
                                             </div>
                                             <div className="transformers-right">
-                                            {user.hobbies?.length ? user.hobbies.join(' | ') : "N/A"}
+                                                {user.hobbies ? user.hobbies : "N/A"}
                                             </div>
                                         </li>
-                                        <li>
-                                            <div className="transformers-left">
-                                                Follow:
-                                            </div>
-                                            <div className="transformers-right follow-social-media-profile">
-                                                <a href="/"><AiFillTwitterCircle size={20} /></a>
-                                                <a href="/"><AiFillFacebook size={20} /></a>
-                                                <a href="/"><AiFillInstagram size={20} /></a>
-                                                <a href="/"><AiFillYoutube size={20} /></a>
-                                            </div>
-                                        </li>
+                                        {user.socials &&
+                                            <li>
+                                                <div className="transformers-left">
+                                                    Follow:
+                                                </div>
+                                                <div className="transformers-right follow-social-media-profile">
+                                                    {user.socials?.twitter && <a href={user.socials?.twitter}><AiFillTwitterCircle size={20} /></a>}
+                                                    {user.socials?.facebook && <a href={user.socials?.facebook}><AiFillFacebook size={20} /></a>}
+                                                    {user.socials?.instagram && <a href={user.socials?.instagram}><AiFillInstagram size={20} /></a>}
+                                                    {user.socials?.youtube && <a href={user.socials?.youtube}><AiFillYoutube size={20} /></a>}
+                                                </div>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </div>
@@ -133,7 +126,7 @@ export function Profile() {
                         <div className="col-lg-9">
                             <div className="details-content">
                                 <div className="details-overview">
-                                    <h2>Overview</h2>
+                                    <h2>Biography</h2>
                                     <p>{user.bio}</p>
                                 </div>
                             </div>

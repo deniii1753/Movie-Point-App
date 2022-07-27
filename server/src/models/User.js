@@ -69,7 +69,7 @@ const userSchema = new Schema({
         type: String
     },
     hobbies: {
-        type: Array
+        type: String
     },
     socials: {
         type: Object
