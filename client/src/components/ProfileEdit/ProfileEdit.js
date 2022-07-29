@@ -75,8 +75,7 @@ export function ProfileEdit() {
     function submitHandler(e) {
         e.preventDefault();
 
-        userService.editUser({
-            _id,
+        userService.editUser(_id, {
             firstName: formData.firstName.value,
             lastName: formData.lastName.value,
             imgUrl: formData.imgUrl.value,

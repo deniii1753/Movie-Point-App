@@ -11,6 +11,7 @@ exports.isAuth = (req, res, next) => {
             }
 
             req.verifiedUserId = decodedData._id;
+            req.verifiedUserRole = decodedData.role;
             next();
         });
     } else {

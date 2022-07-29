@@ -8,7 +8,7 @@ import * as movieService from "../../services/movieService";
 import styles from './MovieDelete.module.css';
 
 
-export function MovieDelete({ closeHandler, creatorId, movieId }) {
+export function MovieDelete({ closeHandler, movieName, movieId }) {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -18,11 +18,9 @@ export function MovieDelete({ closeHandler, creatorId, movieId }) {
     }
 
     function deleteHandler() {
-        if(user?._id !== creatorId) return closeHandler();
-
         movieService.deleteMovie(movieId, user['X-Auth-Token'])
             .then(() => {
-                toast.success('You successfully deleted your movie!');
+                toast.success(`You successfully deleted ${movieName}!`);
                 return navigate('/movies', {replace: true})
             })
             .catch(err => toast.error(err.message));

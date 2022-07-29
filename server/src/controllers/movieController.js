@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
     const skip = req.query?.skip || 0;
     const sort = req.query?.sort;
     const order = req.query?.order;
-    const genres = req.query?.genres ? {genres: req.query.genres} : {};
+    const genres = req.query?.genres ? { genres: req.query.genres } : {};
 
     const sortCriteria = {};
 
@@ -75,7 +75,9 @@ router.put('/:movieId', isAuth, async (req, res, next) => {
         const movie = await movieService.getOne(req.params.movieId);
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
-        if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to edit this movie!' };
+        if (req.verifiedUserRole !== 'admin') {
+            if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to edit this movie!' };
+        }
 
         const updatedMovie = await movieService.updateMovie(movie._id, req.body);
         res.status(200).json(updatedMovie);
@@ -90,12 +92,15 @@ router.delete('/:movieId', isAuth, async (req, res, next) => {
         const movie = await movieService.getOne(req.params.movieId);
 
         if (!movie) throw { status: 404, message: 'Movie not found!' };
-        if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to delete this movie!' };
+
+        if (req.verifiedUserRole !== 'admin') {
+            if (req.verifiedUserId != movie.postCreator) throw { status: 401, message: 'You are not authorized to delete this movie!' };
+        }
 
 
         await Promise.all([
             movieService.deleteMovie(movie._id),
-            userService.deleteMovie(req.verifiedUserId, movie._id)
+            userService.deleteMovie(movie.postCreator, movie._id)
         ]);
         res.status(204).json({});
     } catch (err) {

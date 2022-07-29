@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import UserContext from '../../contexts/UserContext';
 
@@ -12,7 +13,6 @@ import { validateField } from '../../utils/validators/movieValidations';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
-import { toast } from 'react-toastify';
 
 export function MovieEdit() {
     const [genres, setGenres] = useState([]);
@@ -39,8 +39,13 @@ export function MovieEdit() {
             .then(data => setGenres(data));
 
         movieService.getOne(movieId)
-            .then(data => {
-                if(data.postCreator != user._id) return navigate('/');
+            .then(data => { 
+                if(user.role !== 'admin'){
+                    if(user._id !== data.postCreator) {
+                        toast.error('You are not authorized to edit this movie!');
+                        navigate('/');
+                    }
+                }
                 setFormData({
                     title: { value: data.title, error: null },
                     writer: { value: data.writer, error: null },
@@ -55,8 +60,11 @@ export function MovieEdit() {
                     authorImg: { value: data.authorImg, error: null },
                     description: { value: data.description, error: null },
                 })})
-            .catch(() => navigate('/404'));
-    }, [movieId, navigate, user._id]);
+            .catch(err => {
+                toast.error(err.message);
+                navigate('/404');
+            });
+    }, [movieId, navigate, user._id, user.role]);
 
     function submitHandler(e) {
         e.preventDefault();
@@ -69,7 +77,7 @@ export function MovieEdit() {
 
         movieService.editMovie(movieId, updatedData, user['X-Auth-Token'])
             .then(data => {
-                toast.success('You successfully edited your movie!');
+                toast.success(`You successfully edited ${formData.title.value}!`);
                 return navigate(`/movies/${data._id}`)
             })
             .catch(err => toast.error(err.message));

@@ -12,7 +12,8 @@ exports.register = async (user) => {
         email: user.email,
         password: hashedPassword,
         imgUrl: user.imgUrl || defaultProfilePicture,
-        bio: user.bio
+        bio: user.bio,
+        role: 'user'
     });
 
     return newUser.save();

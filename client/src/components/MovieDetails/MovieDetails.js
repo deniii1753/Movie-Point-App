@@ -1,5 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { BsStar, BsStarFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+
 import UserContext from '../../contexts/UserContext';
 
 import styles from './MovieDetails.module.css';
@@ -7,12 +10,10 @@ import styles from './MovieDetails.module.css';
 import * as movieService from '../../services/movieService';
 
 import { DetailsHeader } from './DetailsHeader/DetailsHeader';
-import { Trailer } from "./Trailer/Trailer";
-import { RateButtons } from "./RateButtons/RateButtons";
+import { Trailer } from './Trailer/Trailer';
 
-import { OwnerButtons } from "./OwnerButtons/OwnerButtons";
-import { BsStar, BsStarFill } from "react-icons/bs";
-import { toast } from "react-toastify";
+import MovieButtonsContext from '../../contexts/MovieButtonsContext';
+import { MovieButtons } from './MovieButtons/MovieButtons';
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({
@@ -154,14 +155,13 @@ export function MovieDetails() {
                                 </div>
                             </div>
                         </div>
-                        {user &&
-                            <div className="movie-details-buttons">
-                                {user._id === movie.movie.postCreator
-                                    ? <OwnerButtons movieId={movieId} postCreator={movie.movie.postCreator} />
-                                    : <RateButtons rating={{isLiked: movie.rating.isLiked, isDisliked: movie.rating.isDisliked}} changeRate={changeRate} movieId={movieId} />
-                                }
-                            </div>
-                        }
+                        <MovieButtonsContext.Provider value={{user, movie: movie.movie, rating: movie.rating, changeRate }}>
+                            {user &&
+                                <div className="movie-details-buttons">
+                                    <MovieButtons />
+                                </div>
+                            }
+                        </MovieButtonsContext.Provider>
                         <Trailer trailerUrl={movie.movie.trailer} />
                     </div>
                 </div>

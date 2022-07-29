@@ -77,7 +77,11 @@ const userSchema = new Schema({
     createdMovies: [{
         type: Schema.Types.ObjectId,
         ref: 'movie'
-    }]
+    }],
+    role: {
+        type: String,
+        required: true
+    }
 });
 
 const User = model('user', userSchema);
