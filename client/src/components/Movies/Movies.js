@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BiMoviePlay } from 'react-icons/bi';
 
@@ -31,39 +31,43 @@ const selectStyles = {
 export function Movies() {
     const [genres, setGenres] = useState([]);
     const [movies, setMovies] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams({});
     const [selectedGenre, setSelectedGenre] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        Promise.all([
-            genreService.getAll(),
-            movieService.getMovies(0, MOVIES_PER_REQUEST)
-        ])
-            .then(([genres, movies]) => {
-                setGenres([{label: 'All', value: 'all'}, ...genres]);
-                setMovies(movies);
-            })
-            .catch(err => {
-                toast.error(err.message);
-                navigate('/500');
-            })
-
-    }, [navigate]);
+        genreService.getAll()
+            .then(data => setGenres([{ label: 'All', value: 'all' }, ...data]))
+            .catch(err => toast.error(err.message));
+    }, []);
 
     function genreChangeHandler(genre) {
-        movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre._id)
+        setSearchParams(`?genre=${genre.value}`);
+    }
+
+    useEffect(() => {
+        if(!genres.length) return;
+        const genreValue = searchParams.get('genre');
+        const genre = genres.find(x => x.value === genreValue);
+
+        if (!genreValue || genreValue === 'all') {
+            movieService.getMovies(0, MOVIES_PER_REQUEST)
+                .then(data => {
+                    if(genre) setSelectedGenre(genre);
+                    return setMovies(data);
+                })
+                .catch(err => toast.error(err.message));
+        } else {
+            movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre?._id)
             .then(data => {
                 setMovies(data);
                 setSelectedGenre(genre);
             })
-            .catch(err => {
-                toast.error(err.message);
-                navigate('/500');
-            })
-    }
+            .catch(err => toast.error(err.message));
+        }
+    }, [searchParams, genres]);
 
     function loadNextMovies() {
-        if (movies.length === 0) return;
+        if (movies.length < MOVIES_PER_REQUEST) return;
 
         if (selectedGenre) {
             movieService.getMoviesByGenre(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
@@ -94,6 +98,7 @@ export function Movies() {
                                     <Select
                                         options={genres}
                                         onChange={genreChangeHandler}
+                                        value={selectedGenre}
                                         menuPortalTarget={document.body}
                                         styles={selectStyles}
                                     />
