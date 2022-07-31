@@ -31,6 +31,7 @@ const selectStyles = {
 export function Movies() {
     const [genres, setGenres] = useState([]);
     const [movies, setMovies] = useState([]);
+    const [search, setSearch] = useState('');
     const [searchParams, setSearchParams] = useSearchParams({});
     const [selectedGenre, setSelectedGenre] = useState(null);
 
@@ -45,24 +46,35 @@ export function Movies() {
     }
 
     useEffect(() => {
-        if(!genres.length) return;
+        if (!genres.length) return;
         const genreValue = searchParams.get('genre');
+        const searchValue = searchParams.get('search');
         const genre = genres.find(x => x.value === genreValue);
 
-        if (!genreValue || genreValue === 'all') {
-            movieService.getMovies(0, MOVIES_PER_REQUEST)
+        if (genreValue) {
+            movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre?._id)
                 .then(data => {
-                    if(genre) setSelectedGenre(genre);
+                    setMovies(data);
+                    setSelectedGenre(genre);
+                })
+                .catch(err => toast.error(err.message));
+        } else if (searchValue) {
+            movieService.getMoviesByTitle(0, MOVIES_PER_REQUEST, searchValue)
+                .then(data => {
+                    if (searchValue) {
+                        setSearch(searchValue);
+                        setSelectedGenre(null);
+                    }
                     return setMovies(data);
                 })
                 .catch(err => toast.error(err.message));
         } else {
-            movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre?._id)
-            .then(data => {
-                setMovies(data);
-                setSelectedGenre(genre);
-            })
-            .catch(err => toast.error(err.message));
+            movieService.getMovies(0, MOVIES_PER_REQUEST)
+                .then(data => {
+                    if (genre) setSelectedGenre(genre);
+                    return setMovies(data);
+                })
+                .catch(err => toast.error(err.message));
         }
     }, [searchParams, genres]);
 
@@ -71,12 +83,19 @@ export function Movies() {
 
         if (selectedGenre) {
             movieService.getMoviesByGenre(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
-                .then(data => setMovies(state => [...state, ...data]));
+                .then(data => setMovies(state => [...state, ...data]))
+                .catch(err => toast.error(err.message));
+        } else if (search) {
+            movieService.getMoviesByTitle(movies.length, MOVIES_PER_REQUEST, search)
+                .then(data => setMovies(state => [...state, ...data]))
+                .catch(err => toast.error(err.message));
         } else {
             movieService.getMovies(movies.length, MOVIES_PER_REQUEST)
-                .then(data => setMovies(state => [...state, ...data]));
+                .then(data => setMovies(state => [...state, ...data]))
+                .catch(err => toast.error(err.message));
         }
     }
+
     return (
         <>
             <MoviesHeader />

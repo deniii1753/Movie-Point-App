@@ -1,7 +1,15 @@
 const Movie = require('../models/Movie');
 
-exports.getMovies = (genre, sort, limit, skip) => {
-    return Movie.find(genre)
+exports.getMovies = (search, sort, limit, skip) => {
+    const searchObject = {};
+
+    if(search.key === 'title') {
+        searchObject.title = {$regex: `${search.value}`, $options: 'i'};
+    } else if(search.key === 'genres') {
+        searchObject.genres = search.value;
+    }
+
+    return Movie.find(searchObject)
     .skip(skip)
     .sort({...sort, _id: 1})
     .select('title likes dislikes imgUrl _creationDate description author authorImg _ratingStars')

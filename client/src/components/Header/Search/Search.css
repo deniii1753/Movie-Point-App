@@ -1,0 +1,24 @@
+.header-search-container {
+    display: flex;
+    max-width: 380px;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    margin-left: auto;
+}
+
+.header-search-container button {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding-right: 15px;
+    padding-bottom: 5px;
+}
+
+.header-search-container input {
+    width: auto;
+    background: transparent;
+    color: #fff;
+    border: none;
+    margin: 0;
+    margin-left: 20px;
+}

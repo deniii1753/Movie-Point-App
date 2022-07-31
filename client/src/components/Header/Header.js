@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { GoSearch } from 'react-icons/go';
+import UserContext from '../../contexts/UserContext';
 
 import './Header.css';
 
 import { UserLinks } from './UserLinks';
 import { GuestLinks } from './GuestLinks';
 import { useContext } from 'react';
-import UserContext from '../../contexts/UserContext';
+import { Search } from './Search/Search';
 
 export function Header() {
     const { user } = useContext(UserContext);
@@ -20,10 +20,7 @@ export function Header() {
                         <NavLink to="/"><img src="/img/logo.png" alt="logo" /></NavLink>
                     </div>
                     <div className="header-right mainnav">
-                        <form action="#">
-                            <input type="text" placeholder="Home Alone 2" />
-                            <button><GoSearch size={22} /></button>
-                        </form>
+                        <Search />
                         <ul>
 
                             {user && <li>Welcome {user.username}!</li>}

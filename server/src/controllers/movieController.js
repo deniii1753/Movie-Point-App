@@ -13,14 +13,23 @@ router.get('/', async (req, res, next) => {
     const skip = req.query?.skip || 0;
     const sort = req.query?.sort;
     const order = req.query?.order;
-    const genres = req.query?.genres ? { genres: req.query.genres } : {};
+    const genres = req.query?.genres;
+    const title = req.query?.title;
 
     const sortCriteria = {};
-
     if (sort && order) sortCriteria[sort] = order;
 
+    const search = {};
+    if(genres) {
+        search.key = 'genres';
+        search.value = genres;
+    } else if (title) {
+        search.key = 'title';
+        search.value = title;
+    }
+
     try {
-        const movies = await movieService.getMovies(genres, sortCriteria, limit, skip);
+        const movies = await movieService.getMovies(search, sortCriteria, limit, skip);
 
         res.status(200).json(movies);
     } catch (err) {
