@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom'
+
+import UserContext from '../../contexts/UserContext';
 
 import { Home } from "../Home/Home";
 import { MovieDetails } from "../MovieDetails/MovieDetails";
@@ -8,7 +11,10 @@ import { ServerError } from "../static/ServerError/ServerError";
 import { guestRoutes } from './guestRoutes';
 import { userRoutes } from './userRoutes';
 
-export function Routing({ isAuth }) {
+export function Routing() {
+    const { user } = useContext(UserContext);
+    const isAuth = Boolean(user);
+
     return (
         <Routes>
             <Route path="/" element={<Home />} />
@@ -19,7 +25,7 @@ export function Routing({ isAuth }) {
                 ? userRoutes
                 : guestRoutes
             }
-            
+
             <Route path="/500" element={<ServerError />} />
             <Route path="*" element={<NotFound />} />
         </Routes>

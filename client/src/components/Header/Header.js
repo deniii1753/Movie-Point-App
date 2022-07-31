@@ -5,11 +5,13 @@ import './Header.css';
 
 import { UserLinks } from './UserLinks';
 import { GuestLinks } from './GuestLinks';
+import { useContext } from 'react';
+import UserContext from '../../contexts/UserContext';
 
-export function Header({user}) {
-    
+export function Header() {
+    const { user } = useContext(UserContext);
     const activeClassName = ({ isActive }) => isActive ? 'active' : undefined;
-    
+
     return (
         <header className="header">
             <div className="container">
@@ -20,15 +22,15 @@ export function Header({user}) {
                     <div className="header-right mainnav">
                         <form action="#">
                             <input type="text" placeholder="Home Alone 2" />
-                            <button><GoSearch size={22}/></button>
+                            <button><GoSearch size={22} /></button>
                         </form>
                         <ul>
-            
+
                             {user && <li>Welcome {user.username}!</li>}
                             <li><NavLink to="/" className={activeClassName}>Home</NavLink></li>
                             <li><NavLink to="/movies" className={activeClassName} end>Movies</NavLink></li>
                             {user
-                                ? <UserLinks activeClassName={activeClassName}/>
+                                ? <UserLinks activeClassName={activeClassName} />
                                 : <GuestLinks />
                             }
                         </ul>

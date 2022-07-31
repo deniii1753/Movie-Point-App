@@ -9,35 +9,32 @@ import { Footer } from './components/static/Footer';
 import { Login } from './components/Auth/Login/Login';
 import { Register } from './components/Auth/Register/Register';
 
-import UserContext from './contexts/UserContext';
+import { UserContextProvider } from './contexts/UserContext';
 import UserModalContext from './contexts/UserModalContext';
 import { Routing } from './components/Routing/Routing';
 import { useModal } from './hooks/useModal';
-import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
     const { isModalOpened: isLoginModalOpened, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
     const { isModalOpened: isRegisterModalOpened, openModal: openRegisterModal, closeModal: closeRegisterModal } = useModal();
-    const [user, updateUser] = useLocalStorage('user', null);
 
     return (
-        <UserContext.Provider value={{ user, updateUser }} >
+        <UserContextProvider>
             <div className="App">
                 <UserModalContext.Provider value={[openLoginModal, openRegisterModal]}>
-                    <Header user={user} />
+                    <Header />
                 </UserModalContext.Provider>
 
                 {isLoginModalOpened && <Login closeModalHandler={closeLoginModal} />}
                 {isRegisterModalOpened && <Register closeModalHandler={closeRegisterModal} />}
 
-                <Routing isAuth={user ? true : false} />
+                <Routing />
 
                 <Footer />
 
                 <ToastContainer theme='dark' style={{userSelect: 'none'}}/>
             </div>
-
-        </UserContext.Provider>
+            </UserContextProvider>
     );
 }
 
