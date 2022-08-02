@@ -15,20 +15,23 @@ import { UserContextProvider } from './contexts/UserContext';
 import UserModalContext from './contexts/UserModalContext';
 
 import { useModal } from './hooks/useModal';
+import { AdminPanelHeader } from './components/AdminPanel/Header/AdminPanelHeader';
 
 function App() {
     const { isModalOpened: isLoginModalOpened, openModal: openLoginModal, closeModal: closeLoginModal } = useModal();
     const { isModalOpened: isRegisterModalOpened, openModal: openRegisterModal, closeModal: closeRegisterModal } = useModal();
     const location = useLocation();
-    console.log(location);
+
     return (
         <UserContextProvider>
             <div className="App">
-                {location.pathname !== '/adminPanel' &&
+                {!location.pathname.includes('/adminPanel') 
+                    ?
                     <UserModalContext.Provider value={[openLoginModal, openRegisterModal]}>
                         <Header />
                     </UserModalContext.Provider>
-                }
+                    : <AdminPanelHeader />    
+            }
 
                 {isLoginModalOpened && <Login closeModalHandler={closeLoginModal} />}
                 {isRegisterModalOpened && <Register closeModalHandler={closeRegisterModal} />}

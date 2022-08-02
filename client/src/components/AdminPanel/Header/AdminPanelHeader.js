@@ -1,32 +1,28 @@
-import { GoSearch } from 'react-icons/go';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { BiArrowBack } from 'react-icons/bi';
 
-import styles from './HeaderStyles.module.css';
+import styles from './AdminPanelHeader.module.css';
 
 export function AdminPanelHeader() {
+    const navigate = useNavigate();
+    const className = ({ isActive }) => isActive ? styles.active : undefined;
+
+    function backClickHandler(e) {
+        e.preventDefault();
+        return navigate('/');
+    }
+
     return (
-        <form className={styles["search-form"]}>
-            <h2>
-                <span>Users</span>
-            </h2>
-
-            <div className={styles["search-input-container"]}>
-
-                <input type="text" placeholder="Please, select the search criteria" name="search" />
-                <button className={styles["btn"]}>
-                    <GoSearch size={20} />
-                </button>
-            </div>
-
-            <div className={styles["filter"]}>
-                <span>Search Criteria:</span>
-                <select name="criteria" className={styles["criteria"]} defaultValue="">
-                    <option defaultValue="">Not selected</option>
-                    <option defaultValue="">First Name</option>
-                    <option defaultValue="">Last Name</option>
-                    <option defaultValue="">Email</option>
-                    <option defaultValue="">Phone</option>
-                </select>
-            </div>
-        </form>
+        <div className={styles["header"]}>
+            <a href="/" className={styles["admin-back-button"]} onClick={backClickHandler} title="Back"><BiArrowBack size={25} /></a>
+            <h1 className={styles["header-text"]}>Admin Panel</h1>
+            <nav>
+                <ul className={styles["navigation-ul"]}>
+                    <li><NavLink to="/adminPanel/users" className={className}>Users</NavLink></li>
+                    <li><NavLink to="/adminPanel/movies" className={className}>Movies</NavLink></li>
+                    <li><NavLink to="/adminPanel/genres" className={className}>Genres</NavLink></li>
+                </ul>
+            </nav>
+        </div>
     )
 }

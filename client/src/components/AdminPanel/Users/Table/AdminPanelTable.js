@@ -1,7 +1,7 @@
 import { AiFillEdit, AiFillDelete, AiOutlineArrowUp } from 'react-icons/ai';
 import styles from './AdminPanelTable.module.css';
 
-export function AdminPanelTable() {
+export function AdminPanelUsersTable() {
     return (
         <>
             <div className={styles["table-wrapper"]}>

@@ -1,6 +1,6 @@
-import styles from './AdminPanelPagination.module.css';
+import styles from '../../AdminPanelPagination.module.css';
 
-export function AdminPanelPagination() {
+export function AdminPanelUsersPagination() {
     return (
         <div className={`${styles.pagination} ${styles.position}`}>
             <p className={styles["pages"]}>1 - 1 of 1</p>

@@ -1,0 +1,35 @@
+.header {
+    padding-bottom: 0.5rem;
+}
+
+.admin-back-button {
+    position: absolute;
+    margin: 5px;
+}
+
+.admin-back-button:hover {
+    color: #eb315a;
+}
+
+.header-text {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.navigation-ul {
+    display: flex;
+    justify-content: center;
+}
+
+.navigation-ul li {
+    margin-left: 15px;
+}
+
+.navigation-ul li a:hover {
+    color: #eb315a;
+}
+
+.active {
+    color: #eb315a;
+}

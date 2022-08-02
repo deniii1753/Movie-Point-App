@@ -1,11 +1,13 @@
-import { Route } from "react-router-dom";
-import { AdminPanel } from "../AdminPanel/AdminPanel";
-import { Logout } from "../Auth/Logout/Logout";
+import { Route } from 'react-router-dom';
+import { AdminPanel } from '../AdminPanel/AdminPanel';
+import { Logout } from '../Auth/Logout/Logout';
 
-import { MovieCreate } from "../MovieCreate/MovieCreate";
-import { MovieEdit } from "../MovieEdit/MovieEdit";
-import { Profile } from "../Profile/Profile";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit";
+import { MovieCreate } from '../MovieCreate/MovieCreate';
+import { MovieEdit } from '../MovieEdit/MovieEdit';
+import { Profile } from '../Profile/Profile';
+import { ProfileEdit } from '../ProfileEdit/ProfileEdit';
+import { IsAdmin } from '../static/IsAdmin/IsAdmin';
+import { AdminPanelUsers } from '../AdminPanel/Users/AdminPanelUsers';
 
 export const userRoutes = (
     <>
@@ -14,7 +16,10 @@ export const userRoutes = (
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/edit" element={<ProfileEdit />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/adminPanel" element={<AdminPanel />} />
+        <Route element={<IsAdmin />}>
+            <Route path="/adminPanel" element={<AdminPanel />} />
+            <Route path="/adminPanel/users" element={<AdminPanelUsers />} />
+        </Route>
 
     </>
 )

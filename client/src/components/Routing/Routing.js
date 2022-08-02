@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import UserContext from '../../contexts/UserContext';
 
@@ -27,7 +27,8 @@ export function Routing() {
             }
 
             <Route path="/500" element={<ServerError />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" replace/>} />
         </Routes>
     );
 }
