@@ -13,7 +13,8 @@ exports.register = async (user) => {
         password: hashedPassword,
         imgUrl: user.imgUrl || defaultProfilePicture,
         bio: user.bio,
-        role: 'user'
+        role: 'user',
+        _creationDate: new Date().getTime()
     });
 
     return newUser.save();

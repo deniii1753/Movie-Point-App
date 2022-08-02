@@ -81,6 +81,9 @@ const userSchema = new Schema({
     role: {
         type: String,
         required: true
+    },
+    _creationDate: {
+        type: Number
     }
 });
 

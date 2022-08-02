@@ -23,7 +23,8 @@ router.put('/:userId', isAuth, async (req, res, next) => {
     }
 
     try {
-        if (req.body.hasOwnProperty('role')) throw { status: 401, message: 'You cannot modify your role!' };
+        if (req.body.hasOwnProperty('role')) throw { status: 401, message: 'You cannot modify your role!'};
+        if (req.body.hasOwnProperty('_creationDate')) throw { status: 401, message: 'You cannot modify creation date!'};
         if (req.body.hasOwnProperty('username')) await checkUsernameAvailability(req.body.data.username);
         if (req.body.hasOwnProperty('password')) patchPasswordValidator(req.body.data.password, req.body.data.rePassword);
 
