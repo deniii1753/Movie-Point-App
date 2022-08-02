@@ -19,11 +19,11 @@ export function AdminPanelUsersHeader() {
             <div className={styles["filter"]}>
                 <span>Search Criteria:</span>
                 <select name="criteria" className={styles["criteria"]} defaultValue="">
-                    <option defaultValue="">Not selected</option>
+                    <option defaultValue="">Id</option>
+                    <option defaultValue="">Username</option>
+                    <option defaultValue="">Email</option>
                     <option defaultValue="">First Name</option>
                     <option defaultValue="">Last Name</option>
-                    <option defaultValue="">Email</option>
-                    <option defaultValue="">Phone</option>
                 </select>
             </div>
         </form>

@@ -17,7 +17,7 @@ export function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        userService.getUser(userData['X-Auth-Token'])
+        userService.getUser(userData._id, userData['X-Auth-Token'])
             .then(data => setUser(data))
             .catch(err => {
                 toast.error(err.message);

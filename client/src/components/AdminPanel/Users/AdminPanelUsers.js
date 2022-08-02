@@ -1,5 +1,5 @@
 import { AdminPanelUsersHeader } from './Header/AdminPanelUsersHeader';
-import { AdminPanelUsersTable } from './Table/AdminPanelTable';
+import { AdminPanelUsersTable } from './Table/AdminPanelUsersTable';
 import { AdminPanelUsersPagination } from './Pagination/AdminPanelUsersPagination';
 
 import styles from '../AdminPanel.module.css';

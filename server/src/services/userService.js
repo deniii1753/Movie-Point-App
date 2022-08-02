@@ -1,5 +1,21 @@
 const User = require('../models/User');
 
+exports.getUsers = (search, limit, skip) => {
+    const searchObject = {};
+
+    if(search.key === '_id') {
+        searchObject._id = search.value;
+    } else {
+        search.key ? searchObject[search.key] = {$regex: `${search.value}`, $options: 'i'} : {};
+    }
+
+    return User.find(searchObject)
+    .skip(skip)
+    .select('username firstName lastName email role _creationDate')
+    .limit(limit)
+    
+}
+
 exports.getUser = (userId) => {
     return User.findOne({_id: userId}).select('-password');
 }

@@ -24,5 +24,5 @@ export function AdminPanelHeader() {
                 </ul>
             </nav>
         </div>
-    )
+    );
 }
