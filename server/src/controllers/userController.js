@@ -35,9 +35,12 @@ router.get('/', isAuth, async (req, res, next) => {
     }
 
     try {
-        const users = await userService.getUsers(search, limit, skip);
-
-        res.status(200).json(users);
+        const [users, count] = await Promise.all([
+            userService.getUsers(search, limit, skip),
+            userService.getCount(search)
+        ]);
+        
+        res.status(200).json({count, users});
     } catch (err) {
         next(err);
     }

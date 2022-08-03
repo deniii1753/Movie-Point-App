@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import styles from '../AdminPanel.module.css';
@@ -18,21 +19,42 @@ export function AdminPanelUsers() {
         users: [],
         currentPage: 1
     });
+    const [totalPages, setTotalPages] = useState(0);
+    const [searchParams] = useSearchParams();
 
     const { user } = useContext(UserContext);
 
-
     useEffect(() => {
-        userService.getUsers(0, USERS_PER_PAGE, user['X-Auth-Token'])
-            .then(data => setUsers(state => ({...state, users: data})))
-            .catch(err => toast.error(err.message));
-    }, [user]);
+        const pageNumber = searchParams.get('page') || 1;
 
-    function newPageClickHandler(pageNumber) {
-        userService.getUsers((pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
-            .then(data => setUsers({users: data, currentPage: pageNumber}))
-            .catch(err => toast.error(err.message));
-    }
+        const id = searchParams.get('id');
+        const username = searchParams.get('username');
+        const email = searchParams.get('email');
+        const firstName = searchParams.get('firstName');
+        const lastName = searchParams.get('lastName');
+
+        if (id || username || email || firstName || lastName) {
+            const arr = [{id}, {username}, {email}, {firstName}, {lastName}];
+            
+            const search = arr.find(x => Object.values(x)[0] !== null);
+            const [key, value] = Object.entries(search)[0];
+
+            userService.getUsersBySearch(key, value, (pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
+                .then(data => {
+                    setUsers({ users: data.users, currentPage: pageNumber });
+                    setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
+                })
+                .catch(err => toast.error(err.message));
+        } else {
+            userService.getUsers((pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
+                .then(data => {
+                    setUsers({ users: data.users, currentPage: pageNumber });
+                    setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
+                })
+                .catch(err => toast.error(err.message));
+        }
+
+    }, [searchParams, user]);
 
     return (
         <div className={styles["admin-panel-wrapper"]}>
@@ -45,10 +67,8 @@ export function AdminPanelUsers() {
                     <AdminPanelUsersTable users={users.users} />
 
                     <AdminPanelUsersPagination
-                        loadUsers={newPageClickHandler}
-                        authToken={user['X-Auth-Token']}
-                        usersPerPage={USERS_PER_PAGE}
-                        currentPage={users.currentPage}
+                        totalPages={totalPages}
+                        currentPage={Number(users.currentPage)}
                     />
                 </section>
 

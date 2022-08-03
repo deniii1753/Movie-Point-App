@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useSearchParams } from 'react-router-dom';
 
 import styles from '../../AdminPanelPagination.module.css';
 
-import * as userService from '../../../../services/userService';
 
-export function AdminPanelUsersPagination({ loadUsers, authToken, usersPerPage, currentPage }) {
-    const [totalPages, setTotalPages] = useState(0);
+export function AdminPanelUsersPagination({ totalPages, currentPage }) {
 
-    useEffect(() => {
-        userService.getUsersCount(authToken)
-            .then(data => setTotalPages(Math.ceil(data.totalUsers / usersPerPage)))
-            .catch(err => toast.error(err.message));
-    }, [authToken, usersPerPage]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     function newPageHandler(e) {
         const buttonTitle = e.currentTarget.title.trim();
@@ -30,7 +23,24 @@ export function AdminPanelUsersPagination({ loadUsers, authToken, usersPerPage, 
             newPage = totalPages;
         }
 
-        loadUsers(newPage);
+        let query = `?page=${newPage}`;
+
+        const id = searchParams.get('id');
+        const username = searchParams.get('username');
+        const email = searchParams.get('email');
+        const firstName = searchParams.get('firstName');
+        const lastName = searchParams.get('lastName');
+
+        if (id || username || email || firstName || lastName) {
+            const arr = [{id}, {username}, {email}, {firstName}, {lastName}];
+            
+            const search = arr.find(x => Object.values(x)[0] !== null);
+            const [key, value] = Object.entries(search)[0];
+
+            query += `&${key}=${value}`;
+        }
+
+        setSearchParams(query);
     }
 
     return (

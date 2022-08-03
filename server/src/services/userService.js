@@ -12,8 +12,19 @@ exports.getUsers = (search, limit, skip) => {
     return User.find(searchObject)
     .skip(skip)
     .select('username firstName lastName email role _creationDate')
-    .limit(limit)
-    
+    .limit(limit);
+}
+
+exports.getCount = (search) => {
+    const searchObject = {};
+
+    if(search.key === '_id') {
+        searchObject._id = search.value;
+    } else {
+        search.key ? searchObject[search.key] = {$regex: `${search.value}`, $options: 'i'} : {};
+    }
+
+    return User.find(searchObject).count();
 }
 
 exports.getUser = (userId) => {
