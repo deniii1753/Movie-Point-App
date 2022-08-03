@@ -1,24 +1,8 @@
-import { useEffect, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
-
 import styles from './AdminPanelUsersTable.module.css';
-
-import UserContext from '../../../../contexts/UserContext';
 
 import { AdminPanelUserRow } from './AdminPanelUserRow/AdminPanelUserRow';
 
-import * as userService from '../../../../services/userService';
-
-export function AdminPanelUsersTable() {
-    const [users, setUsers] = useState([]);
-
-    const { user } = useContext(UserContext);
-
-    useEffect(() => {
-        userService.getUsers(0, 8, user['X-Auth-Token'])
-            .then(data => setUsers(data))
-            .catch(err => toast.error(err.message));
-    }, [user]);
+export function AdminPanelUsersTable({users}) {
     return (
         <>
             <div className={styles["table-wrapper"]}>

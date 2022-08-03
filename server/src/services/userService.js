@@ -20,6 +20,10 @@ exports.getUser = (userId) => {
     return User.findOne({_id: userId}).select('-password');
 }
 
+exports.getUsersCount = () => {
+    return User.count()
+}
+
 exports.getUsername = (username) => {
     return User.findOne({ username: { $regex: `${username}$`, $options: 'i' } }).select('username');
 }

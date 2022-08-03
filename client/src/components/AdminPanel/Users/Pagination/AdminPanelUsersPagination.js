@@ -1,11 +1,43 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import styles from '../../AdminPanelPagination.module.css';
 
-export function AdminPanelUsersPagination() {
+import * as userService from '../../../../services/userService';
+
+export function AdminPanelUsersPagination({ loadUsers, authToken, usersPerPage, currentPage }) {
+    const [totalPages, setTotalPages] = useState(0);
+
+    useEffect(() => {
+        userService.getUsersCount(authToken)
+            .then(data => setTotalPages(Math.ceil(data.totalUsers / usersPerPage)))
+            .catch(err => toast.error(err.message));
+    }, [authToken, usersPerPage]);
+
+    function newPageHandler(e) {
+        const buttonTitle = e.currentTarget.title.trim();
+        let newPage = 0;
+
+        if (buttonTitle === 'First Page') {
+            newPage = 1;
+        } else if (buttonTitle === 'Previous Page') {
+            if (currentPage === 1) return;
+            newPage = currentPage - 1;
+        } else if (buttonTitle === 'Next Page') {
+            if (currentPage === totalPages) return;
+            newPage = currentPage + 1;
+        } else if (buttonTitle === 'Last Page') {
+            newPage = totalPages;
+        }
+
+        loadUsers(newPage);
+    }
+
     return (
         <div className={`${styles.pagination} ${styles.position}`}>
-            <p className={styles["pages"]}>1 - 1 of 1</p>
+            <p className={styles["pages"]}>{currentPage} of {totalPages}</p>
             <div className={styles["actions"]}>
-                <button className={styles["btn"]} title="First Page">
+                <button className={styles["btn"]} title="First Page" onClick={newPageHandler}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-left"
                         className={`${styles["svg-inline--fa"]} ${styles["fa-angles-left"]}`} role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                         <path fill="currentColor"
@@ -14,7 +46,7 @@ export function AdminPanelUsersPagination() {
                     </svg>
                 </button>
 
-                <button className={styles["btn"]} title="Previous Page">
+                <button className={styles["btn"]} title="Previous Page" onClick={newPageHandler}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left"
                         className={`${styles["svg-inline--fa"]} ${styles["fa-angle-left"]}`} role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                         <path fill="currentColor"
@@ -22,7 +54,7 @@ export function AdminPanelUsersPagination() {
                         </path>
                     </svg>
                 </button>
-                <button className={styles["btn"]} title="Next Page">
+                <button className={styles["btn"]} title="Next Page" onClick={newPageHandler}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right"
                         className={`${styles["svg-inline--fa"]} ${styles["fa-angle-right"]}`} role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                         <path fill="currentColor"
@@ -31,7 +63,7 @@ export function AdminPanelUsersPagination() {
                     </svg>
                 </button>
 
-                <button className={styles["btn"]} title="Last Page">
+                <button className={styles["btn"]} title="Last Page" onClick={newPageHandler}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-right"
                         className={`${styles["svg-inline--fa"]} ${styles["fa-angle-right"]}`} role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">

@@ -17,19 +17,19 @@ router.get('/', isAuth, async (req, res, next) => {
     const id = req.query?.id;
 
     const search = {};
-    if(firstName) {
+    if (firstName) {
         search.key = 'firstName';
         search.value = firstName;
     } else if (lastName) {
         search.key = 'lastName';
         search.value = lastName;
-    } else if(email) {
+    } else if (email) {
         search.key = 'email';
         search.value = email;
-    } else if(id) {
+    } else if (id) {
         search.key = '_id';
         search.value = id;
-    } else if(username) {
+    } else if (username) {
         search.key = 'username';
         search.value = username;
     }
@@ -43,19 +43,33 @@ router.get('/', isAuth, async (req, res, next) => {
     }
 });
 
-router.get('/:userId', isAuth, async (req, res, next) => {
-    if (req.verifieduserRole !== 'admin') {
-        if (req.verifiedUserId !== req.params.userId) throw { status: 401, message: 'You are not authorized to view this data!' };
+router.get('/count', isAuth, async (req, res, next) => {
+    try {
+        if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'You are not authorized to view this data!' };
+
+        const userCount = await userService.getUsersCount();
+
+        res.status(200).json({totalUsers: userCount});
+    } catch (err) {
+        next(err);
     }
+});
+
+router.get('/:userId', isAuth, async (req, res, next) => {
 
     try {
-        const user = await userService.getUser(req.verifiedUserId);
+        if (req.verifiedUserRole !== 'admin') {
+            if (req.verifiedUserId !== req.params.userId) throw { status: 401, message: 'You are not authorized to view this data!' };
+        }
+
+        const user = await userService.getUser(req.params.userId);
 
         res.status(200).json(user);
     } catch (err) {
         next(err);
     }
 });
+
 
 router.put('/:userId', isAuth, async (req, res, next) => {
     if (req.verifiedUserRole !== 'admin') {
