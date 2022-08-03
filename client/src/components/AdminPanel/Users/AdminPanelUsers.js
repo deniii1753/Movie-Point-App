@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import styles from '../AdminPanel.module.css';
+import AdminPanelUsersUpdateContext from '../../../contexts/AdminPanelUsersUpdateContext';
 
 import UserContext from '../../../contexts/UserContext';
 
@@ -34,8 +35,8 @@ export function AdminPanelUsers() {
         const lastName = searchParams.get('lastName');
 
         if (id || username || email || firstName || lastName) {
-            const arr = [{id}, {username}, {email}, {firstName}, {lastName}];
-            
+            const arr = [{ id }, { username }, { email }, { firstName }, { lastName }];
+
             const search = arr.find(x => Object.values(x)[0] !== null);
             const [key, value] = Object.entries(search)[0];
 
@@ -56,6 +57,10 @@ export function AdminPanelUsers() {
 
     }, [searchParams, user]);
 
+    function editUsers(updatedUser) {
+        setUsers(state => ({ ...state, users: state.users.map(x => x._id === updatedUser._id ? updatedUser : x) }))
+    }
+
     return (
         <div className={styles["admin-panel-wrapper"]}>
 
@@ -64,7 +69,9 @@ export function AdminPanelUsers() {
                 <section className={`${styles.card} ${styles["users-container"]}`}>
                     <AdminPanelUsersHeader />
 
-                    <AdminPanelUsersTable users={users.users} />
+                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers }} >
+                        <AdminPanelUsersTable users={users.users} />
+                    </AdminPanelUsersUpdateContext.Provider>
 
                     <AdminPanelUsersPagination
                         totalPages={totalPages}

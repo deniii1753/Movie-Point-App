@@ -39,8 +39,8 @@ router.get('/', isAuth, async (req, res, next) => {
             userService.getUsers(search, limit, skip),
             userService.getCount(search)
         ]);
-        
-        res.status(200).json({count, users});
+
+        res.status(200).json({ count, users });
     } catch (err) {
         next(err);
     }
@@ -52,7 +52,7 @@ router.get('/count', isAuth, async (req, res, next) => {
 
         const userCount = await userService.getUsersCount();
 
-        res.status(200).json({totalUsers: userCount});
+        res.status(200).json({ totalUsers: userCount });
     } catch (err) {
         next(err);
     }
@@ -78,16 +78,21 @@ router.put('/:userId', isAuth, async (req, res, next) => {
     if (req.verifiedUserRole !== 'admin') {
         if (req.verifiedUserId != req.params.userId) return next({ status: 401, message: 'You are not authorized to change this data!' });
     }
+    if(req.body.password === '') delete req.body.password;
 
     try {
+        const user = await userService.getUser(req.params.userId);
+
         if (req.body.hasOwnProperty('role')) throw { status: 401, message: 'You cannot modify your role!' };
         if (req.body.hasOwnProperty('_creationDate')) throw { status: 401, message: 'You cannot modify creation date!' };
-        if (req.body.hasOwnProperty('username')) await checkUsernameAvailability(req.body.data.username);
-        if (req.body.hasOwnProperty('password')) patchPasswordValidator(req.body.data.password, req.body.data.rePassword);
+        if (req.body.username !== user.username) {
+            if (req.body.hasOwnProperty('username')) await checkUsernameAvailability(req.body.username);
+        }
+        if (req.body.hasOwnProperty('password')) patchPasswordValidator(req.body.password, req.body.rePassword);
 
-        const user = await userService.update(req.params.userId, req.body);
+        const updatedUser = await userService.update(req.params.userId, req.body);
 
-        res.status(200).json(user);
+        res.status(200).json(updatedUser);
     } catch (err) {
         next(err);
     }

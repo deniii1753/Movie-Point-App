@@ -183,8 +183,12 @@
     background-color: #5cb85c;
 }
 
-.admin-btn {
+.make-admin-btn {
     background-color: #2a87a5;
+}
+
+.remove-admin-btn {
+    background-color: rgb(134, 31, 31);
 }
 
 .btn:hover {

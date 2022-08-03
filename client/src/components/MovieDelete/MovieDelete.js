@@ -3,9 +3,10 @@ import { AiOutlineClose, AiFillCloseCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import styles from './MovieDelete.module.css';
+
 import UserContext from "../../contexts/UserContext";
 import * as movieService from "../../services/movieService";
-import styles from './MovieDelete.module.css';
 
 
 export function MovieDelete({ closeHandler, movieName, movieId }) {
@@ -13,7 +14,7 @@ export function MovieDelete({ closeHandler, movieName, movieId }) {
     const navigate = useNavigate();
 
     function clickCloseHandler(e) {
-        if (e.target.className !== styles.modal) return;
+        if (e.target.className !== 'modal') return;
         closeHandler();
     }
 
@@ -26,7 +27,7 @@ export function MovieDelete({ closeHandler, movieName, movieId }) {
             .catch(err => toast.error(err.message));
     }
     return (
-        <div className={styles.modal} onClick={clickCloseHandler}>
+        <div className="modal" onClick={clickCloseHandler}>
             <div className={styles["modal-confirm"]}>
                 <div className={styles["modal-content"]}>
                     <button className={styles["close"]} onClick={closeHandler}><AiFillCloseCircle size={20} /></button>

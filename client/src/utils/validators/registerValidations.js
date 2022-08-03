@@ -20,8 +20,6 @@ export function registerValidation(key, value) {
             return regex.test(value) ? null : 'Email address is not valid!';
         case 'password':
             return value.length < 5 ? 'Password should be at least 5 characters long!' : null;
-        case 'rePassword':
-            return 
         case 'bio':
             if (value.length < 50) return 'Bio should be at least 50 characters long!';
     }

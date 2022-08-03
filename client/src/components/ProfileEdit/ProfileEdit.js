@@ -32,7 +32,7 @@ export function ProfileEdit() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        userService.getUser(user['X-Auth-Token'])
+        userService.getUser(user._id, user['X-Auth-Token'])
             .then(data => {
                 _id = data._id;
                 setFormData(state => ({

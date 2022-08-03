@@ -1,11 +1,50 @@
+import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import UserContext from '../../../../contexts/UserContext';
+
 import styles from './AdminPanelUsersTable.module.css';
 
-import { AdminPanelUserRow } from './AdminPanelUserRow/AdminPanelUserRow';
+import { useModal } from '../../../../hooks/useModal';
 
-export function AdminPanelUsersTable({users}) {
+import { AdminPanelUserRow } from './AdminPanelUserRow/AdminPanelUserRow';
+import { UserEditModal } from '../UserEditModal/UserEditModal';
+import { UserDeleteModal } from '../UserDeleteModal.js/UserDeleteModal';
+import { UserAdminModal } from '../UserAdminModal/UserAdminModal';
+
+import * as userService from '../../../../services/userService';
+
+export function AdminPanelUsersTable({ users }) {
+    const [selectedUser, setSelectedUser] = useState({});
+    const { user } = useContext(UserContext);
+
+    const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
+    const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
+    const { isModalOpened: isAdminOpened, openModal: openAdmin, closeModal: closeAdmin } = useModal();
+
+
+    async function openModal(modalName, userId) {
+        try {
+            const userFromDb = await userService.getUser(userId, user['X-Auth-Token'])
+
+            if (modalName === 'Edit') openEdit();
+            if (modalName === 'Delete') openDelete();
+            if (modalName === 'Make Admin') openAdmin();
+            if (modalName === 'Remove Admin') openAdmin();
+
+            setSelectedUser(userFromDb);
+        } catch (err) {
+            toast.error(err.message);
+        }
+    }
+
     return (
         <>
+                {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />}
+                {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />}
+                {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />}
             <div className={styles["table-wrapper"]}>
+
 
                 <table className={styles["table"]}>
                     <thead>
@@ -22,7 +61,14 @@ export function AdminPanelUsersTable({users}) {
                     </thead>
                     <tbody>
 
-                        {users.map(x => <AdminPanelUserRow key={x._id} user={x}/>)}
+                        {users.map(x =>
+                            <AdminPanelUserRow
+                                key={x._id}
+                                user={x}
+                                openModal={openModal}
+                            />
+                        )}
+
                     </tbody>
                 </table>
             </div>

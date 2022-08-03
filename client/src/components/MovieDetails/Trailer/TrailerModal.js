@@ -3,7 +3,7 @@ import styles from './TrailerModal.module.css';
 export function TrailerModal({ trailerUrl, closeHandler }) {
 
     return (
-        <div className={styles.modal} onClick={closeHandler}>
+        <div className="modal" onClick={closeHandler}>
             <div className={styles["video-resizer"]}>
                 <div className={styles["video-container"]}>
                     <iframe

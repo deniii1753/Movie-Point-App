@@ -23,14 +23,21 @@ export function profileEditValidations(key, value) {
             const regex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
 
             return regex.test(value) ? null : 'Please enter a valid date!';
+        case 'email':
+            const emailRegex = /^(.+)@(.+)$/;
+
+            return emailRegex.test(value) ? null : 'Email address is not valid!';
+        case 'username':
+            if (value.length < 5) return 'Username should be at least 5 characters long!';
+            if (value.length > 15) return 'Username should be maximum 15 characters long!';
+            return null;
+        case 'password':
+            return value.length < 5 ? 'Password should be at least 5 characters long!' : null;
         case 'imgUrl':
             return value.startsWith('http://') || value.startsWith('https://') ? null : 'Please enter a valid link!';
         case 'twitter':
-            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'facebook':
-            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'instagram':
-            return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'youtube':
             return value.startsWith('http://') || value.startsWith('https://') || value === '' ? null : 'Please enter a valid link!';
         case 'bio':
