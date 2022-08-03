@@ -1,0 +1,302 @@
+[{
+  "_id": {
+    "$oid": "62e0073d8b777677b53c7843"
+  },
+  "title": "The Lost City",
+  "writer": "Adam Nee",
+  "director": "Aaron Nee, Adam Nee",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4b"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af50"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af4f"
+    }
+  ],
+  "time": 120,
+  "releaseDate": "25/03/2022",
+  "language": "English, German",
+  "imgUrl": "https://dx35vtwkllhj9.cloudfront.net/paramountpictures/the-lost-city/images/regions/us/onesheet.jpg",
+  "trailer": "https://www.youtube.com/watch?v=nfKO9rYDmE8",
+  "author": "Adam Nee",
+  "authorImg": "https://resizing.flixster.com/m0KESPq7Hq7hRp8lkz3btlY9b24=/218x280/v2/https://flxt.tmsimg.com/assets/499696_v9_bb.jpg",
+  "description": "Reclusive author Loretta Sage writes about exotic places in her popular adventure novels that feature a handsome cover model named Alan. While on tour promoting her new book with Alan, Loretta gets kidnapped by an eccentric billionaire who hopes she can lead him to an ancient city's lost treasure from her latest story. Determined to prove he can be a hero in real life and not just on the pages of her books, Alan sets off to rescue her.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658849085009"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e0084a8b777677b53c7865"
+  },
+  "title": "The Gray Man",
+  "writer": " Pietro Scalia",
+  "director": "Joe Russo, Anthony Russo",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4b"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af4d"
+    }
+  ],
+  "time": 120,
+  "releaseDate": "22/07/2022",
+  "language": "Bulgarian, English",
+  "imgUrl": "https://m.media-amazon.com/images/M/MV5BOWY4MmFiY2QtMzE1YS00NTg1LWIwOTQtYTI4ZGUzNWIxNTVmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UX1000_.jpg",
+  "trailer": "https://www.youtube.com/watch?v=BmllggGO4pM",
+  "author": " Anthony Russo",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BMTc2NjM5MTM0Ml5BMl5BanBnXkFtZTgwMTY3ODczNjM@._V1_.jpg",
+  "description": "When the CIA's most skilled operative-whose true identity is known to none-accidentally uncovers dark agency secrets, a psychopathic former colleague puts a bounty on his head, setting off a global manhunt by international assassins.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658849354393"
+  },
+  "__v": 28
+},{
+  "_id": {
+    "$oid": "62e008f98b777677b53c786f"
+  },
+  "title": "Uncharted",
+  "writer": "Ruben Fleischer",
+  "director": "Anthony Franco",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4b"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af50"
+    }
+  ],
+  "time": 156,
+  "releaseDate": "10/02/2022",
+  "language": "Russian, German, Turkish, Bulgarian",
+  "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCAT4deET55wX0MzpBp45_7201ZndSAI8m2W52rNVeVmEbEgEW",
+  "trailer": "https://www.youtube.com/watch?v=eHp3MbsCbMg",
+  "author": "Ruben Fleischer",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BMTc0NDU5MDc1NF5BMl5BanBnXkFtZTcwMDY0MTM5OA@@._V1_.jpg",
+  "description": "Street-smart Nathan Drake is recruited by seasoned treasure hunter Victor \"Sully\" Sullivan to recover a fortune amassed by Ferdinand Magellan, and lost 500 years ago by the House of Moncada.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658849529122"
+  },
+  "__v": 19
+},{
+  "_id": {
+    "$oid": "62e009c88b777677b53c788c"
+  },
+  "title": "Senior Year",
+  "writer": "Alex Hardcastle",
+  "director": "Jeremy Stein",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4c"
+    }
+  ],
+  "time": 151,
+  "releaseDate": "13/05/2022",
+  "language": "English, Bulgarian",
+  "imgUrl": "https://upload.wikimedia.org/wikipedia/en/2/2f/SeniorYearNetflixTeaser.jpg",
+  "trailer": "https://www.youtube.com/watch?v=HCtDkpe89aY",
+  "author": "Alex Hardcastle",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BNzJlN2E0NTctNDRmYS00NjdkLWJhMjMtZTgxZDg1YjdiMjcxXkEyXkFqcGdeQXVyMzc5OTM1NA@@._V1_.jpg",
+  "description": "A high-school cheerleader falls into a coma before her prom; twenty years later, she awakens and wants to return to high school to reclaim her status and become prom queen.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658849736434"
+  },
+  "__v": 14
+},{
+  "_id": {
+    "$oid": "62e00b9f8b777677b53c7895"
+  },
+  "title": "Inception",
+  "writer": " Christopher Nolan",
+  "director": " Christopher Nolan",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4b"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af50"
+    },
+    {
+      "$oid": "62e00b27dd8357310d93806d"
+    }
+  ],
+  "time": 228,
+  "releaseDate": "13/07/2010",
+  "language": "English, Japanese, French",
+  "imgUrl": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT3VT-Ynisr-nRV7R65rC8iZ4jyJKgLHU7wvROHYTnc1X7zg_4i",
+  "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+  "author": "Christopher Nolan",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BNjE3NDQyOTYyMV5BMl5BanBnXkFtZTcwODcyODU2Mw@@._V1_UY317_CR7,0,214,317_AL_.jpg",
+  "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658850207586"
+  },
+  "__v": 6
+},{
+  "_id": {
+    "$oid": "62e00c4f8b777677b53c789b"
+  },
+  "title": "The Matrix",
+  "writer": " Lana Wachowski",
+  "director": "Lilly Wachowski",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4b"
+    },
+    {
+      "$oid": "62e00b27dd8357310d93806d"
+    }
+  ],
+  "time": 216,
+  "releaseDate": "24/03/1999",
+  "language": "Bulgarian, English, Turkish, Greek",
+  "imgUrl": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg",
+  "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8",
+  "author": " Lana Wachowski",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BMjEzMTc2MDQ5OV5BMl5BanBnXkFtZTcwNjkzNDY0OA@@._V1_UX214_CR0,0,214,317_AL_.jpg",
+  "description": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658850383073"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e00cfb8b777677b53c78b0"
+  },
+  "title": "Don't Breathe",
+  "writer": "Fede Álvarez",
+  "director": "Pedro Luque",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4e"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af4d"
+    }
+  ],
+  "time": 128,
+  "releaseDate": "12/03/2016",
+  "language": "English",
+  "imgUrl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRlK7QC75zRlDY0sMOsewRtUgs96n6RZ-fPcepsHIVJ3-sNweH-",
+  "trailer": "https://www.youtube.com/watch?v=JrEnkFywzC4",
+  "author": "Fede Álvarez",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BOWUwYmVkMmEtZGJkMS00NWE1LWEwYzktN2NlOGM3OWZiM2RkXkEyXkFqcGdeQXVyMjc5NDMyMw@@._V1_.jpg",
+  "description": "Three delinquents break into the house of Norman, a Gulf War veteran who is blind, to steal his money. However, much to their horror, they discover that Norman is not as defenceless as he seems.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [
+    {
+      "$oid": "62dd9d4820755e16cb061fcf"
+    }
+  ],
+  "dislikes": [],
+  "_ratingStars": 5,
+  "_creationDate": {
+    "$numberLong": "1658850555089"
+  },
+  "__v": 50
+},{
+  "_id": {
+    "$oid": "62e00df48b777677b53c78da"
+  },
+  "title": "Along for the Ride",
+  "writer": "Brenda Abbandandolo",
+  "director": "Justin Chan",
+  "genres": [
+    {
+      "$oid": "62e00d70dd8357310d93806e"
+    },
+    {
+      "$oid": "62d7100a48c34d392330af4f"
+    }
+  ],
+  "time": 146,
+  "releaseDate": "12/06/2022",
+  "language": "English",
+  "imgUrl": "https://m.media-amazon.com/images/M/MV5BZTAxNTRjYTQtYjg3ZC00NzI1LWE5YzgtZTIwMGU1NDBkYzBmXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_FMjpg_UX1000_.jpg",
+  "trailer": "https://www.youtube.com/watch?v=A1PTIxYrTVw",
+  "author": "Sofia Alvarez",
+  "authorImg": "https://tisch.nyu.edu/content/dam/tisch/dramatic-writing/AdjunctInstructor/Alverez,%20Sofia%20pic.png.precrop.0,0,401,396.xjpeg.preset.square.jpeg?",
+  "description": "During the summer before college, Auden meets the mysterious Eli, a fellow insomniac. While the seaside town of Colby sleeps, the two embark on nightly quests to help Auden experience the fun, carefree life she never knew she wanted.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658850804314"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e00e858b777677b53c78e2"
+  },
+  "title": "Halloween",
+  "writer": "Tyler Bates",
+  "director": "John Carpenter",
+  "genres": [
+    {
+      "$oid": "62d7100a48c34d392330af4e"
+    }
+  ],
+  "time": 210,
+  "releaseDate": "31/08/2007",
+  "language": "English, Bulgarian",
+  "imgUrl": "https://m.media-amazon.com/images/I/91hVgOfq-DL._SL1500_.jpg",
+  "trailer": "https://www.youtube.com/watch?v=-qKmXIy9Juk",
+  "author": "Rob Zombie",
+  "authorImg": "https://m.media-amazon.com/images/M/MV5BMTU0ODE2ODM5MF5BMl5BanBnXkFtZTYwODUwNTQz._V1_UY1200_CR87,0,630,1200_AL_.jpg",
+  "description": "After spending 17 years in a mental institution, Michael Myers escapes and sets out to find his younger sister. He doesn't spare anyone who tries to interfere with his mission.",
+  "postCreator": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "likes": [],
+  "dislikes": [],
+  "_ratingStars": 0,
+  "_creationDate": {
+    "$numberLong": "1658850949466"
+  },
+  "__v": 6
+}]
