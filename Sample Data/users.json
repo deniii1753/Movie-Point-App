@@ -1,0 +1,166 @@
+[{
+  "_id": {
+    "$oid": "62dd9d4820755e16cb061fcf"
+  },
+  "username": "ivan1",
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
+  "email": "ivan@abv.bg",
+  "password": "$2b$10$V226zQWiCy.wt/8b77i3Iejarm5TS81jIoe8CMxsI3.eJCdGXhnhy",
+  "bio": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "imgUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWVufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+  "hobbies": "Football, baseball",
+  "createdMovies": [],
+  "__v": 0,
+  "birthday": "11/11/1989",
+  "eyeColor": "Blue",
+  "hairColor": "Black",
+  "height": 187,
+  "language": "Bulgarian",
+  "socials": {
+    "twitter": "https://twitter.com/",
+    "facebook": "https://facebook.com/",
+    "instagram": "https://instagram.com/",
+    "youtube": "https://youtube.com/"
+  },
+  "weight": 100,
+  "role": "user",
+  "_creationDate": {
+    "$numberLong": "1658350800000"
+  }
+},{
+  "_id": {
+    "$oid": "62dda0a07ded9a20ea0c6d66"
+  },
+  "username": "admin",
+  "firstName": "Admin",
+  "lastName": "Admin",
+  "email": "admin@abv.bg",
+  "password": "$2b$10$OS6nMRbIRqQgaoJgS3UujuY4dHkPUX/OR3br.tD5M2brXlllmP16a",
+  "bio": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "imgUrl": "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+  "hobbies": "",
+  "createdMovies": [
+    {
+      "$oid": "62e0073d8b777677b53c7843"
+    },
+    {
+      "$oid": "62e0084a8b777677b53c7865"
+    },
+    {
+      "$oid": "62e008f98b777677b53c786f"
+    },
+    {
+      "$oid": "62e009c88b777677b53c788c"
+    },
+    {
+      "$oid": "62e00b9f8b777677b53c7895"
+    },
+    {
+      "$oid": "62e00c4f8b777677b53c789b"
+    },
+    {
+      "$oid": "62e00cfb8b777677b53c78b0"
+    },
+    {
+      "$oid": "62e00df48b777677b53c78da"
+    },
+    {
+      "$oid": "62e00e858b777677b53c78e2"
+    }
+  ],
+  "__v": 0,
+  "role": "admin",
+  "_creationDate": {
+    "$numberLong": "1000000000000"
+  },
+  "socials": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": "",
+    "youtube": ""
+  }
+},{
+  "_id": {
+    "$oid": "62de7a8c61b10b0c4dba689c"
+  },
+  "username": "xSparky",
+  "firstName": "Sparky",
+  "lastName": "Sparky",
+  "email": "xSparky_@outlook.com",
+  "password": "$2b$10$eGXI8SRK6CrxQDD27XmUjeS1QN7xzGjucZtKgtrgAI5EjkCiSa/gq",
+  "bio": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "imgUrl": "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+  "hobbies": "",
+  "createdMovies": [],
+  "__v": 0,
+  "socials": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": "",
+    "youtube": ""
+  },
+  "weight": null,
+  "role": "admin",
+  "_creationDate": {
+    "$numberLong": "1657832400000"
+  }
+},{
+  "_id": {
+    "$oid": "62dfc9d50df9c2972a21f020"
+  },
+  "username": "ivan11",
+  "firstName": "ivan1",
+  "lastName": "ivan",
+  "email": "asdasd@abv.bg",
+  "password": "$2b$10$HVDi0Wzf8PRstWm.FUQyl.qlJ6GVR40GoCvR7BPKbFiKuoQ7CiFny",
+  "bio": "ivan 12313123123123123123123123123123123123123123123123123123123123",
+  "imgUrl": "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+  "hobbies": "",
+  "createdMovies": [],
+  "__v": 0,
+  "role": "user",
+  "_creationDate": {
+    "$numberLong": "1659460629110"
+  }
+},{
+  "_id": {
+    "$oid": "62e3c062b07e6b2f1d988e20"
+  },
+  "username": "test1",
+  "firstName": "test1",
+  "lastName": "test",
+  "email": "ivan@abv.bg",
+  "password": "$2b$10$hQuIvcUHIapACGd7N6cAq.WDgcxbyKVVodtOmG.GT7KWsDOirronC",
+  "bio": "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+  "imgUrl": "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+  "createdMovies": [],
+  "role": "user",
+  "__v": 0,
+  "_creationDate": {
+    "$numberLong": "1651555555555"
+  },
+  "socials": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": "",
+    "youtube": ""
+  }
+},{
+  "_id": {
+    "$oid": "62eaf0fc43222c9644ed9a3b"
+  },
+  "username": "todor",
+  "firstName": "Todor",
+  "lastName": "Ivanov",
+  "email": "todor@abv.bg",
+  "password": "$2b$10$ejVRjWasfMpqVyIJQZ/9n.pC.JbTCT0u0tgGevflUNemS5T36w8Hy",
+  "bio": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "imgUrl": "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
+  "createdMovies": [],
+  "role": "user",
+  "_creationDate": {
+    "$numberLong": "1659564284919"
+  },
+  "__v": 0
+}]

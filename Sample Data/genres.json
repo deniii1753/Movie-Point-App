@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af4b"
+  },
+  "label": "Action",
+  "value": "action"
+},{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af4c"
+  },
+  "label": "Comedy",
+  "value": "comedy"
+},{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af4d"
+  },
+  "label": "Triller",
+  "value": "triller"
+},{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af4e"
+  },
+  "label": "Horror",
+  "value": "horror"
+},{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af4f"
+  },
+  "label": "Romantic",
+  "value": "romantic"
+},{
+  "_id": {
+    "$oid": "62d7100a48c34d392330af50"
+  },
+  "label": "Adventure",
+  "value": "adventure"
+},{
+  "_id": {
+    "$oid": "62e00b27dd8357310d93806d"
+  },
+  "value": "sci-fi",
+  "label": "Sci-Fi"
+},{
+  "_id": {
+    "$oid": "62e00d70dd8357310d93806e"
+  },
+  "label": "Drama",
+  "value": "drama"
+}]
