@@ -31,7 +31,7 @@ export function UserEditModal({ closeHandler, user }) {
         youtube: { value: '', error: null }
     });
     const { user: adminUser } = useContext(UserContext);
-    const { editUsers } = useContext(AdminPanelUsersUpdateContext);
+    const { editUser } = useContext(AdminPanelUsersUpdateContext);
     useEffect(() => {
         setFormData(state => ({
             ...state,
@@ -84,8 +84,8 @@ export function UserEditModal({ closeHandler, user }) {
             },
         }, adminUser["X-Auth-Token"])
             .then(data => {
+                editUser(data);
                 toast.success(`You successfully edit ${formData.username.value}'s profile!`);
-                editUsers(data);
                 closeHandler();
             })
             .catch(err => toast.error(err.message));

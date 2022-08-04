@@ -57,7 +57,7 @@ export function AdminPanelUsers() {
 
     }, [searchParams, user]);
 
-    function editUsers(updatedUser) {
+    function editUser(updatedUser) {
         setUsers(state => ({ ...state, users: state.users.map(x => x._id === updatedUser._id ? updatedUser : x) }))
     }
 
@@ -72,12 +72,12 @@ export function AdminPanelUsers() {
     }
 
     function deleteUser(userId) {
-        if(users.users.length === 1) {
-            if(users.currentPage === 1) return;
-            return setSearchParams(`?page=${users.currentPage-1}`);
+        if (users.users.length === 1) {
+            if (users.currentPage === 1) return;
+            return setSearchParams(`?page=${users.currentPage - 1}`);
         }
-        
-        setUsers(state => ({...state, users: state.users.filter(x => x._id !== userId)}));
+
+        setUsers(state => ({ ...state, users: state.users.filter(x => x._id !== userId) }));
     }
 
     return (
@@ -88,7 +88,7 @@ export function AdminPanelUsers() {
                 <section className={`${styles.card} ${styles["users-container"]}`}>
                     <AdminPanelUsersHeader />
 
-                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers, addNewUser, deleteUser }} >
+                    <AdminPanelUsersUpdateContext.Provider value={{ editUser, addNewUser, deleteUser }} >
                         <AdminPanelUsersTable users={users.users} />
                     </AdminPanelUsersUpdateContext.Provider>
 

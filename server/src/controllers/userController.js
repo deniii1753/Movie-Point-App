@@ -78,12 +78,16 @@ router.put('/:userId', isAuth, async (req, res, next) => {
     if (req.verifiedUserRole !== 'admin') {
         if (req.verifiedUserId != req.params.userId) return next({ status: 401, message: 'You are not authorized to change this data!' });
     }
-    if(req.body.password === '') delete req.body.password;
+    if (req.body.password === '') delete req.body.password;
 
     try {
         const user = await userService.getUser(req.params.userId);
 
-        if (req.body.hasOwnProperty('role')) throw { status: 401, message: 'You cannot modify your role!' };
+        if (req.body.hasOwnProperty('role')) {
+            if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'You cannot modify your role!' };
+            if (req.verifiedUserId === req.params.userId) throw { status: 401, message: 'You cannot change your own role!' };
+        }
+
         if (req.body.hasOwnProperty('_creationDate')) throw { status: 401, message: 'You cannot modify creation date!' };
         if (req.body.username !== user.username) {
             if (req.body.hasOwnProperty('username')) await checkUsernameAvailability(req.body.username);
@@ -100,7 +104,7 @@ router.put('/:userId', isAuth, async (req, res, next) => {
 
 router.delete('/:userId', isAuth, async (req, res, next) => {
     try {
-        if (req.verifiedUserRole !== 'admin') throw {status: 401, message: 'You are not authorized to delete users!'};
+        if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'You are not authorized to delete users!' };
 
         await userService.deleteUser(req.params.userId);
 

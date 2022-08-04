@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { AiFillFileImage, AiFillMail, AiOutlineClose } from 'react-icons/ai';
+import { AiFillFileImage, AiFillMail, AiOutlineClose, AiFillInfoCircle } from 'react-icons/ai';
 import { BiRename } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
@@ -139,7 +139,7 @@ export function UserCreateModal({ closeHandler }) {
                         <div className={`${styles["form-group"]} ${styles["long-line"]}`}>
                             <label htmlFor="bio">Biography</label>
                             <div className={styles["input-wrapper"]}>
-                                <span><AiFillFileImage size={25} /></span>
+                                <span><AiFillInfoCircle size={25} /></span>
                                 <textarea id="bio" name="bio" value={formData.bio.value} onChange={changeHandler} />
                                 {/* <input id="bio" name="bio" type="text" value={formData.bio.value} onChange={changeHandler} /> */}
                             </div>

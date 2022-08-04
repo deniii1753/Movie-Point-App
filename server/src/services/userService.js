@@ -1,34 +1,37 @@
 const User = require('../models/User');
 
+const bcrypt = require('bcrypt');
+const { saltRounds } = require('../../config/settings.json');
+
 exports.getUsers = (search, limit, skip) => {
     const searchObject = {};
 
-    if(search.key === '_id') {
+    if (search.key === '_id') {
         searchObject._id = search.value;
     } else {
-        search.key ? searchObject[search.key] = {$regex: `${search.value}`, $options: 'i'} : {};
+        search.key ? searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' } : {};
     }
 
     return User.find(searchObject)
-    .skip(skip)
-    .select('username firstName lastName email role _creationDate')
-    .limit(limit);
+        .skip(skip)
+        .select('username firstName lastName email role _creationDate')
+        .limit(limit);
 }
 
 exports.getCount = (search) => {
     const searchObject = {};
 
-    if(search.key === '_id') {
+    if (search.key === '_id') {
         searchObject._id = search.value;
     } else {
-        search.key ? searchObject[search.key] = {$regex: `${search.value}`, $options: 'i'} : {};
+        search.key ? searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' } : {};
     }
 
     return User.find(searchObject).count();
 }
 
 exports.getUser = (userId) => {
-    return User.findOne({_id: userId}).select('-password');
+    return User.findOne({ _id: userId }).select('-password');
 }
 
 exports.getUsersCount = () => {
@@ -40,8 +43,8 @@ exports.getUsername = (username) => {
 }
 
 exports.update = async (userId, newData) => {
-    if(newData.hasOwnProperty('password')) {
-        newData.password = await bcrypt.hash(newData.password, saltRounds); 
+    if (newData.hasOwnProperty('password')) {
+        newData.password = await bcrypt.hash(newData.password, saltRounds);
     }
     return User.findByIdAndUpdate(userId, newData, { runValidators: true, new: true }).select('-password');
 }
@@ -55,5 +58,5 @@ exports.deleteMovie = (userId, movieId) => {
 }
 
 exports.deleteUser = (userId) => {
-    return User.deleteOne({_id: userId});
+    return User.deleteOne({ _id: userId });
 }
