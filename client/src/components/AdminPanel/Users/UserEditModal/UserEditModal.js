@@ -8,6 +8,7 @@ import { FaUser } from 'react-icons/fa';
 import UserContext from '../../../../contexts/UserContext';
 import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
 
+import mainStyles from '../../Modals.module.css';
 import styles from '../UserCreateEdit.module.css';
 
 import { profileEditValidations } from '../../../../utils/validators/profileEditValidations';
@@ -91,13 +92,13 @@ export function UserEditModal({ closeHandler, user }) {
     }
 
     return (
-        <div className={styles["overlay"]}>
-            <div className={styles["backdrop"]} onClick={closeHandler} />
-            <div className={styles["modal"]}>
+        <div className={mainStyles["overlay"]}>
+            <div className={mainStyles["backdrop"]} onClick={closeHandler} />
+            <div className={mainStyles["modal"]}>
                 <div className={styles["user-container"]}>
-                    <header className={styles["headers"]}>
+                    <header className={mainStyles["headers"]}>
                         <h2>Edit User</h2>
-                        <button className={styles["btn-close"]} onClick={closeHandler}><AiOutlineClose size={20} /></button>
+                        <button className={mainStyles["btn-close"]} onClick={closeHandler}><AiOutlineClose size={20} /></button>
                     </header>
                     <form>
                         <div className={styles["form-row"]}>
@@ -204,13 +205,13 @@ export function UserEditModal({ closeHandler, user }) {
 
                         <div className={styles["form-actions"]}>
                             <button
-                                className={styles["action-save"]}
+                                className={mainStyles["action-save"]}
                                 onClick={submitHandler}
                                 disabled={Object.values(formData).some(x => x.error)}
                             >
                                 Save
                             </button>
-                            <button className={styles["action-cancel"]} onClick={closeModal}>Cancel</button>
+                            <button className={mainStyles["action-cancel"]} onClick={closeModal}>Cancel</button>
                         </div>
                     </form>
                 </div>

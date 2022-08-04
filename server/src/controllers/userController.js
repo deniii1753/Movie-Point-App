@@ -98,4 +98,16 @@ router.put('/:userId', isAuth, async (req, res, next) => {
     }
 });
 
+router.delete('/:userId', isAuth, async (req, res, next) => {
+    try {
+        if (req.verifiedUserRole !== 'admin') throw {status: 401, message: 'You are not authorized to delete users!'};
+
+        await userService.deleteUser(req.params.userId);
+
+        res.status(204).json({});
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;

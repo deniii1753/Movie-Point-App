@@ -21,7 +21,7 @@ export function AdminPanelUsers() {
         currentPage: 1
     });
     const [totalPages, setTotalPages] = useState(0);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { user } = useContext(UserContext);
 
@@ -62,14 +62,22 @@ export function AdminPanelUsers() {
     }
 
     function addNewUser(newUser) {
-        if(users.users.length < USERS_PER_PAGE) setUsers(state => ({...state, users: [...state.users, newUser]}));
+        if (users.users.length < USERS_PER_PAGE) return setUsers(state => ({ ...state, users: [...state.users, newUser] }));
 
         userService.getUsersCount(user["X-Auth-Token"])
             .then(data => {
                 const pages = Math.ceil(data.totalUsers / USERS_PER_PAGE);
-                console.log(pages);
-                if(pages !== totalPages) setTotalPages(pages);
+                if (pages !== totalPages) setTotalPages(pages);
             });
+    }
+
+    function deleteUser(userId) {
+        if(users.users.length === 1) {
+            if(users.currentPage === 1) return;
+            return setSearchParams(`?page=${users.currentPage-1}`);
+        }
+        
+        setUsers(state => ({...state, users: state.users.filter(x => x._id !== userId)}));
     }
 
     return (
@@ -80,7 +88,7 @@ export function AdminPanelUsers() {
                 <section className={`${styles.card} ${styles["users-container"]}`}>
                     <AdminPanelUsersHeader />
 
-                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers, addNewUser }} >
+                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers, addNewUser, deleteUser }} >
                         <AdminPanelUsersTable users={users.users} />
                     </AdminPanelUsersUpdateContext.Provider>
 

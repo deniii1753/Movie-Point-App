@@ -53,3 +53,7 @@ exports.addMovie = (userId, movieId) => {
 exports.deleteMovie = (userId, movieId) => {
     return User.updateOne({ _id: userId }, { $pull: { createdMovies: movieId } });
 }
+
+exports.deleteUser = (userId) => {
+    return User.deleteOne({_id: userId});
+}

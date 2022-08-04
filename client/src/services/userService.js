@@ -9,3 +9,4 @@ export const getUsersBySearch = (key, value, from = DEFAULT_FROM, to = DEFAULT_T
 export const getUsersCount = (authToken) => requester(`${BASE_URL}/count`, 'GET', null, authToken);
 export const getUser = (userId, authToken) => requester(`${BASE_URL}/${userId}`, 'GET', null, authToken);
 export const editUser = (userId, newData, authToken) => requester(`${BASE_URL}/${userId}`, 'PUT', newData, authToken);
+export const deleteUser = (userId, authToken) => requester(`${BASE_URL}/${userId}`, 'DELETE', null, authToken);
