@@ -42,7 +42,7 @@ export function Register({ closeModalHandler }) {
 
         authService.register(Object.fromEntries(entries))
             .then(data => {
-                updateUser(data);
+                updateUser({_id: data._id, username: data.username, role: data.role, 'X-Auth-Token': data['X-Auth-Token']});
                 toast.success('You successfully registered!');
                 closeModalHandler('register');
             })

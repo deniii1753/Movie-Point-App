@@ -1,21 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { AiOutlineClose, AiFillMail, AiFillFileImage, AiFillFacebook, AiFillInstagram, AiFillTwitterSquare, AiFillYoutube } from 'react-icons/ai';
+import { useContext, useState } from 'react';
+import { AiFillFileImage, AiFillMail, AiOutlineClose } from 'react-icons/ai';
 import { BiRename } from 'react-icons/bi';
-import { RiLockPasswordFill } from 'react-icons/ri';
 import { FaUser } from 'react-icons/fa';
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { toast } from 'react-toastify';
 
-import UserContext from '../../../../contexts/UserContext';
 import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
 
 import styles from '../UserCreateEdit.module.css';
 
-import { profileEditValidations } from '../../../../utils/validators/profileEditValidations';
 import { comparePasswords } from '../../../../utils/validators/comparePasswords';
+import { profileEditValidations } from '../../../../utils/validators/profileEditValidations';
 
-import * as userService from '../../../../services/userService';
+import * as authService from '../../../../services/authService';
 
-export function UserEditModal({ closeHandler, user }) {
+export function UserCreateModal({ closeHandler }) {
     const [formData, setFormData] = useState({
         firstName: { value: '', error: null },
         lastName: { value: '', error: null },
@@ -24,27 +23,10 @@ export function UserEditModal({ closeHandler, user }) {
         imgUrl: { value: '', error: null },
         password: { value: '', error: null },
         rePassword: { value: '', error: null },
-        facebook: { value: '', error: null },
-        instagram: { value: '', error: null },
-        twitter: { value: '', error: null },
-        youtube: { value: '', error: null }
+        bio: { value: '', error: null }
     });
-    const { user: adminUser } = useContext(UserContext);
-    const { editUsers } = useContext(AdminPanelUsersUpdateContext);
-    useEffect(() => {
-        setFormData(state => ({
-            ...state,
-            firstName: { value: user.firstName, error: null },
-            lastName: { value: user.lastName, error: null },
-            username: { value: user.username, error: null },
-            email: { value: user.email, error: null },
-            imgUrl: { value: user.imgUrl, error: null },
-            twitter: { value: user.socials?.twitter || '', error: null },
-            facebook: { value: user.socials?.facebook || '', error: null },
-            instagram: { value: user.socials?.instagram || '', error: null },
-            youtube: { value: user.socials?.youtube || '', error: null }
-        }));
-    }, [user]);
+
+    const { addNewUser } = useContext(AdminPanelUsersUpdateContext)
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -59,44 +41,31 @@ export function UserEditModal({ closeHandler, user }) {
 
     }
 
-    function closeModal(e) {
-        e.preventDefault();
-
-        closeHandler();
-    }
-
     function submitHandler(e) {
         e.preventDefault();
+        const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
 
-        userService.editUser(user._id, {
-            firstName: formData.firstName.value,
-            lastName: formData.lastName.value,
-            imgUrl: formData.imgUrl.value,
-            username: formData.username.value,
-            email: formData.email.value,
-            password: formData.password.value,
-            socials: {
-                twitter: formData.twitter.value,
-                facebook: formData.facebook.value,
-                instagram: formData.instagram.value,
-                youtube: formData.youtube.value,
-            },
-        }, adminUser["X-Auth-Token"])
+        authService.register(Object.fromEntries(entries))
             .then(data => {
-                toast.success(`You successfully edit ${formData.username.value}'s profile!`);
-                editUsers(data);
+                toast.success(`You successfully registered ${data.username}`);
+                addNewUser(data);
                 closeHandler();
             })
             .catch(err => toast.error(err.message));
     }
 
+    function closeModal(e) {
+        e.preventDefault();
+
+        closeHandler();
+    }
     return (
         <div className={styles["overlay"]}>
             <div className={styles["backdrop"]} onClick={closeHandler} />
             <div className={styles["modal"]}>
                 <div className={styles["user-container"]}>
                     <header className={styles["headers"]}>
-                        <h2>Edit User</h2>
+                        <h2>Create User</h2>
                         <button className={styles["btn-close"]} onClick={closeHandler}><AiOutlineClose size={20} /></button>
                     </header>
                     <form>
@@ -167,48 +136,22 @@ export function UserEditModal({ closeHandler, user }) {
                         </div>
 
                         <div className={`${styles["form-group"]} ${styles["long-line"]}`}>
-                            <label htmlFor="facebook">Facebook</label>
+                            <label htmlFor="bio">Biography</label>
                             <div className={styles["input-wrapper"]}>
-                                <span><AiFillFacebook size={25} /></span>
-                                <input id="facebook" name="facebook" type="text" value={formData.facebook.value} onChange={changeHandler} />
+                                <span><AiFillFileImage size={25} /></span>
+                                <textarea id="bio" name="bio" value={formData.bio.value} onChange={changeHandler} />
+                                {/* <input id="bio" name="bio" type="text" value={formData.bio.value} onChange={changeHandler} /> */}
                             </div>
-                            {formData.facebook.error && <p className={styles["form-error"]}>❌{formData.facebook.error}</p>}
-                        </div>
-
-                        <div className={`${styles["form-group"]} ${styles["long-line"]}`}>
-                            <label htmlFor="instagram">Instagram</label>
-                            <div className={styles["input-wrapper"]}>
-                                <span><AiFillInstagram size={25} /></span>
-                                <input id="instagram" name="instagram" type="text" value={formData.instagram.value} onChange={changeHandler} />
-                            </div>
-                            {formData.instagram.error && <p className={styles["form-error"]}>❌{formData.instagram.error}</p>}
-                        </div>
-
-                        <div className={`${styles["form-group"]} ${styles["long-line"]}`}>
-                            <label htmlFor="twitter">Twitter</label>
-                            <div className={styles["input-wrapper"]}>
-                                <span><AiFillTwitterSquare size={25} /></span>
-                                <input id="twitter" name="twitter" type="text" value={formData.twitter.value} onChange={changeHandler} />
-                            </div>
-                            {formData.twitter.error && <p className={styles["form-error"]}>❌{formData.twitter.error}</p>}
-                        </div>
-
-                        <div className={`${styles["form-group"]} ${styles["long-line"]}`}>
-                            <label htmlFor="youtube">YouTube</label>
-                            <div className={styles["input-wrapper"]}>
-                                <span><AiFillYoutube size={25} /></span>
-                                <input id="youtube" name="youtube" type="text" value={formData.youtube.value} onChange={changeHandler} />
-                            </div>
-                            {formData.youtube.error && <p className={styles["form-error"]}>❌{formData.youtube.error}</p>}
+                            {formData.bio.error && <p className={styles["form-error"]}>❌{formData.bio.error}</p>}
                         </div>
 
                         <div className={styles["form-actions"]}>
                             <button
                                 className={styles["action-save"]}
                                 onClick={submitHandler}
-                                disabled={Object.values(formData).some(x => x.error)}
+                                disabled={Object.values(formData).some(x => x.value === '' || x.error)}
                             >
-                                Save
+                                Create
                             </button>
                             <button className={styles["action-cancel"]} onClick={closeModal}>Cancel</button>
                         </div>

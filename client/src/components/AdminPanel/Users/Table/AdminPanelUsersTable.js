@@ -11,6 +11,7 @@ import { AdminPanelUserRow } from './AdminPanelUserRow/AdminPanelUserRow';
 import { UserEditModal } from '../UserEditModal/UserEditModal';
 import { UserDeleteModal } from '../UserDeleteModal.js/UserDeleteModal';
 import { UserAdminModal } from '../UserAdminModal/UserAdminModal';
+import { UserCreateModal } from '../UserCreateModal/UserCreateModal';
 
 import * as userService from '../../../../services/userService';
 
@@ -21,6 +22,8 @@ export function AdminPanelUsersTable({ users }) {
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isAdminOpened, openModal: openAdmin, closeModal: closeAdmin } = useModal();
+    const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
+
 
 
     async function openModal(modalName, userId) {
@@ -43,6 +46,8 @@ export function AdminPanelUsersTable({ users }) {
                 {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />}
                 {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />}
                 {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />}
+                {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />}
+                
             <div className={styles["table-wrapper"]}>
 
 
@@ -73,7 +78,7 @@ export function AdminPanelUsersTable({ users }) {
                 </table>
             </div>
 
-            <button className={`${styles["btn-add"]} ${styles.btn}`}>Add new user</button>
+            <button className={`${styles["btn-add"]} ${styles.btn}`} onClick={openCreate}>Add new user</button>
         </>
     );
 }

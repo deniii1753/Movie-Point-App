@@ -61,6 +61,17 @@ export function AdminPanelUsers() {
         setUsers(state => ({ ...state, users: state.users.map(x => x._id === updatedUser._id ? updatedUser : x) }))
     }
 
+    function addNewUser(newUser) {
+        if(users.users.length < USERS_PER_PAGE) setUsers(state => ({...state, users: [...state.users, newUser]}));
+
+        userService.getUsersCount(user["X-Auth-Token"])
+            .then(data => {
+                const pages = Math.ceil(data.totalUsers / USERS_PER_PAGE);
+                console.log(pages);
+                if(pages !== totalPages) setTotalPages(pages);
+            });
+    }
+
     return (
         <div className={styles["admin-panel-wrapper"]}>
 
@@ -69,7 +80,7 @@ export function AdminPanelUsers() {
                 <section className={`${styles.card} ${styles["users-container"]}`}>
                     <AdminPanelUsersHeader />
 
-                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers }} >
+                    <AdminPanelUsersUpdateContext.Provider value={{ editUsers, addNewUser }} >
                         <AdminPanelUsersTable users={users.users} />
                     </AdminPanelUsersUpdateContext.Provider>
 

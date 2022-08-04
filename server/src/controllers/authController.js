@@ -15,7 +15,16 @@ router.post('/register', async (req, res, next) => {
         const user = await authService.register(req.body);
         const token = await generateAuthToken(user._id, user.role);
 
-        res.status(201).json({ _id: user._id, username: user.username, role: user.role, 'X-Auth-Token': token });
+        res.status(201).json({ 
+            _id: user._id, 
+            username: user.username, 
+            role: user.role, 
+            firstName: user.firstName, 
+            lastName: user.lastName, 
+            email: user.email,
+            _creationDate: user._creationDate,
+            'X-Auth-Token': token
+        });
     } catch (err) {
         next(err);
     }

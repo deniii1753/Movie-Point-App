@@ -71,10 +71,6 @@
     color: #000;
 }
 
-.btn {
-
-}
-
 .btn-close {
     position: absolute;
     right: 0;
@@ -151,6 +147,15 @@
     border-bottom-right-radius: 1.25rem;
 }
 
+.input-wrapper textarea {
+    border: 1px solid #d5dee6;
+    border-left: none;
+    background-color: #f7f7f7;
+    border-top-right-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+
+}
+
 .long-line {
     width: 98%;
     margin-top: 15px;
@@ -167,6 +172,15 @@
     height: 3em;
     margin-right: 20px;
     background:rgb(129, 248, 18);
+}
+
+.action-save:disabled {
+    width: 5em;
+    height: 3em;
+    margin-right: 20px;
+    color: #5f5c5c;
+    cursor: not-allowed;
+    background: rgb(204 204 204);
 }
 
 .action-cancel {
