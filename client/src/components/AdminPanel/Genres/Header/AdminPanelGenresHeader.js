@@ -28,7 +28,8 @@ export function AdminPanelGenresHeader() {
 
             setSearchParams('');
     }
-
+    const shouldShowClear = searchParams.toString() && !searchParams.has('page');
+    console.log(shouldShowClear);
     return (
         <form className={styles["search-form"]}>
             <h2>
@@ -38,7 +39,7 @@ export function AdminPanelGenresHeader() {
             <div className={styles["search-input-container"]}>
 
                 <input type="text" placeholder="Please, select the search criteria" name="search" value={formData.search} onChange={changeHandler} />
-                {searchParams.toString() &&
+                {searchParams.toString() && !searchParams.has('page') &&
                     <button className={`${styles["btn"]} ${styles["close-btn"]}`} onClick={clearSearch}>
                         <AiOutlineClose size={15} />
                     </button>

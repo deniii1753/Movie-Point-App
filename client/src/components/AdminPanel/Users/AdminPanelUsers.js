@@ -13,7 +13,7 @@ import { AdminPanelUsersPagination } from './Pagination/AdminPanelUsersPaginatio
 
 import * as userService from '../../../services/userService';
 
-const USERS_PER_PAGE = 5;
+const USERS_PER_PAGE = 2;
 
 export function AdminPanelUsers() {
     const [users, setUsers] = useState({
