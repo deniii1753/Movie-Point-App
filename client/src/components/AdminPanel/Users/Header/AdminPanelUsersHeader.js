@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 import { GoSearch } from 'react-icons/go';
 import { useSearchParams } from 'react-router-dom';
 import styles from '../../HeaderStyles.module.css';
 
 export function AdminPanelUsersHeader() {
-    // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams();
     const [formData, setFormData] = useState({
         search: '',
@@ -17,8 +17,15 @@ export function AdminPanelUsersHeader() {
     }
 
     function changeHandler(e) {
-        setFormData(state => ({...state, [e.target.name]: e.target.value}));
+        setFormData(state => ({ ...state, [e.target.name]: e.target.value }));
     }
+
+    function clearSearch() {
+        setFormData(state => ({ ...state, search: '' }));
+
+        setSearchParams('');
+    }
+
     return (
         <form className={styles["search-form"]}>
             <h2>
@@ -27,7 +34,12 @@ export function AdminPanelUsersHeader() {
 
             <div className={styles["search-input-container"]}>
 
-                <input type="text" placeholder="Please, select the search criteria" name="search" value={formData.search} onChange={changeHandler}/>
+                <input type="text" placeholder="Please, select the search criteria" name="search" value={formData.search} onChange={changeHandler} />
+                {searchParams.toString() &&
+                    <button className={`${styles["btn"]} ${styles["close-btn"]}`} onClick={clearSearch}>
+                        <AiOutlineClose size={15} />
+                    </button>
+                }
                 <button className={styles["btn"]} onClick={searchClickHandler}>
                     <GoSearch size={20} />
                 </button>

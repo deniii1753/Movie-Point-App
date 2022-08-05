@@ -8,7 +8,6 @@ import styles from '../../HeaderStyles.module.css';
 
 
 export function AdminPanelGenresHeader() {
-    // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams();
     const [formData, setFormData] = useState({
         search: '',
