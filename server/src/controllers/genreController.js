@@ -34,16 +34,6 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.get('/:genreId', async (req, res, next) => {
-    try {
-        const genre = await genreService.getOne(req.params.genreId);
-
-        res.status(200).json(genre);
-    } catch (err) {
-        next(err);
-    }
-});
-
 router.get('/count', async (req, res, next) => {
     try {
         const count = await genreService.getTotalCount();
@@ -54,11 +44,33 @@ router.get('/count', async (req, res, next) => {
     }
 });
 
+router.get('/:genreId', async (req, res, next) => {
+    try {
+        const genre = await genreService.getOne(req.params.genreId);
+
+        res.status(200).json(genre);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.put('/:genreId', isAuth, async (req, res, next) => {
     try {
         if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'Only admins can edit genres!' };
 
         const genre = await genreService.editGenre(req.params.genreId, req.body);
+
+        res.status(200).json(genre);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.post('/', isAuth, async (req, res, next) => {
+    try {
+        if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'Only admins can create new genres!' };
+
+        const genre = await genreService.addGenre(req.body);
 
         res.status(200).json(genre);
     } catch (err) {

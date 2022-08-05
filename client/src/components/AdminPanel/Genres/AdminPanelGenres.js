@@ -51,8 +51,17 @@ export function AdminPanelGenres() {
     }, [searchParams]);
 
     function editGenre(updatedGenre) {
-        console.log(updatedGenre);
         setGenres(state => ({ ...state, genres: state.genres.map(x => x._id === updatedGenre._id ? updatedGenre : x) }))
+    }
+
+    function addNewGenre(newGenre) {
+        if (genres.genres.length < GENRES_PER_PAGE) return setGenres(state => ({ ...state, genres: [...state.genres, newGenre] }));
+
+        genreService.getCount()
+            .then(data => {
+                const pages = Math.ceil(data.totalGenres / GENRES_PER_PAGE);
+                if (pages !== totalPages) setTotalPages(pages);
+            });
     }
 
     return (
@@ -63,7 +72,7 @@ export function AdminPanelGenres() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelGenresHeader />
 
-                    <AdminPanelGenresContext.Provider value={{editGenre}}>
+                    <AdminPanelGenresContext.Provider value={{ editGenre, addNewGenre }}>
                         <AdminPanelGenresTable genres={genres.genres} />
                     </AdminPanelGenresContext.Provider>
 

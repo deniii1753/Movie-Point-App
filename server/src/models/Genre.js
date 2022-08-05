@@ -3,11 +3,11 @@ const {Schema, model} = require('mongoose');
 const genreSchema = new Schema({
     label: {
         type: String,
-        required: true
+        required: [true, 'Label field is required!']
     },
     value: {
         type: String,
-        required: true
+        required: [true, 'Value field is required!']
     }
 });
 

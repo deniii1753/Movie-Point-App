@@ -12,6 +12,7 @@ import { AdminPanelGenresRow } from "./AdminPanelGenresRow/AdminPanelGenresRow";
 import * as genreService from "../../../../services/genreService";
 
 import { GenreEditModal } from "../GenreEditModal/GenreEditModal";
+import { GenreCreateModal } from "../GenreCreateModal/GenreCreateModal";
 
 export function AdminPanelGenresTable({ genres }) {
     const [selectedGenre, setSelectedGenre] = useState({});
@@ -37,7 +38,7 @@ export function AdminPanelGenresTable({ genres }) {
         <>
             {isEditOpened && <GenreEditModal closeHandler={closeEdit} genre={selectedGenre} />}
             {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
-            {/* {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />} */}
+            {isCreateOpened && <GenreCreateModal closeHandler={closeCreate} />}
 
             <div className={styles["table-wrapper"]}>
 

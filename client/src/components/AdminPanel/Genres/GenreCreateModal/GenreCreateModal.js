@@ -1,30 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FaUser } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { useContext, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import styles from '../../Modals.module.css';
 
-import AdminPanelGenresContext from '../../../../contexts/AdminPanelGenreContext';
+import AdminPanelGenresContext from "../../../../contexts/AdminPanelGenreContext";
+import UserContext from "../../../../contexts/UserContext";
 
-import UserContext from '../../../../contexts/UserContext';
+import * as genreService from "../../../../services/genreService";
 
-import * as genreService from '../../../../services/genreService';
-
-export function GenreEditModal({ closeHandler, genre }) {
+export function GenreCreateModal({ closeHandler }) {
     const [formData, setFormData] = useState({
         value: '',
         label: ''
     });
     const { user } = useContext(UserContext);
-    const { editGenre } = useContext(AdminPanelGenresContext);
-
-    useEffect(() => {
-        setFormData({
-            value: genre.value,
-            label: genre.label,
-        });
-    }, [genre]);
+    const { addNewGenre } = useContext(AdminPanelGenresContext);
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -46,10 +38,10 @@ export function GenreEditModal({ closeHandler, genre }) {
     function submitHandler(e) {
         e.preventDefault();
 
-        genreService.editOne(genre._id, formData, user["X-Auth-Token"])
+        genreService.addNew(formData, user["X-Auth-Token"])
             .then(data => {
-                editGenre(data);
-                toast.success(`You successfully updated ${genre.label}!`);
+                addNewGenre(data);
+                toast.success(`You successfully created new genre ${data.label}`);
                 closeHandler();
             })
             .catch(err => toast.error(err.message));
@@ -72,7 +64,6 @@ export function GenreEditModal({ closeHandler, genre }) {
                                     <span><FaUser size={22} /></span>
                                     <input id="value" name="value" type="text" value={formData.value} onChange={changeHandler} />
                                 </div>
-                                {!formData.label && <p className={styles["form-error"]}>❌Label field cannot be empty!</p>}
                             </div>
                             <div className={styles["form-group"]}>
                                 <label htmlFor="label">Label</label>
@@ -80,7 +71,6 @@ export function GenreEditModal({ closeHandler, genre }) {
                                     <span><FaUser size={22} /></span>
                                     <input id="label" name="label" type="text" value={formData.label} onChange={changeHandler} />
                                 </div>
-                                {!formData.value && <p className={styles["form-error"]}>❌Value field cannot be empty!</p>}
                             </div>
                         </div>
 

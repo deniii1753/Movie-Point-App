@@ -37,3 +37,9 @@ exports.getOne = (genreId) => {
 exports.editGenre = (genreId, updatedData) => {
     return Genre.findByIdAndUpdate({_id: genreId}, updatedData, {runValidators: true, new: true});
 }
+
+exports.addGenre = (data) => {
+    const newGenre = new Genre({value: data.value, label: data.label});
+
+    return newGenre.save();
+}
