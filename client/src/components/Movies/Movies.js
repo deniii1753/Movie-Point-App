@@ -37,7 +37,7 @@ export function Movies() {
 
     useEffect(() => {
         genreService.getAll()
-            .then(data => setGenres([{ label: 'All', value: 'all' }, ...data]))
+            .then(data => setGenres([{ label: 'All', value: 'all' }, ...data.genres]))
             .catch(err => toast.error(err.message));
     }, []);
 

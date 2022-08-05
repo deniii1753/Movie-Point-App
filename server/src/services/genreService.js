@@ -1,21 +1,35 @@
 const Genre = require('../models/Genre');
 
-exports.getGenres = () => {
-    // this should return only value and label
-    return Genre.find({});
+exports.getGenres = (search, limit, skip) => {
+    const searchObject = {};
+
+    if (search.key === '_id') {
+        searchObject._id = search.value;
+    } else {
+        search.key ? searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' } : {};
+    }
+
+    return Genre.find(searchObject)
+        .skip(skip)
+        .limit(limit);
 }
 
-                // details endpoint
-// should make detailed ganre which return the array of all movies with specific genre
+exports.getCount = (search) => {
+    const searchObject = {};
 
-// exports.addMovie = (genreIds, movieId) => {
-//     return Genre.updateMany({_id: {$in: genreIds}}, {$push: {movies: movieId}});
-// }
+    if (search.key === '_id') {
+        searchObject._id = search.value;
+    } else {
+        search.key ? searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' } : {};
+    }
 
-// exports.updateMovie = (genreIds, movieId) => {
+    return Genre.count(searchObject);
+}
 
-// }
+exports.getTotalCount = () => {
+    return Genre.count();
+}
 
-// exports.deleteMovie = (genreIds, movieId) => {
-//     return Genre.updateMany({_id: {$in: genreIds}}, {$pull: {movies: movieId}});
-// }
+exports.getOne = (genreId) => {
+    return Genre.findOne({_id: genreId});
+}

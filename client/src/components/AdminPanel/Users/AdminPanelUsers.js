@@ -85,7 +85,7 @@ export function AdminPanelUsers() {
 
             <main className={styles["main"]}>
 
-                <section className={`${styles.card} ${styles["users-container"]}`}>
+                <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelUsersHeader />
 
                     <AdminPanelUsersContext.Provider value={{ editUser, addNewUser, deleteUser }} >

@@ -1,5 +1,7 @@
 import requester from "./requester";
 
-const BASE_URL = 'http://localhost:3030/api/genre';
+const BASE_URL = 'http://localhost:3030/api/genres';
 
-export const getAll = () => requester(BASE_URL, 'GET');
+export const getAll = (from = 0, to = 0) => requester(`${BASE_URL}?skip=${from}&limit=${to}`, 'GET');
+export const getGenresBySearch = (key, value, from, to) => requester(`${BASE_URL}?${key}=${value}&skip=${from}&limit=${to}`, 'GET', null);
+export const getOne = (genreId) => requester(`${BASE_URL}/${genreId}`, 'GET', null);

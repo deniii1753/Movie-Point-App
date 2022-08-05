@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import UserContext from '../../../../contexts/UserContext';
 
-import styles from './AdminPanelUsersTable.module.css';
+import styles from '../../AdminPanelTable.module.css';
 
 import { useModal } from '../../../../hooks/useModal';
 

@@ -25,13 +25,13 @@ function App() {
     return (
         <UserContextProvider>
             <div className="App">
-                {!location.pathname.includes('/adminPanel') 
+                {!location.pathname.includes('/adminPanel')
                     ?
                     <UserModalContext.Provider value={[openLoginModal, openRegisterModal]}>
                         <Header />
                     </UserModalContext.Provider>
-                    : <AdminPanelHeader />    
-            }
+                    : <AdminPanelHeader />
+                }
 
                 {isLoginModalOpened && <Login closeModalHandler={closeLoginModal} />}
                 {isRegisterModalOpened && <Register closeModalHandler={closeRegisterModal} />}
