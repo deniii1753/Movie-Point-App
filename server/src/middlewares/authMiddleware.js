@@ -7,7 +7,7 @@ exports.isAuth = (req, res, next) => {
     if(authToken) {
         jwt.verify(authToken, secret, (err, decodedData) => {
             if(err) {
-                return next({status: 400, message:'You are not authenticated!'});
+                return next({status: 400, message:'Invalid access token!'});
             }
 
             req.verifiedUserId = decodedData._id;

@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import UserContext from "../../../contexts/UserContext";
-import * as genreService from "../../../services/genreService";
 
 import styles from '../AdminPanel.module.css';
 
 import { AdminPanelGenresHeader } from "./Header/AdminPanelGenresHeader";
 import { AdminPanelGenresPagination } from "./Pagination/AdminPanelGenresPagination";
 import { AdminPanelGenresTable } from "./Table/AdminPanelGenresTable";
+
+import * as genreService from "../../../services/genreService";
+import AdminPanelGenresContext from "../../../contexts/AdminPanelGenreContext";
 
 const GENRES_PER_PAGE = 5;
 
@@ -19,8 +20,6 @@ export function AdminPanelGenres() {
     });
     const [totalPages, setTotalPages] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
-
-    const { user } = useContext(UserContext);
 
     useEffect(() => {
         const pageNumber = searchParams.get('page') || 1;
@@ -34,7 +33,7 @@ export function AdminPanelGenres() {
             const search = arr.find(x => Object.values(x)[0] !== null);
             const kvp = Object.entries(search)[0];
 
-            genreService.getGenresBySearch(kvp[0], kvp[1], (pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE, user['X-Auth-Token'])
+            genreService.getGenresBySearch(kvp[0], kvp[1], (pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE)
                 .then(data => {
                     setGenres({ genres: data.genres, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / GENRES_PER_PAGE));
@@ -49,7 +48,12 @@ export function AdminPanelGenres() {
                 .catch(err => toast.error(err.message));
         }
 
-    }, [searchParams, user]);
+    }, [searchParams]);
+
+    function editGenre(updatedGenre) {
+        console.log(updatedGenre);
+        setGenres(state => ({ ...state, genres: state.genres.map(x => x._id === updatedGenre._id ? updatedGenre : x) }))
+    }
 
     return (
         <div className={styles["admin-panel-wrapper"]}>
@@ -59,7 +63,9 @@ export function AdminPanelGenres() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelGenresHeader />
 
-                    <AdminPanelGenresTable genres={genres.genres} />
+                    <AdminPanelGenresContext.Provider value={{editGenre}}>
+                        <AdminPanelGenresTable genres={genres.genres} />
+                    </AdminPanelGenresContext.Provider>
 
                     <AdminPanelGenresPagination
                         totalPages={totalPages}

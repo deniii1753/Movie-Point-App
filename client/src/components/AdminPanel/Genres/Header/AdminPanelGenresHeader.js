@@ -28,8 +28,7 @@ export function AdminPanelGenresHeader() {
 
             setSearchParams('');
     }
-    const shouldShowClear = searchParams.toString() && !searchParams.has('page');
-    console.log(shouldShowClear);
+    
     return (
         <form className={styles["search-form"]}>
             <h2>

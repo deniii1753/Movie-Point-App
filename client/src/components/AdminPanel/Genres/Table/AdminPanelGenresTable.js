@@ -11,7 +11,9 @@ import { AdminPanelGenresRow } from "./AdminPanelGenresRow/AdminPanelGenresRow";
 
 import * as genreService from "../../../../services/genreService";
 
-export function AdminPanelGenresTable({genres}) {
+import { GenreEditModal } from "../GenreEditModal/GenreEditModal";
+
+export function AdminPanelGenresTable({ genres }) {
     const [selectedGenre, setSelectedGenre] = useState({});
 
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
@@ -21,10 +23,10 @@ export function AdminPanelGenresTable({genres}) {
     async function openModal(modalName, genreId) {
         try {
             const genre = await genreService.getOne(genreId);
-
+            
             if (modalName === 'Edit') openEdit();
             if (modalName === 'Delete') openDelete();
-
+            
             setSelectedGenre(genre);
         } catch (err) {
             toast.error(err.message);
@@ -33,9 +35,8 @@ export function AdminPanelGenresTable({genres}) {
 
     return (
         <>
-            {/* {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />} */}
+            {isEditOpened && <GenreEditModal closeHandler={closeEdit} genre={selectedGenre} />}
             {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
-            {/* {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />} */}
             {/* {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />} */}
 
             <div className={styles["table-wrapper"]}>
@@ -51,8 +52,14 @@ export function AdminPanelGenresTable({genres}) {
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        {genres.map(x => <AdminPanelGenresRow key={x._id} genre={x}/>)}
+
+                        {genres.map(x =>
+                            <AdminPanelGenresRow
+                                key={x._id}
+                                genre={x}
+                                openModal={openModal}
+                            />
+                        )}
 
                     </tbody>
                 </table>

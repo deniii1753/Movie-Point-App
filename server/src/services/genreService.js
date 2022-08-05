@@ -33,3 +33,7 @@ exports.getTotalCount = () => {
 exports.getOne = (genreId) => {
     return Genre.findOne({_id: genreId});
 }
+
+exports.editGenre = (genreId, updatedData) => {
+    return Genre.findByIdAndUpdate({_id: genreId}, updatedData, {runValidators: true, new: true});
+}
