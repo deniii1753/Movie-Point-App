@@ -5,7 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 
-import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
+import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
 
 import mainStyles from '../../Modals.module.css';
 import styles from '../UserCreateEdit.module.css';
@@ -27,7 +27,7 @@ export function UserCreateModal({ closeHandler }) {
         bio: { value: '', error: null }
     });
 
-    const { addNewUser } = useContext(AdminPanelUsersUpdateContext)
+    const { addNewUser } = useContext(AdminPanelUsersContext)
 
     function changeHandler(e) {
         const fieldName = e.target.name;

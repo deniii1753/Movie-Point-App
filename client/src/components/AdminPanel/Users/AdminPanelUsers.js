@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import styles from '../AdminPanel.module.css';
-import AdminPanelUsersUpdateContext from '../../../contexts/AdminPanelUsersUpdateContext';
+import AdminPanelUsersContext from '../../../contexts/AdminPanelUsersContext';
 
 import UserContext from '../../../contexts/UserContext';
 
@@ -88,9 +88,9 @@ export function AdminPanelUsers() {
                 <section className={`${styles.card} ${styles["users-container"]}`}>
                     <AdminPanelUsersHeader />
 
-                    <AdminPanelUsersUpdateContext.Provider value={{ editUser, addNewUser, deleteUser }} >
+                    <AdminPanelUsersContext.Provider value={{ editUser, addNewUser, deleteUser }} >
                         <AdminPanelUsersTable users={users.users} />
-                    </AdminPanelUsersUpdateContext.Provider>
+                    </AdminPanelUsersContext.Provider>
 
                     <AdminPanelUsersPagination
                         totalPages={totalPages}

@@ -8,12 +8,12 @@ import styles from './UserAdminModal.module.css';
 import mainStyles from '../../Modals.module.css';
 
 import * as userService from '../../../../services/userService';
-import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
+import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
 import { toast } from 'react-toastify';
 
 export function UserAdminModal({ closeHandler, user }) {
     const { user: adminUser } = useContext(UserContext);
-    const { editUser } = useContext(AdminPanelUsersUpdateContext);
+    const { editUser } = useContext(AdminPanelUsersContext);
 
     function closeModal(e) {
         if (e.target.className === 'modal') return closeHandler();

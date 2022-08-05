@@ -9,7 +9,7 @@ import { useModal } from '../../../../hooks/useModal';
 
 import { AdminPanelUserRow } from './AdminPanelUserRow/AdminPanelUserRow';
 import { UserEditModal } from '../UserEditModal/UserEditModal';
-import { UserDeleteModal } from '../UserDeleteModal.js/UserDeleteModal';
+import { UserDeleteModal } from '../UserDeleteModal/UserDeleteModal';
 import { UserAdminModal } from '../UserAdminModal/UserAdminModal';
 import { UserCreateModal } from '../UserCreateModal/UserCreateModal';
 

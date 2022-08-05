@@ -7,12 +7,12 @@ import styles from './UserDeleteModal.module.css';
 
 import UserContext from '../../../../contexts/UserContext';
 import * as userService from '../../../../services/userService';
-import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
+import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
 
 
 export function UserDeleteModal({ closeHandler, user }) {
     const {user: adminUser} = useContext(UserContext);
-    const {deleteUser} = useContext(AdminPanelUsersUpdateContext);
+    const {deleteUser} = useContext(AdminPanelUsersContext);
 
     function deleteHandler() {
         userService.deleteUser(user._id, adminUser['X-Auth-Token'])

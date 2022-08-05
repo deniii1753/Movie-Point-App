@@ -6,7 +6,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { FaUser } from 'react-icons/fa';
 
 import UserContext from '../../../../contexts/UserContext';
-import AdminPanelUsersUpdateContext from '../../../../contexts/AdminPanelUsersUpdateContext';
+import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
 
 import mainStyles from '../../Modals.module.css';
 import styles from '../UserCreateEdit.module.css';
@@ -31,7 +31,7 @@ export function UserEditModal({ closeHandler, user }) {
         youtube: { value: '', error: null }
     });
     const { user: adminUser } = useContext(UserContext);
-    const { editUser } = useContext(AdminPanelUsersUpdateContext);
+    const { editUser } = useContext(AdminPanelUsersContext);
     useEffect(() => {
         setFormData(state => ({
             ...state,
