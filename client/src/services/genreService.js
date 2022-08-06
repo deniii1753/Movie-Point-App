@@ -8,3 +8,4 @@ export const getOne = (genreId) => requester(`${BASE_URL}/${genreId}`, 'GET', nu
 export const getCount = () => requester(`${BASE_URL}/count`, 'GET', null);
 export const editOne = (genreId, newData, authToken) => requester(`${BASE_URL}/${genreId}`, 'PUT', newData, authToken);
 export const addNew = (genre, authToken) => requester(`${BASE_URL}`, 'POST', genre, authToken);
+export const deleteOne = (genreId, authToken) => requester(`${BASE_URL}/${genreId}`, 'DELETE', null, authToken);

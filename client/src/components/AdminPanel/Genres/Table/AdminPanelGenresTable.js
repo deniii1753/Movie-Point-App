@@ -1,9 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 import styles from '../../AdminPanelTable.module.css';
-
-import UserContext from "../../../../contexts/UserContext";
 
 
 import { useModal } from "../../../../hooks/useModal";
@@ -13,6 +11,7 @@ import * as genreService from "../../../../services/genreService";
 
 import { GenreEditModal } from "../GenreEditModal/GenreEditModal";
 import { GenreCreateModal } from "../GenreCreateModal/GenreCreateModal";
+import { GenreDeleteModal } from "../GenreDeleteModal/GenreDeleteModal";
 
 export function AdminPanelGenresTable({ genres }) {
     const [selectedGenre, setSelectedGenre] = useState({});
@@ -37,8 +36,8 @@ export function AdminPanelGenresTable({ genres }) {
     return (
         <>
             {isEditOpened && <GenreEditModal closeHandler={closeEdit} genre={selectedGenre} />}
-            {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
             {isCreateOpened && <GenreCreateModal closeHandler={closeCreate} />}
+            {isDeleteOpened && <GenreDeleteModal closeHandler={closeDelete} genre={selectedGenre} />}
 
             <div className={styles["table-wrapper"]}>
 

@@ -78,5 +78,17 @@ router.post('/', isAuth, async (req, res, next) => {
     }
 });
 
+router.delete('/:genreId', isAuth, async (req, res, next) => {
+    try {
+        if (req.verifiedUserRole !== 'admin') throw { status: 401, message: 'Only admins can delete genres!' };
+        
+        await genreService.deleteGenre(req.params.genreId);
+
+        res.status(204).json({})
+    } catch (err) {
+        next(err);
+    }
+});
+
 
 module.exports = router;

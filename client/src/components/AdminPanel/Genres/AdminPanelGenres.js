@@ -64,6 +64,15 @@ export function AdminPanelGenres() {
             });
     }
 
+    function deleteGenre(genreId) {
+        if (genres.genres.length === 1) {
+            if (genres.currentPage === 1) return;
+            return setSearchParams(`?page=${genres.currentPage - 1}`);
+        }
+
+        setGenres(state => ({ ...state, genres: state.genres.filter(x => x._id !== genreId) }));
+    }
+
     return (
         <div className={styles["admin-panel-wrapper"]}>
 
@@ -72,7 +81,7 @@ export function AdminPanelGenres() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelGenresHeader />
 
-                    <AdminPanelGenresContext.Provider value={{ editGenre, addNewGenre }}>
+                    <AdminPanelGenresContext.Provider value={{ editGenre, addNewGenre, deleteGenre }}>
                         <AdminPanelGenresTable genres={genres.genres} />
                     </AdminPanelGenresContext.Provider>
 

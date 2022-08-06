@@ -43,3 +43,7 @@ exports.addGenre = (data) => {
 
     return newGenre.save();
 }
+
+exports.deleteGenre = (genreId) => {
+    return Genre.deleteOne({_id: genreId});
+}
