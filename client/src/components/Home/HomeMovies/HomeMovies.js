@@ -17,7 +17,7 @@ export function HomeMovies() {
     useEffect(() => {
         movieService.getRecent()
             .then(data => setFilteredMovies({
-                movies: data,
+                movies: data.movies,
                 filter: 'Recently Added'
             }))
             .catch(err => {
@@ -33,14 +33,14 @@ export function HomeMovies() {
             if (filter === 'Recently Added') {
                 movieService.getRecent()
                     .then(data => setFilteredMovies({
-                        movies: data,
+                        movies: data.movies,
                         filter: 'Recently Added'
                     }))
             } else if (filter === 'Top 5') {
                 movieService.getTopFive()
                     .then(data => {
                         setFilteredMovies({
-                            movies: data,
+                            movies: data.movies,
                             filter: 'Top 5'
                         })
                     });

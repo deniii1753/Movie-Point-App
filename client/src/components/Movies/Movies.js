@@ -8,6 +8,7 @@ import { BiMoviePlay } from 'react-icons/bi';
 
 import './Movies.css';
 import styles from './Movies.module.css';
+import { selectStyles } from './selectStyles';
 
 import { MoviesHeader } from "./MoviesHeader/MoviesHeader";
 import { MovieItem } from '../MovieItem/MovieItem';
@@ -16,17 +17,6 @@ import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 
 const MOVIES_PER_REQUEST = 16;
-
-const selectStyles = {
-    option: (provided) => ({
-        ...provided,
-        color: 'black'
-    }),
-    menu: (provided) => ({
-        ...provided,
-        width: 'max-content'
-    })
-}
 
 export function Movies() {
     const [genres, setGenres] = useState([]);
@@ -51,28 +41,28 @@ export function Movies() {
         const searchValue = searchParams.get('search');
         const genre = genres.find(x => x.value === genreValue);
 
-        if (genreValue) {
-            movieService.getMoviesByGenre(0, MOVIES_PER_REQUEST, genre?._id)
+        if (genreValue && genreValue !== 'all') {
+            movieService.getMoviesBySearch('genres', genre?._id, 0, MOVIES_PER_REQUEST)
                 .then(data => {
-                    setMovies(data);
+                    setMovies(data.movies);
                     setSelectedGenre(genre);
                 })
                 .catch(err => toast.error(err.message));
         } else if (searchValue) {
-            movieService.getMoviesByTitle(0, MOVIES_PER_REQUEST, searchValue)
+            movieService.getMoviesBySearch('title', searchValue, 0, MOVIES_PER_REQUEST)
                 .then(data => {
                     if (searchValue) {
                         setSearch(searchValue);
                         setSelectedGenre(null);
                     }
-                    return setMovies(data);
+                    return setMovies(data.movies);
                 })
                 .catch(err => toast.error(err.message));
         } else {
             movieService.getMovies(0, MOVIES_PER_REQUEST)
                 .then(data => {
                     if (genre) setSelectedGenre(genre);
-                    return setMovies(data);
+                    return setMovies(data.movies);
                 })
                 .catch(err => toast.error(err.message));
         }
@@ -82,16 +72,16 @@ export function Movies() {
         if (movies.length < MOVIES_PER_REQUEST) return;
 
         if (selectedGenre) {
-            movieService.getMoviesByGenre(movies.length, MOVIES_PER_REQUEST, selectedGenre._id)
-                .then(data => setMovies(state => [...state, ...data]))
+            movieService.getMoviesBySearch('genres', selectedGenre._id, movies.length, MOVIES_PER_REQUEST)
+                .then(data => setMovies(state => [...state, ...data.movies]))
                 .catch(err => toast.error(err.message));
         } else if (search) {
-            movieService.getMoviesByTitle(movies.length, MOVIES_PER_REQUEST, search)
-                .then(data => setMovies(state => [...state, ...data]))
+            movieService.getMoviesBySearch('title', search, movies.length, MOVIES_PER_REQUEST)
+                .then(data => setMovies(state => [...state, ...data.movies]))
                 .catch(err => toast.error(err.message));
         } else {
             movieService.getMovies(movies.length, MOVIES_PER_REQUEST)
-                .then(data => setMovies(state => [...state, ...data]))
+                .then(data => setMovies(state => [...state, ...data.movies]))
                 .catch(err => toast.error(err.message));
         }
     }

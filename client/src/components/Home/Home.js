@@ -16,7 +16,7 @@ export function Home() {
 
     useEffect(() => {
         movieService.getTopRated()
-            .then(data => setTopRatedMovie(data[0]))
+            .then(data => setTopRatedMovie(data.movies[0]))
             .catch(err => {
                 toast.error(err.message)
                 navigate('/500');

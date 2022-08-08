@@ -30,8 +30,9 @@ router.get('/', async (req, res, next) => {
 
     try {
         const movies = await movieService.getMovies(search, sortCriteria, limit, skip);
+        const moviesCount = await movieService.getCount(search);
 
-        res.status(200).json(movies);
+        res.status(200).json({count: moviesCount, movies});
     } catch (err) {
         next(err);
     }

@@ -24,8 +24,6 @@ export function AdminPanelUsersTable({ users }) {
     const { isModalOpened: isAdminOpened, openModal: openAdmin, closeModal: closeAdmin } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
-
-
     async function openModal(modalName, userId) {
         try {
             const userFromDb = await userService.getUser(userId, user['X-Auth-Token'])

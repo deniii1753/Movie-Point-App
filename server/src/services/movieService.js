@@ -3,27 +3,38 @@ const Movie = require('../models/Movie');
 exports.getMovies = (search, sort, limit, skip) => {
     const searchObject = {};
 
-    if(search.key === 'title') {
-        searchObject.title = {$regex: `${search.value}`, $options: 'i'};
-    } else if(search.key === 'genres') {
+    if (search.key === 'title') {
+        searchObject.title = { $regex: `${search.value}`, $options: 'i' };
+    } else if (search.key === 'genres') {
         searchObject.genres = search.value;
     }
 
     return Movie.find(searchObject)
-    .skip(skip)
-    .sort({...sort, _id: 1})
-    .select('title likes dislikes imgUrl _creationDate description author authorImg _ratingStars')
-    .limit(limit);
+        .skip(skip)
+        .sort({ ...sort, _id: 1 })
+        .select('title likes dislikes imgUrl _creationDate description author authorImg postCreator _ratingStars')
+        .limit(limit);
 }
+exports.getCount = (search) => {
+    const searchObject = {};
 
-exports.getOne = (movieId, populateGenres, populateGenresDetailed) => {
-    if(populateGenresDetailed) return Movie.findById(movieId).populate('genres');
-    if(populateGenres) return Movie.findById(movieId).populate('genres', '-movies');
-    return Movie.findById(movieId);
+    if (search.key === 'title') {
+        searchObject.title = { $regex: `${search.value}`, $options: 'i' };
+    } else if (search.key === 'genres') {
+        searchObject.genres = search.value;
+    }
+
+    return Movie.find(searchObject).count();
 }
 
 exports.getMoviesCount = () => {
-    return Movie.countDocuments()
+    return Movie.count();
+}
+
+exports.getOne = (movieId, populateGenres, populateGenresDetailed) => {
+    if (populateGenresDetailed) return Movie.findById(movieId).populate('genres');
+    if (populateGenres) return Movie.findById(movieId).populate('genres', '-movies');
+    return Movie.findById(movieId);
 }
 
 exports.addMovie = (movie) => {
@@ -45,16 +56,16 @@ exports.addMovie = (movie) => {
         _ratingStars: 0,
         _creationDate: new Date().getTime()
     });
-    
+
     return newMovie.save();
 }
 
 exports.updateMovie = (movieId, updatedData) => {
-    return Movie.findOneAndUpdate({_id: movieId}, updatedData);
+    return Movie.findOneAndUpdate({ _id: movieId }, updatedData);
 }
 
 exports.deleteMovie = (movieId) => {
-    return Movie.findOneAndDelete({_id: movieId});
+    return Movie.findOneAndDelete({ _id: movieId });
 }
 
 exports.saveMovie = (movie) => {

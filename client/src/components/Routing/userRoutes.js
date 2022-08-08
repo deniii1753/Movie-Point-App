@@ -9,6 +9,7 @@ import { ProfileEdit } from '../ProfileEdit/ProfileEdit';
 import { IsAdmin } from '../static/IsAdmin/IsAdmin';
 import { AdminPanelUsers } from '../AdminPanel/Users/AdminPanelUsers';
 import { AdminPanelGenres } from '../AdminPanel/Genres/AdminPanelGenres';
+import { AdminPanelMovies } from '../AdminPanel/Movies/AdminPanelMovies';
 
 export const userRoutes = (
     <>
@@ -21,6 +22,7 @@ export const userRoutes = (
             <Route path="/adminPanel" element={<AdminPanel />} />
             <Route path="/adminPanel/users" element={<AdminPanelUsers />} />
             <Route path="/adminPanel/genres" element={<AdminPanelGenres />} />
+            <Route path="/adminPanel/movies" element={<AdminPanelMovies />} />
         </Route>
 
     </>

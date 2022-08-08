@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { GoSearch } from 'react-icons/go';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { GoSearch } from "react-icons/go";
+import { useSearchParams } from "react-router-dom";
 
 import styles from '../../HeaderStyles.module.css';
 
-export function AdminPanelUsersHeader() {
+export function AdminPanelMoviesHeader() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [formData, setFormData] = useState({
         search: '',
@@ -26,11 +26,11 @@ export function AdminPanelUsersHeader() {
 
         setSearchParams('');
     }
-
+    
     return (
         <form className={styles["search-form"]}>
             <h2>
-                <span>Users</span>
+                <span>Movies</span>
             </h2>
 
             <div className={styles["search-input-container"]}>
@@ -50,10 +50,9 @@ export function AdminPanelUsersHeader() {
                 <span>Search Criteria:</span>
                 <select name="criteria" className={styles["criteria"]} onChange={changeHandler} value={formData.criteria}>
                     <option value="id">Id</option>
-                    <option value="username">Username</option>
-                    <option value="email">Email</option>
-                    <option value="firstName">First Name</option>
-                    <option value="lastName">Last Name</option>
+                    <option value="title">Title</option>
+                    <option value="author">Author</option>
+                    <option value="movieCreatorId">Movie Creator Id</option>
                 </select>
             </div>
         </form>
