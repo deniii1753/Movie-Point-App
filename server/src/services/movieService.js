@@ -3,10 +3,10 @@ const Movie = require('../models/Movie');
 exports.getMovies = (search, sort, limit, skip) => {
     const searchObject = {};
 
-    if (search.key === 'title') {
-        searchObject.title = { $regex: `${search.value}`, $options: 'i' };
-    } else if (search.key === 'genres') {
-        searchObject.genres = search.value;
+    if (search.key === 'genres' || search.key === 'postCreator') {
+        searchObject[search.key] = search.value;
+    } else if (search.key) {
+        searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' };
     }
 
     return Movie.find(searchObject)
@@ -15,13 +15,14 @@ exports.getMovies = (search, sort, limit, skip) => {
         .select('title likes dislikes imgUrl _creationDate description author authorImg postCreator _ratingStars')
         .limit(limit);
 }
+
 exports.getCount = (search) => {
     const searchObject = {};
 
-    if (search.key === 'title') {
-        searchObject.title = { $regex: `${search.value}`, $options: 'i' };
-    } else if (search.key === 'genres') {
-        searchObject.genres = search.value;
+    if (search.key === 'genres' || search.key === 'postCreator') {
+        searchObject[search.key] = search.value;
+    } else if(search.key) {
+        searchObject[search.key] = { $regex: `${search.value}`, $options: 'i' };
     }
 
     return Movie.find(searchObject).count();

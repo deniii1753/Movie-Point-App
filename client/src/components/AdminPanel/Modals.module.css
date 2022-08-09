@@ -117,7 +117,7 @@
     width: 100%;
 }
 
-.input-wrapper span {
+.input-wrapper > span {
     display: flex;
     align-items: center;
     padding: 6px 12px;

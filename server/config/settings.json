@@ -1,5 +1,5 @@
 {
-    "databaseUrl": "mongodb://localhost:27017/movie-point-app",
+    "databaseUrl": "mongodb+srv://xSparky:xSparky@softuniexam.olxeaai.mongodb.net/movie-point-app?retryWrites=true&w=majority",
     "port": 3030,
     "saltRounds": 10,
     "secret": "g2RuQ6nq$z60UWvh4Dtke@l6"

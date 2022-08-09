@@ -53,6 +53,16 @@ export function AdminPanelMovies() {
 
     }, [searchParams]);
 
+    function addNewMovie(newMovie) {
+        if (movies.movies.length < MOVIES_PER_PAGE) return setMovies(state => ({ ...state, movies: [...state.movies, newMovie] }));
+
+        movieService.getMoviesCount()
+            .then(data => {
+                const pages = Math.ceil(data.moviesCount / MOVIES_PER_PAGE);
+                if (pages !== totalPages) setTotalPages(pages);
+            });
+    }
+
     return (
         <div className={styles["admin-panel-wrapper"]}>
 
@@ -61,7 +71,7 @@ export function AdminPanelMovies() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelMoviesHeader />
 
-                    <AdminPanelMoviesContext.Provider value={null}>
+                    <AdminPanelMoviesContext.Provider value={{addNewMovie}}>
                         <AdminPanelMoviesTable movies={movies.movies} />
                     </AdminPanelMoviesContext.Provider>
 

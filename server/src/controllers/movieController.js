@@ -15,24 +15,32 @@ router.get('/', async (req, res, next) => {
     const order = req.query?.order;
     const genres = req.query?.genres;
     const title = req.query?.title;
+    const author = req.query?.author;
+    const movieCreatorId = req.query?.movieCreatorId;
 
     const sortCriteria = {};
     if (sort && order) sortCriteria[sort] = order;
 
     const search = {};
-    if(genres) {
+    if (genres) {
         search.key = 'genres';
         search.value = genres;
     } else if (title) {
         search.key = 'title';
         search.value = title;
+    } else if (author) {
+        search.key = 'author';
+        search.value = author;
+    } else if (movieCreatorId) {
+        search.key = 'postCreator';
+        search.value = movieCreatorId;
     }
 
     try {
         const movies = await movieService.getMovies(search, sortCriteria, limit, skip);
         const moviesCount = await movieService.getCount(search);
 
-        res.status(200).json({count: moviesCount, movies});
+        res.status(200).json({ count: moviesCount, movies });
     } catch (err) {
         next(err);
     }
@@ -67,9 +75,10 @@ router.get('/:movieId', async (req, res, next) => {
 router.post('/', isAuth, async (req, res, next) => {
     try {
         if (req.body.hasOwnProperty('_ratingStars')) throw { status: 400, message: 'You cannot modify _ratingStars property!' };
+        if(req.body.postCreator !== req.verifiedUserId && req.verifiedUserRole !== 'admin') throw {status: 401, message: 'You are not authorized to set postCreator field!'};
 
         const movie = await movieService.addMovie(req.body);
-        await userService.addMovie(req.verifiedUserId, movie._id);
+        await userService.addMovie(req.body.postCreator, movie._id);
 
         res.status(201).json(movie);
     } catch (err) {

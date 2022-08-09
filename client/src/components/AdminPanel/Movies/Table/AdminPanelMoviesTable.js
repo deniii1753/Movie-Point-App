@@ -1,9 +1,14 @@
 import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import UserContext from '../../../../contexts/UserContext';
 import { useModal } from '../../../../hooks/useModal';
 
 import styles from '../../AdminPanelTable.module.css';
+
 import { AdminPanelMoviesRow } from './AdminPanelMoviesRow/AdminPanelMoviesRow';
+import { MovieCreateModal } from '../MovieCreateModal/MovieCreateModal';
+
+import * as movieService from '../../../../services/movieService';
 
 export function AdminPanelMoviesTable({movies}) {
     const [selectedMovie, setSelectedMovie] = useState({});
@@ -12,27 +17,26 @@ export function AdminPanelMoviesTable({movies}) {
 
     // const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     // const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
-    // const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
+    const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
 
-    // async function openModal(modalName, userId) {
-    //     try {
-    //         const userFromDb = await userService.getUser(userId, user['X-Auth-Token'])
+    async function openModal(modalName, movieId) {
+        try {
+            const movie = await movieService.getOne(movieId)
 
-    //         if (modalName === 'Edit') openEdit();
-    //         if (modalName === 'Delete') openDelete();
+            // if (modalName === 'Edit') openEdit();
+            // if (modalName === 'Delete') openDelete();
 
-    //         setSelectedUser(userFromDb);
-    //     } catch (err) {
-    //         toast.error(err.message);
-    //     }
-    // }
+            setSelectedMovie(movie);
+        } catch (err) {
+            toast.error(err.message);
+        }
+    }
     return (
         <>
-                {/* {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />}
-                {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />}
-                {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />}
-                {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />} */}
+                {/* {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />} */}
+                {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
+                {isCreateOpened && <MovieCreateModal closeHandler={closeCreate} />}
                 
             <div className={styles["table-wrapper"]}>
 
@@ -54,6 +58,7 @@ export function AdminPanelMoviesTable({movies}) {
                             <AdminPanelMoviesRow
                                 key={x._id}
                                 movie={x}
+                                openModal={openModal}
                             />
                         )}
 
@@ -61,7 +66,7 @@ export function AdminPanelMoviesTable({movies}) {
                 </table>
             </div>
 
-            <button className={`${styles["btn-add"]} ${styles.btn}`} >Add new movie</button>
+            <button className={`${styles["btn-add"]} ${styles.btn}`} onClick={openCreate}>Add new movie</button>
         </>
     );
 }
