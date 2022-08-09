@@ -71,13 +71,19 @@ export function AdminPanelUsers() {
             });
     }
 
-    function deleteUser(userId) {
+    function deleteUser() {
         if (users.users.length === 1) {
             if (users.currentPage === 1) return;
             return setSearchParams(`?page=${users.currentPage - 1}`);
         }
+        const pageNumber = searchParams.get('page') || 1;
 
-        setUsers(state => ({ ...state, users: state.users.filter(x => x._id !== userId) }));
+        userService.getUsers((pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
+        .then(data => {
+            setUsers({ users: data.users, currentPage: pageNumber });
+            setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
+        })
+        .catch(err => toast.error(err.message));
     }
 
     return (

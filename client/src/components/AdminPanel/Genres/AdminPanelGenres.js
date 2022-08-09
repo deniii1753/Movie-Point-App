@@ -64,13 +64,19 @@ export function AdminPanelGenres() {
             });
     }
 
-    function deleteGenre(genreId) {
+    function deleteGenre() {
         if (genres.genres.length === 1) {
             if (genres.currentPage === 1) return;
             return setSearchParams(`?page=${genres.currentPage - 1}`);
         }
+        const pageNumber = searchParams.get('page') || 1;
 
-        setGenres(state => ({ ...state, genres: state.genres.filter(x => x._id !== genreId) }));
+        genreService.getAll((pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE)
+        .then(data => {
+            setGenres({ genres: data.genres, currentPage: pageNumber });
+            setTotalPages(Math.ceil(data.count / GENRES_PER_PAGE));
+        })
+        .catch(err => toast.error(err.message));
     }
 
     return (

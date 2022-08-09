@@ -18,7 +18,7 @@ export function GenreDeleteModal({ closeHandler, genre }) {
     function deleteGenreHandler() {
         genreService.deleteOne(genre._id, user["X-Auth-Token"])
             .then(() => {
-                deleteGenre(genre._id);
+                deleteGenre();
                 toast.success(`You successfully deleted ${genre.label}!`);
                 closeHandler();
             })

@@ -17,7 +17,7 @@ export function UserDeleteModal({ closeHandler, user }) {
     function deleteHandler() {
         userService.deleteUser(user._id, adminUser['X-Auth-Token'])
             .then(() => {
-                deleteUser(user._id);
+                deleteUser();
                 toast.success(`You successfully deleted ${user.username}!`)
                 closeHandler();
             })
