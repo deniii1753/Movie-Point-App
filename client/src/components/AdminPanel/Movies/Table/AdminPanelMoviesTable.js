@@ -1,21 +1,19 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
-import UserContext from '../../../../contexts/UserContext';
 import { useModal } from '../../../../hooks/useModal';
 
 import styles from '../../AdminPanelTable.module.css';
 
 import { AdminPanelMoviesRow } from './AdminPanelMoviesRow/AdminPanelMoviesRow';
 import { MovieCreateModal } from '../MovieCreateModal/MovieCreateModal';
+import { MovieEditModal } from '../MovieEditModal/MovieEditModal';
 
 import * as movieService from '../../../../services/movieService';
 
 export function AdminPanelMoviesTable({movies}) {
     const [selectedMovie, setSelectedMovie] = useState({});
 
-    const { user } = useContext(UserContext);
-
-    // const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
+    const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     // const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
@@ -24,7 +22,7 @@ export function AdminPanelMoviesTable({movies}) {
         try {
             const movie = await movieService.getOne(movieId)
 
-            // if (modalName === 'Edit') openEdit();
+            if (modalName === 'Edit') openEdit();
             // if (modalName === 'Delete') openDelete();
 
             setSelectedMovie(movie);
@@ -34,7 +32,7 @@ export function AdminPanelMoviesTable({movies}) {
     }
     return (
         <>
-                {/* {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />} */}
+                {isEditOpened && <MovieEditModal closeHandler={closeEdit} movie={selectedMovie} />}
                 {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
                 {isCreateOpened && <MovieCreateModal closeHandler={closeCreate} />}
                 

@@ -63,6 +63,11 @@ export function AdminPanelMovies() {
             });
     }
 
+    function editMovie(updatedMovie) {
+        console.log(updatedMovie);
+        setMovies(state => ({ ...state, movies: state.movies.map(x => x._id === updatedMovie._id ? updatedMovie : x) }))
+    }
+
     return (
         <div className={styles["admin-panel-wrapper"]}>
 
@@ -71,7 +76,7 @@ export function AdminPanelMovies() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelMoviesHeader />
 
-                    <AdminPanelMoviesContext.Provider value={{addNewMovie}}>
+                    <AdminPanelMoviesContext.Provider value={{addNewMovie, editMovie}}>
                         <AdminPanelMoviesTable movies={movies.movies} />
                     </AdminPanelMoviesContext.Provider>
 

@@ -7,7 +7,7 @@ import { OwnerButtons } from "./OwnerButtons/OwnerButtons";
 export function MovieButtons() {
     const {user, movie} = useContext(MovieButtonsContext);
     let buttons;
-    console.log(movie);
+    
     if (user) {
         if (user?.role !== 'admin') {
             if (user._id === movie.postCreator) {

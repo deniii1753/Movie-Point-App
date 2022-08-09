@@ -21,26 +21,26 @@ import { selectStyles } from "../utils/selectStyles";
 import * as genreService from "../../../../services/genreService";
 import * as movieService from "../../../../services/movieService";
 
-export function MovieCreateModal({ closeHandler }) {
+export function MovieEditModal({ closeHandler, movie }) {
 
     const [formData, setFormData] = useState({
-        title: { value: '', error: null },
-        writer: { value: '', error: null },
-        director: { value: '', error: null },
-        time: { value: '', error: null },
-        genres: { value: [], error: null },
-        imgUrl: { value: '', error: null },
-        releaseDate: { value: '', error: null },
-        language: { value: '', error: null },
-        author: { value: '', error: null },
-        authorImg: { value: '', error: null },
-        trailer: { value: '', error: null },
-        description: { value: '', error: null },
-        postCreator: { value: '', error: null, focused: true }
+        title: { value: movie.title, error: null },
+        writer: { value: movie.writer, error: null },
+        director: { value: movie.director, error: null },
+        time: { value: movie.time, error: null },
+        genres: { value: movie.genres, error: null },
+        imgUrl: { value: movie.imgUrl, error: null },
+        releaseDate: { value: movie.releaseDate, error: null },
+        language: { value: movie.language, error: null },
+        author: { value: movie.author, error: null },
+        authorImg: { value: movie.authorImg, error: null },
+        trailer: { value: movie.trailer, error: null },
+        description: { value: movie.description, error: null },
+        postCreator: { value: movie.postCreator, error: null, focused: false }
     });
     const [genres, setGenres] = useState([]);
     const { user } = useContext(UserContext);
-    const { addNewMovie } = useContext(AdminPanelMoviesContext);
+    const { editMovie } = useContext(AdminPanelMoviesContext);
     useEffect(() => {
         genreService.getAll()
             .then(data => setGenres(data.genres))
@@ -69,10 +69,11 @@ export function MovieCreateModal({ closeHandler }) {
     function submitHandler(e) {
         e.preventDefault();
         const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
-        movieService.addMovie(Object.fromEntries(entries), user['X-Auth-Token'])
+
+        movieService.editMovie(movie._id, Object.fromEntries(entries), user['X-Auth-Token'])
             .then(data => {
-                addNewMovie(data);
-                toast.success(`You successfully created ${data.title} movie!`);
+                editMovie(data);
+                toast.success(`You successfully edited ${data.title} movie!`);
                 closeHandler();
             })
             .catch(err => toast.error(err.message));
@@ -256,7 +257,7 @@ export function MovieCreateModal({ closeHandler }) {
                                 onClick={submitHandler}
                                 disabled={Object.values(formData).some(x => x.error || x.value.length === 0 || x.focused)}
                             >
-                                Create
+                                Edit
                             </button>
                             <button className={styles["action-cancel"]} onClick={closeModal}>Cancel</button>
                         </div>

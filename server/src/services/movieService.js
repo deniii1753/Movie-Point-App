@@ -62,7 +62,7 @@ exports.addMovie = (movie) => {
 }
 
 exports.updateMovie = (movieId, updatedData) => {
-    return Movie.findOneAndUpdate({ _id: movieId }, updatedData);
+    return Movie.findOneAndUpdate({ _id: movieId }, updatedData, {new: true});
 }
 
 exports.deleteMovie = (movieId) => {
