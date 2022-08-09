@@ -9,12 +9,13 @@ import { MovieCreateModal } from '../MovieCreateModal/MovieCreateModal';
 import { MovieEditModal } from '../MovieEditModal/MovieEditModal';
 
 import * as movieService from '../../../../services/movieService';
+import { MovieDeleteModal } from '../MovieDeleteModal/MovieDeleteModal';
 
 export function AdminPanelMoviesTable({movies}) {
     const [selectedMovie, setSelectedMovie] = useState({});
 
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
-    // const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
+    const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
 
@@ -23,7 +24,7 @@ export function AdminPanelMoviesTable({movies}) {
             const movie = await movieService.getOne(movieId)
 
             if (modalName === 'Edit') openEdit();
-            // if (modalName === 'Delete') openDelete();
+            if (modalName === 'Delete') openDelete();
 
             setSelectedMovie(movie);
         } catch (err) {
@@ -33,7 +34,7 @@ export function AdminPanelMoviesTable({movies}) {
     return (
         <>
                 {isEditOpened && <MovieEditModal closeHandler={closeEdit} movie={selectedMovie} />}
-                {/* {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />} */}
+                {isDeleteOpened && <MovieDeleteModal closeHandler={closeDelete} movie={selectedMovie} />}
                 {isCreateOpened && <MovieCreateModal closeHandler={closeCreate} />}
                 
             <div className={styles["table-wrapper"]}>

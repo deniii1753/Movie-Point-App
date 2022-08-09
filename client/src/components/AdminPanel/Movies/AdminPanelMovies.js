@@ -64,8 +64,22 @@ export function AdminPanelMovies() {
     }
 
     function editMovie(updatedMovie) {
-        console.log(updatedMovie);
         setMovies(state => ({ ...state, movies: state.movies.map(x => x._id === updatedMovie._id ? updatedMovie : x) }))
+    }
+
+    function deleteMovie() {
+        if (movies.movies.length === 1) {
+            if (movies.currentPage === 1) return;
+            return setSearchParams(`?page=${movies.currentPage - 1}`);
+        }
+        const pageNumber = searchParams.get('page') || 1;
+
+        movieService.getMovies((pageNumber - 1) * MOVIES_PER_PAGE, MOVIES_PER_PAGE)
+        .then(data => {
+            setMovies({ movies: data.movies, currentPage: pageNumber });
+            setTotalPages(Math.ceil(data.count / MOVIES_PER_PAGE));
+        })
+        .catch(err => toast.error(err.message));
     }
 
     return (
@@ -76,7 +90,7 @@ export function AdminPanelMovies() {
                 <section className={`${styles.card} ${styles["main-container"]}`}>
                     <AdminPanelMoviesHeader />
 
-                    <AdminPanelMoviesContext.Provider value={{addNewMovie, editMovie}}>
+                    <AdminPanelMoviesContext.Provider value={{addNewMovie, editMovie, deleteMovie}}>
                         <AdminPanelMoviesTable movies={movies.movies} />
                     </AdminPanelMoviesContext.Provider>
 

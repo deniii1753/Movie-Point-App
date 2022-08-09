@@ -17,7 +17,7 @@ export function AdminPanelMoviesRow({ movie, openModal }) {
 
             <td className={styles["actions"]}>
                 <button className={`${styles["btn"]} ${styles["edit-btn"]}`} title="Edit" onClick={openModal.bind(null, 'Edit', movie._id)}><AiFillEdit size={20} /></button>
-                <button className={`${styles["btn"]} ${styles["delete-btn"]}`} title="Delete" ><AiFillDelete size={20} /></button>
+                <button className={`${styles["btn"]} ${styles["delete-btn"]}`} title="Delete" onClick={openModal.bind(null, 'Delete', movie._id)}><AiFillDelete size={20} /></button>
             </td>
         </tr>
     );
