@@ -1,4 +1,4 @@
-import { TosHeader } from "./Header/TosHeader";
+import { TosHeader } from "./TosHeader/TosHeader";
 
 export function TermsOfService() {
     return (
