@@ -8,6 +8,7 @@ import { MovieDetails } from "../MovieDetails/MovieDetails";
 import { Movies } from "../Movies/Movies";
 import { NotFound } from "../static/NotFound/NotFound";
 import { ServerError } from "../static/ServerError/ServerError";
+import { TermsOfService } from '../static/TermsOfService/TermsOfService';
 import { guestRoutes } from './guestRoutes';
 import { userRoutes } from './userRoutes';
 
@@ -20,7 +21,8 @@ export function Routing() {
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/movies/:movieId" element={<MovieDetails />} />
-
+            <Route path="/TermsOfService" element={<TermsOfService />} />
+            
             {isAuth
                 ? userRoutes
                 : guestRoutes

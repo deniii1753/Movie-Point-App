@@ -18,7 +18,7 @@ export function Footer() {
                         <div className="widget">
                             <h4>Legal</h4>
                             <ul>
-                                <li><Link to="/">Terms of Use</Link></li>
+                                <li><Link to="/TermsOfService">Terms of Service</Link></li>
                                 <li><Link to="/">Privacy Policy</Link></li>
                                 <li><Link to="/">Security</Link></li>
                             </ul>

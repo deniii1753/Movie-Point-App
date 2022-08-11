@@ -42,3 +42,11 @@
 .widget form {
     margin-top: 25px;
 }
+
+.footer-container-resizer {
+    padding-bottom: 30px;
+}
+
+.footer-titles {
+    margin: 20px 0;
+}
