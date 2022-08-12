@@ -13,6 +13,7 @@ import { validateField } from '../../utils/validators/movieValidations';
 
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
+import { Spinner } from '../Spinner/Spinner';
 
 export function MovieEdit() {
     const [genres, setGenres] = useState([]);
@@ -33,19 +34,22 @@ export function MovieEdit() {
     const navigate = useNavigate();
     const { movieId } = useParams();
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         genreService.getAll()
-            .then(data => setGenres(data.genres));
+            .then(data => setGenres(data.genres))
+            .catch(err => toast.error(err.message));
 
         movieService.getOne(movieId)
-            .then(data => { 
-                if(user.role !== 'admin'){
-                    if(user._id !== data.postCreator) {
+            .then(data => {
+                if (user.role !== 'admin') {
+                    if (user._id !== data.postCreator) {
                         toast.error('You are not authorized to edit this movie!');
                         navigate('/');
                     }
                 }
+                setIsLoading(false);
                 setFormData({
                     title: { value: data.title, error: null },
                     writer: { value: data.writer, error: null },
@@ -59,16 +63,19 @@ export function MovieEdit() {
                     author: { value: data.author, error: null },
                     authorImg: { value: data.authorImg, error: null },
                     description: { value: data.description, error: null },
-                })})
+                })
+            })
             .catch(err => {
                 toast.error(err.message);
                 navigate('/404');
             });
     }, [movieId, navigate, user._id, user.role]);
 
+    if (isLoading) return <Spinner />
+
     function submitHandler(e) {
         e.preventDefault();
-
+        setIsLoading(true);
         const updatedData = Object.entries(formData).reduce((acc, x) => {
             const [key, { value }] = x;
             const data = { [key]: value };
@@ -77,10 +84,14 @@ export function MovieEdit() {
 
         movieService.editMovie(movieId, updatedData, user['X-Auth-Token'])
             .then(data => {
+                setIsLoading(false);
                 toast.success(`You successfully edited ${formData.title.value}!`);
                 return navigate(`/movies/${data._id}`)
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message)
+            });
     }
 
     function changeHandler(e) {
@@ -131,7 +142,7 @@ export function MovieEdit() {
                                         styles={multiSelectStyles}
                                         isMulti
                                     />
-                                    
+
                                     {formData.genres.error && <p className="error-message">❌{formData.genres.error}</p>}
                                     <label htmlFor="time">Time*: </label>
                                     <input type="Number" id="time" name="time" value={formData.time.value} onChange={changeHandler} />

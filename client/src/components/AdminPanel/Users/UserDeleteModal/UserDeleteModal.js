@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
@@ -8,20 +8,29 @@ import styles from '../../DeleteModal.module.css';
 import UserContext from '../../../../contexts/UserContext';
 import * as userService from '../../../../services/userService';
 import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
+import { Spinner } from '../../../Spinner/Spinner';
 
 
 export function UserDeleteModal({ closeHandler, user }) {
     const { user: adminUser } = useContext(UserContext);
     const { deleteUser } = useContext(AdminPanelUsersContext);
+    const [isLoading, setIsLoading] = useState(false);
+
+    if(isLoading) return <Spinner />
 
     function deleteHandler() {
+        setIsLoading(true);
         userService.deleteUser(user._id, adminUser['X-Auth-Token'])
             .then(() => {
                 deleteUser();
                 toast.success(`You successfully deleted ${user.username}!`)
+                setIsLoading(false);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     function closeModal(e) {

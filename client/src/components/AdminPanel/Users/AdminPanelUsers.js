@@ -12,6 +12,7 @@ import { AdminPanelUsersTable } from './Table/AdminPanelUsersTable';
 import { AdminPanelUsersPagination } from './Pagination/AdminPanelUsersPagination';
 
 import * as userService from '../../../services/userService';
+import { Spinner } from '../../Spinner/Spinner';
 
 const USERS_PER_PAGE = 2;
 
@@ -21,11 +22,12 @@ export function AdminPanelUsers() {
         currentPage: 1
     });
     const [totalPages, setTotalPages] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
-
     const { user } = useContext(UserContext);
 
     useEffect(() => {
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         const id = searchParams.get('id');
@@ -42,20 +44,30 @@ export function AdminPanelUsers() {
 
             userService.getUsersBySearch(key, value, (pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
                 .then(data => {
+                    setIsLoading(false);
                     setUsers({ users: data.users, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         } else {
             userService.getUsers((pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
                 .then(data => {
+                    setIsLoading(false);
                     setUsers({ users: data.users, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         }
 
     }, [searchParams, user]);
+
+    if(isLoading) return <Spinner />
 
     function editUser(updatedUser) {
         setUsers(state => ({ ...state, users: state.users.map(x => x._id === updatedUser._id ? updatedUser : x) }))
@@ -76,14 +88,19 @@ export function AdminPanelUsers() {
             if (users.currentPage === 1) return;
             return setSearchParams(`?page=${users.currentPage - 1}`);
         }
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         userService.getUsers((pageNumber - 1) * USERS_PER_PAGE, USERS_PER_PAGE, user['X-Auth-Token'])
         .then(data => {
+            setIsLoading(false);
             setUsers({ users: data.users, currentPage: pageNumber });
             setTotalPages(Math.ceil(data.count / USERS_PER_PAGE));
         })
-        .catch(err => toast.error(err.message));
+        .catch(err => {
+            setIsLoading(false);
+            toast.error(err.message);
+        });
     }
 
     return (

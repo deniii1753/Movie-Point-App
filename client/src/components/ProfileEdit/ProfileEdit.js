@@ -7,6 +7,7 @@ import userContext from '../../contexts/UserContext';
 import * as userService from '../../services/userService';
 
 import { profileEditValidations } from '../../utils/validators/profileEditValidations';
+import { Spinner } from '../Spinner/Spinner';
 import { ProfileEditHeader } from "./ProfileEditHeader/ProfileEditHeader";
 
 let _id;
@@ -28,6 +29,8 @@ export function ProfileEdit() {
         instagram: { value: '', error: null },
         youtube: { value: '', error: null },
     });
+    const [isLoading, setIsLoading] = useState(true);
+
     const { user } = useContext(userContext);
     const navigate = useNavigate();
 
@@ -52,14 +55,17 @@ export function ProfileEdit() {
                     facebook: { value: data.socials?.facebook || '', error: null },
                     instagram: { value: data.socials?.instagram || '', error: null },
                     youtube: { value: data.socials?.youtube || '', error: null }
-                }))
+                }));
+                setIsLoading(false);
             })
             .catch(err => {
                 toast.error(err.message);
                 navigate('/profile');
             });
 
-    }, [user, navigate])
+    }, [user, navigate]);
+
+    if(isLoading) return <Spinner />
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -74,7 +80,7 @@ export function ProfileEdit() {
 
     function submitHandler(e) {
         e.preventDefault();
-
+        setIsLoading(true);
         userService.editUser(_id, {
             firstName: formData.firstName.value,
             lastName: formData.lastName.value,
@@ -98,7 +104,10 @@ export function ProfileEdit() {
                 toast.success('You successfully edit your profile!');
                 navigate('/profile');
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (

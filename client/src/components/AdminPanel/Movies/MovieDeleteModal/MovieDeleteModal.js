@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
@@ -9,19 +9,28 @@ import UserContext from '../../../../contexts/UserContext';
 import AdminPanelMoviesContext from '../../../../contexts/AdminPanelMoviesContext';
 
 import * as movieService from '../../../../services/movieService';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function MovieDeleteModal({ closeHandler, movie }) {
     const { user } = useContext(UserContext);
     const { deleteMovie } = useContext(AdminPanelMoviesContext);
+    const [isLoading, setIsLoading] = useState(false);
+
+    if(isLoading) return <Spinner />
 
     function deleteHandler() {
+        setIsLoading(true);
         movieService.deleteMovie(movie._id, user['X-Auth-Token'])
             .then(() => {
+                setIsLoading(false);
                 deleteMovie();
                 toast.success(`You successfully deleted ${movie.title} movie!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     function closeModal(e) {

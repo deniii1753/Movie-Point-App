@@ -20,6 +20,7 @@ import { selectStyles } from "../utils/selectStyles";
 
 import * as genreService from "../../../../services/genreService";
 import * as movieService from "../../../../services/movieService";
+import { Spinner } from "../../../Spinner/Spinner";
 
 export function MovieCreateModal({ closeHandler }) {
 
@@ -38,6 +39,7 @@ export function MovieCreateModal({ closeHandler }) {
         description: { value: '', error: null },
         postCreator: { value: '', error: null, focused: true }
     });
+    const [isLoading, setIsLoading] = useState(false);
     const [genres, setGenres] = useState([]);
     const { user } = useContext(UserContext);
     const { addNewMovie } = useContext(AdminPanelMoviesContext);
@@ -47,6 +49,8 @@ export function MovieCreateModal({ closeHandler }) {
             .catch(err => toast.error(err.message));
     }, []);
 
+    if(isLoading) return <Spinner />
+    
     function changeHandler(e) {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -68,14 +72,19 @@ export function MovieCreateModal({ closeHandler }) {
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
         const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
         movieService.addMovie(Object.fromEntries(entries), user['X-Auth-Token'])
             .then(data => {
+                setIsLoading(false);
                 addNewMovie(data);
                 toast.success(`You successfully created ${data.title} movie!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     function multiSelectHandler(selectedOptions) {

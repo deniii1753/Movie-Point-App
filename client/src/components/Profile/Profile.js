@@ -10,25 +10,31 @@ import UserContext from '../../contexts/UserContext';
 
 import * as userService from '../../services/userService';
 import { ProfileHeader } from './ProfileHeader/ProfileHeader';
+import { Spinner } from '../Spinner/Spinner';
 
 export function Profile() {
     const [user, setUser] = useState({});
     const { user: userData } = useContext(UserContext);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         userService.getUser(userData._id, userData['X-Auth-Token'])
-            .then(data => setUser(data))
+            .then(data => {
+                setIsLoading(false);
+                setUser(data);
+            })
             .catch(err => {
                 toast.error(err.message);
                 navigate('/500');
             });
     }, [navigate, userData]);
 
+    if(isLoading) return <Spinner />
+    
     return (
         <>
             <ProfileHeader />
-
             <section className="transformers-area">
                 <div className="container">
                     <div className="transformers-box">

@@ -10,6 +10,7 @@ import { AdminPanelGenresTable } from "./Table/AdminPanelGenresTable";
 
 import * as genreService from "../../../services/genreService";
 import AdminPanelGenresContext from "../../../contexts/AdminPanelGenreContext";
+import { Spinner } from "../../Spinner/Spinner";
 
 const GENRES_PER_PAGE = 5;
 
@@ -20,8 +21,9 @@ export function AdminPanelGenres() {
     });
     const [totalPages, setTotalPages] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         const id = searchParams.get('id');
@@ -35,20 +37,30 @@ export function AdminPanelGenres() {
 
             genreService.getGenresBySearch(kvp[0], kvp[1], (pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE)
                 .then(data => {
+                    setIsLoading(false);
                     setGenres({ genres: data.genres, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / GENRES_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         } else {
             genreService.getAll((pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE)
                 .then(data => {
+                    setIsLoading(false);
                     setGenres({ genres: data.genres, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / GENRES_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         }
 
     }, [searchParams]);
+
+    if(isLoading) return <Spinner />
 
     function editGenre(updatedGenre) {
         setGenres(state => ({ ...state, genres: state.genres.map(x => x._id === updatedGenre._id ? updatedGenre : x) }))
@@ -69,14 +81,19 @@ export function AdminPanelGenres() {
             if (genres.currentPage === 1) return;
             return setSearchParams(`?page=${genres.currentPage - 1}`);
         }
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         genreService.getAll((pageNumber - 1) * GENRES_PER_PAGE, GENRES_PER_PAGE)
         .then(data => {
+            setIsLoading(false);
             setGenres({ genres: data.genres, currentPage: pageNumber });
             setTotalPages(Math.ceil(data.count / GENRES_PER_PAGE));
         })
-        .catch(err => toast.error(err.message));
+        .catch(err => {
+            setIsLoading(false);
+            toast.error(err.message);
+        });
     }
 
     return (

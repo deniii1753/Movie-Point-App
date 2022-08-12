@@ -10,24 +10,28 @@ import { MovieEditModal } from '../MovieEditModal/MovieEditModal';
 
 import * as movieService from '../../../../services/movieService';
 import { MovieDeleteModal } from '../MovieDeleteModal/MovieDeleteModal';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function AdminPanelMoviesTable({movies}) {
     const [selectedMovie, setSelectedMovie] = useState({});
-
+    const [isLoading, setIsLoading] = useState(false);
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
+    if(isLoading) return <Spinner />
 
     async function openModal(modalName, movieId) {
+        setIsLoading(true);
         try {
             const movie = await movieService.getOne(movieId)
-
+            setIsLoading(false);
             if (modalName === 'Edit') openEdit();
             if (modalName === 'Delete') openDelete();
 
             setSelectedMovie(movie);
         } catch (err) {
+            setIsLoading(false);
             toast.error(err.message);
         }
     }

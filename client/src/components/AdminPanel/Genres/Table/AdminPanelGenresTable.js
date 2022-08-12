@@ -12,18 +12,24 @@ import * as genreService from "../../../../services/genreService";
 import { GenreEditModal } from "../GenreEditModal/GenreEditModal";
 import { GenreCreateModal } from "../GenreCreateModal/GenreCreateModal";
 import { GenreDeleteModal } from "../GenreDeleteModal/GenreDeleteModal";
+import { Spinner } from "../../../Spinner/Spinner";
 
 export function AdminPanelGenresTable({ genres }) {
     const [selectedGenre, setSelectedGenre] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
+    
+    if(isLoading) return <Spinner />
 
     async function openModal(modalName, genreId) {
+        setIsLoading(true);
         try {
             const genre = await genreService.getOne(genreId);
-            
+            setIsLoading(false);
+
             if (modalName === 'Edit') openEdit();
             if (modalName === 'Delete') openDelete();
             

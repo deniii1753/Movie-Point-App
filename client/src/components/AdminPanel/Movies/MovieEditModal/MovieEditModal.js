@@ -20,9 +20,10 @@ import { selectStyles } from "../utils/selectStyles";
 
 import * as genreService from "../../../../services/genreService";
 import * as movieService from "../../../../services/movieService";
+import { Spinner } from "../../../Spinner/Spinner";
 
 export function MovieEditModal({ closeHandler, movie }) {
-
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: { value: movie.title, error: null },
         writer: { value: movie.writer, error: null },
@@ -47,6 +48,8 @@ export function MovieEditModal({ closeHandler, movie }) {
             .catch(err => toast.error(err.message));
     }, []);
 
+    if(isLoading) return <Spinner />
+
     function changeHandler(e) {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -68,15 +71,20 @@ export function MovieEditModal({ closeHandler, movie }) {
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
         const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
 
         movieService.editMovie(movie._id, Object.fromEntries(entries), user['X-Auth-Token'])
             .then(data => {
+                setIsLoading(false);
                 editMovie(data);
                 toast.success(`You successfully edited ${data.title} movie!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     function multiSelectHandler(selectedOptions) {

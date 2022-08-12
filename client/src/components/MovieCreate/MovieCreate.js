@@ -13,6 +13,7 @@ import { validateField } from '../../utils/validators/movieValidations';
 import * as genreService from '../../services/genreService';
 import * as movieService from '../../services/movieService';
 import { toast } from 'react-toastify';
+import { Spinner } from '../Spinner/Spinner';
 
 export function MovieCreate() {
     const [genres, setGenres] = useState([]);
@@ -30,6 +31,7 @@ export function MovieCreate() {
         authorImg: { value: '', error: null },
         description: { value: '', error: null },
     });
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
@@ -39,12 +41,14 @@ export function MovieCreate() {
             .then(data => setGenres(data.genres));
     }, []);
 
+    if (isLoading) return <Spinner />
+
     function submitHandler(e) {
         e.preventDefault();
-
+        setIsLoading(true);
         const movie = Object.entries(formData).reduce((acc, x) => {
-            const [key, {value}] = x;
-            const data = {[key]: value};
+            const [key, { value }] = x;
+            const data = { [key]: value };
             return Object.assign(acc, data);
         }, {});
 
@@ -52,10 +56,14 @@ export function MovieCreate() {
 
         movieService.addMovie(movie, user['X-Auth-Token'])
             .then(data => {
+                setIsLoading(false);
                 toast.success('You successfully created a new movie!');
                 return navigate(`/movies/${data._id}`)
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message)
+            });
     }
 
     function changeHandler(e) {

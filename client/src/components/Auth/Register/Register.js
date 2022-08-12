@@ -10,6 +10,7 @@ import { registerValidation } from '../../../utils/validators/registerValidation
 
 import UserContext from '../../../contexts/UserContext';
 import { toast } from 'react-toastify';
+import { Spinner } from '../../Spinner/Spinner';
 
 
 export function Register({ closeModalHandler }) {
@@ -22,7 +23,11 @@ export function Register({ closeModalHandler }) {
         rePassword: { value: '', error: null },
         bio: { value: '', error: null }
     });
+    const [isLoading, setIsLoading] = useState(false);
+
     const { updateUser } = useContext(UserContext);
+    
+    if(isLoading) return <Spinner />
 
     function closeHandler(e) {
         e.preventDefault();
@@ -39,14 +44,18 @@ export function Register({ closeModalHandler }) {
 
     function submitHandler(e) {
         const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
-
+        setIsLoading(true);
         authService.register(Object.fromEntries(entries))
             .then(data => {
+                setIsLoading(false);
                 updateUser({_id: data._id, username: data.username, role: data.role, 'X-Auth-Token': data['X-Auth-Token']});
                 toast.success('You successfully registered!');
                 closeModalHandler('register');
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (

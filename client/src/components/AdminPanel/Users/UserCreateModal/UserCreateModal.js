@@ -13,6 +13,7 @@ import { comparePasswords } from '../../../../utils/validators/comparePasswords'
 import { profileEditValidations } from '../../../../utils/validators/profileEditValidations';
 
 import * as authService from '../../../../services/authService';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function UserCreateModal({ closeHandler }) {
     const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ export function UserCreateModal({ closeHandler }) {
         rePassword: { value: '', error: null },
         bio: { value: '', error: null }
     });
-
+    const [isLoading, setIsLoading] = useState(false);
     const { addNewUser } = useContext(AdminPanelUsersContext)
 
     function changeHandler(e) {
@@ -40,18 +41,24 @@ export function UserCreateModal({ closeHandler }) {
         }))
 
     }
+    if(isLoading) return <Spinner />
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
         const entries = Object.entries(formData).map(x => [x[0], x[1].value]);
 
         authService.register(Object.fromEntries(entries))
             .then(data => {
+                setIsLoading(false);
                 toast.success(`You successfully registered ${data.username}`);
                 addNewUser(data);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     function closeModal(e) {

@@ -10,12 +10,14 @@ import AdminPanelGenresContext from '../../../../contexts/AdminPanelGenreContext
 import UserContext from '../../../../contexts/UserContext';
 
 import * as genreService from '../../../../services/genreService';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function GenreEditModal({ closeHandler, genre }) {
     const [formData, setFormData] = useState({
         value: '',
         label: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
     const { user } = useContext(UserContext);
     const { editGenre } = useContext(AdminPanelGenresContext);
 
@@ -25,6 +27,8 @@ export function GenreEditModal({ closeHandler, genre }) {
             label: genre.label,
         });
     }, [genre]);
+
+    if(isLoading) return <Spinner />
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -45,14 +49,19 @@ export function GenreEditModal({ closeHandler, genre }) {
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         genreService.editOne(genre._id, formData, user["X-Auth-Token"])
             .then(data => {
+                setIsLoading(false);
                 editGenre(data);
                 toast.success(`You successfully updated ${genre.label}!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (

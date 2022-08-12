@@ -14,19 +14,25 @@ import { UserAdminModal } from '../UserAdminModal/UserAdminModal';
 import { UserCreateModal } from '../UserCreateModal/UserCreateModal';
 
 import * as userService from '../../../../services/userService';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function AdminPanelUsersTable({ users }) {
     const [selectedUser, setSelectedUser] = useState({});
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { isModalOpened: isEditOpened, openModal: openEdit, closeModal: closeEdit } = useModal();
     const { isModalOpened: isDeleteOpened, openModal: openDelete, closeModal: closeDelete } = useModal();
     const { isModalOpened: isAdminOpened, openModal: openAdmin, closeModal: closeAdmin } = useModal();
     const { isModalOpened: isCreateOpened, openModal: openCreate, closeModal: closeCreate } = useModal();
 
+    if (isLoading) return <Spinner />
+
     async function openModal(modalName, userId) {
+        setIsLoading(true);
         try {
-            const userFromDb = await userService.getUser(userId, user['X-Auth-Token'])
+            const userFromDb = await userService.getUser(userId, user['X-Auth-Token']);
+            setIsLoading(false);
 
             if (modalName === 'Edit') openEdit();
             if (modalName === 'Delete') openDelete();
@@ -35,17 +41,18 @@ export function AdminPanelUsersTable({ users }) {
 
             setSelectedUser(userFromDb);
         } catch (err) {
+            setIsLoading(false);
             toast.error(err.message);
         }
     }
 
     return (
         <>
-                {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />}
-                {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />}
-                {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />}
-                {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />}
-                
+            {isEditOpened && <UserEditModal closeHandler={closeEdit} user={selectedUser} />}
+            {isDeleteOpened && <UserDeleteModal closeHandler={closeDelete} user={selectedUser} />}
+            {isAdminOpened && <UserAdminModal closeHandler={closeAdmin} user={selectedUser} />}
+            {isCreateOpened && <UserCreateModal closeHandler={closeCreate} />}
+
             <div className={styles["table-wrapper"]}>
 
 

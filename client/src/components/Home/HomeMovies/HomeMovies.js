@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import * as movieService from "../../../services/movieService";
 import { MovieItem } from "../../MovieItem/MovieItem";
+import { Spinner } from "../../Spinner/Spinner";
 
 
 export function HomeMovies() {
@@ -13,32 +14,43 @@ export function HomeMovies() {
         filter: 'Recently Added'
     });
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         movieService.getRecent()
-            .then(data => setFilteredMovies({
+            .then(data => {
+                setIsLoading(false);
+                setFilteredMovies({
                 movies: data.movies,
                 filter: 'Recently Added'
-            }))
+            })})
             .catch(err => {
                 toast.error(err.message);
                 navigate('/500');
             })
     }, [navigate]);
 
+    if(isLoading) return <Spinner />
+
     async function clickHandler(e) {
         const filter = e.target.textContent;
 
         try {
             if (filter === 'Recently Added') {
+                setIsLoading(true);
                 movieService.getRecent()
-                    .then(data => setFilteredMovies({
+                    .then(data => {
+                        setIsLoading(false);
+                        setFilteredMovies({
                         movies: data.movies,
                         filter: 'Recently Added'
-                    }))
+                    })})
             } else if (filter === 'Top 5') {
+                setIsLoading(true);
                 movieService.getTopFive()
                     .then(data => {
+                        setIsLoading(false);
                         setFilteredMovies({
                             movies: data.movies,
                             filter: 'Top 5'

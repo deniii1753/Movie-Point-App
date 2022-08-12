@@ -11,6 +11,7 @@ import { AdminPanelMoviesHeader } from "./Header/AdminPanelMoviesHeader";
 import * as movieService from "../../../services/movieService";
 import { AdminPanelMoviesTable } from "./Table/AdminPanelMoviesTable";
 import { AdminPanelMoviesPagination } from "./Pagination/AdminPanelMoviesPagination";
+import { Spinner } from "../../Spinner/Spinner";
 
 const MOVIES_PER_PAGE = 5;
 
@@ -19,10 +20,12 @@ export function AdminPanelMovies() {
         movies: [],
         currentPage: 1
     });
+    const [isLoading, setIsLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         const id = searchParams.get('id');
@@ -38,20 +41,30 @@ export function AdminPanelMovies() {
 
             movieService.getMoviesBySearch(key, value, (pageNumber - 1) * MOVIES_PER_PAGE, MOVIES_PER_PAGE)
                 .then(data => {
+                    setIsLoading(false);
                     setMovies({ movies: data.movies, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / MOVIES_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         } else {
             movieService.getMovies((pageNumber - 1) * MOVIES_PER_PAGE, MOVIES_PER_PAGE)
                 .then(data => {
+                    setIsLoading(false);
                     setMovies({ movies: data.movies, currentPage: pageNumber });
                     setTotalPages(Math.ceil(data.count / MOVIES_PER_PAGE));
                 })
-                .catch(err => toast.error(err.message));
+                .catch(err => {
+                    setIsLoading(false);
+                    toast.error(err.message);
+                });
         }
 
     }, [searchParams]);
+    
+    if(isLoading) return <Spinner />
 
     function addNewMovie(newMovie) {
         if (movies.movies.length < MOVIES_PER_PAGE) return setMovies(state => ({ ...state, movies: [...state.movies, newMovie] }));
@@ -72,14 +85,19 @@ export function AdminPanelMovies() {
             if (movies.currentPage === 1) return;
             return setSearchParams(`?page=${movies.currentPage - 1}`);
         }
+        setIsLoading(true);
         const pageNumber = searchParams.get('page') || 1;
 
         movieService.getMovies((pageNumber - 1) * MOVIES_PER_PAGE, MOVIES_PER_PAGE)
         .then(data => {
+            setIsLoading(false);
             setMovies({ movies: data.movies, currentPage: pageNumber });
             setTotalPages(Math.ceil(data.count / MOVIES_PER_PAGE));
         })
-        .catch(err => toast.error(err.message));
+        .catch(err => {
+            setIsLoading(false);
+            toast.error(err.message);
+        });
     }
 
     return (

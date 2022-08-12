@@ -29,7 +29,6 @@ export function Home() {
                 ? <HomeHeaderMovie movie={topRatedMovie} />
                 : <HomeHeaderText />}
 
-
             <HomeMovies />
         </>
     );

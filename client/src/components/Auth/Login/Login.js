@@ -7,6 +7,7 @@ import styles from '../Auth.module.css';
 
 import * as authService from '../../../services/authService';
 import UserContext from '../../../contexts/UserContext';
+import { Spinner } from '../../Spinner/Spinner';
 
 export function Login({ closeModalHandler }) {
     const [formData, setFormData] = useState({
@@ -14,8 +15,10 @@ export function Login({ closeModalHandler }) {
         password: ''
     });
     const [error, setError] = useState(null);
-
+    const [isLoading, setIsLoading] = useState(false);
     const { updateUser } = useContext(UserContext);
+
+    if(isLoading) return <Spinner />
 
     function closeHandler(e) {
         e.preventDefault();
@@ -25,14 +28,17 @@ export function Login({ closeModalHandler }) {
     }
 
     function loginClickHandler() {
+        setIsLoading(true);
         authService.login(formData)
             .then(data => {
+                setIsLoading(false);
                 updateUser(data);
                 toast.success('You successfully logged in!');
                 closeModalHandler('login');
 
             })
             .catch(err => {
+                setIsLoading(false);
                 setError(err.message);
                 setFormData(state => ({ ...state, password: '' }))
             });

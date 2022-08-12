@@ -14,6 +14,7 @@ import { profileEditValidations } from '../../../../utils/validators/profileEdit
 import { comparePasswords } from '../../../../utils/validators/comparePasswords';
 
 import * as userService from '../../../../services/userService';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function UserEditModal({ closeHandler, user }) {
     const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ export function UserEditModal({ closeHandler, user }) {
         twitter: { value: '', error: null },
         youtube: { value: '', error: null }
     });
+    const [isLoading, setIsLoading] = useState(false);
     const { user: adminUser } = useContext(UserContext);
     const { editUser } = useContext(AdminPanelUsersContext);
     useEffect(() => {
@@ -45,6 +47,8 @@ export function UserEditModal({ closeHandler, user }) {
             youtube: { value: user.socials?.youtube || '', error: null }
         }));
     }, [user]);
+
+    if(isLoading) return <Spinner />
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -67,6 +71,7 @@ export function UserEditModal({ closeHandler, user }) {
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         userService.editUser(user._id, {
             firstName: formData.firstName.value,
@@ -83,11 +88,15 @@ export function UserEditModal({ closeHandler, user }) {
             },
         }, adminUser["X-Auth-Token"])
             .then(data => {
+                setIsLoading(false);
                 editUser(data);
                 toast.success(`You successfully edit ${formData.username.value}'s profile!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (

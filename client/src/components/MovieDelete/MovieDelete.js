@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineClose, AiFillCloseCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,11 +7,16 @@ import styles from './MovieDelete.module.css';
 
 import UserContext from "../../contexts/UserContext";
 import * as movieService from "../../services/movieService";
+import { Spinner } from "../Spinner/Spinner";
 
 
 export function MovieDelete({ closeHandler, movieName, movieId }) {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false);
+    
+    if(isLoading) return <Spinner />
 
     function clickCloseHandler(e) {
         if (e.target.className !== 'modal') return;
@@ -19,12 +24,17 @@ export function MovieDelete({ closeHandler, movieName, movieId }) {
     }
 
     function deleteHandler() {
+        setIsLoading(true);
         movieService.deleteMovie(movieId, user['X-Auth-Token'])
             .then(() => {
+                setIsLoading(false);
                 toast.success(`You successfully deleted ${movieName}!`);
-                return navigate('/movies', {replace: true})
+                return navigate('/movies', { replace: true })
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
     return (
         <div className="modal" onClick={clickCloseHandler}>

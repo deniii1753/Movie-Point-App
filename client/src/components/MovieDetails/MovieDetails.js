@@ -14,6 +14,7 @@ import { Trailer } from './Trailer/Trailer';
 
 import MovieButtonsContext from '../../contexts/MovieButtonsContext';
 import { MovieButtons } from './MovieButtons/MovieButtons';
+import { Spinner } from '../Spinner/Spinner';
 
 export function MovieDetails() {
     const [movie, setMovie] = useState({
@@ -23,6 +24,7 @@ export function MovieDetails() {
     const { movieId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         movieService.getOne(movieId)
@@ -30,7 +32,6 @@ export function MovieDetails() {
                 const { _ratingStars, ...rest } = data;
                 const isLiked = data.likes.includes(user?._id) ?? false;
                 const isDisliked = data.dislikes.includes(user?._id) ?? false;
-
                 setMovie({
                     movie: rest,
                     rating: {
@@ -41,6 +42,7 @@ export function MovieDetails() {
                         isDisliked
                     }
                 })
+                setIsLoading(false);
             })
             .catch(err => {
                 toast.error(err.message);
@@ -49,7 +51,7 @@ export function MovieDetails() {
 
     }, [movieId, navigate, user?._id]);
 
-
+    if(isLoading) return <Spinner />
 
     function changeRate(data) {
         setMovie(state => ({

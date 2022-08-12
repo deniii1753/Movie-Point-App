@@ -9,14 +9,18 @@ import AdminPanelGenresContext from "../../../../contexts/AdminPanelGenreContext
 import UserContext from "../../../../contexts/UserContext";
 
 import * as genreService from "../../../../services/genreService";
+import { Spinner } from "../../../Spinner/Spinner";
 
 export function GenreCreateModal({ closeHandler }) {
     const [formData, setFormData] = useState({
         value: '',
         label: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
     const { user } = useContext(UserContext);
     const { addNewGenre } = useContext(AdminPanelGenresContext);
+
+    if(isLoading) return <Spinner />
 
     function changeHandler(e) {
         const fieldName = e.target.name;
@@ -37,14 +41,19 @@ export function GenreCreateModal({ closeHandler }) {
 
     function submitHandler(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         genreService.addNew(formData, user["X-Auth-Token"])
             .then(data => {
+                setIsLoading(false);
                 addNewGenre(data);
                 toast.success(`You successfully created new genre ${data.label}`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (
