@@ -2,7 +2,7 @@ import requester from "./requester";
 
 const DEFAULT_FROM = 0;
 const DEFAULT_TO = 8;
-const BASE_URL = 'http://localhost:3030/api/movies';
+const BASE_URL = 'https://movie-point-backend.herokuapp.com/api/movies';
 
 export const getRecent = (from = DEFAULT_FROM, to = DEFAULT_TO) => requester(`${BASE_URL}?skip=${from}&sort=_creationDate&order=desc&limit=${to}`, 'GET');
 export const getTopFive = () => requester(`${BASE_URL}?sort=likes&order=desc&limit=5`, 'GET');

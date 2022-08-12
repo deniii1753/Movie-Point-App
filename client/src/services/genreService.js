@@ -1,6 +1,6 @@
 import requester from "./requester";
 
-const BASE_URL = 'http://localhost:3030/api/genres';
+const BASE_URL = 'https://movie-point-backend.herokuapp.com/api/genres';
 
 export const getAll = (from = 0, to = 0) => requester(`${BASE_URL}?skip=${from}&limit=${to}`, 'GET');
 export const getGenresBySearch = (key, value, from, to) => requester(`${BASE_URL}?${key}=${value}&skip=${from}&limit=${to}`, 'GET', null);

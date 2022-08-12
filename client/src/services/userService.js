@@ -1,6 +1,6 @@
 import requester from "./requester";
 
-const BASE_URL = 'http://localhost:3030/api/users';
+const BASE_URL = 'https://movie-point-backend.herokuapp.com/api/users';
 const DEFAULT_FROM = 0;
 const DEFAULT_TO = 8;
 
