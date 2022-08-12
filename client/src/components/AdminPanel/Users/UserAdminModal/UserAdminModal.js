@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FaExclamation } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -10,10 +10,14 @@ import mainStyles from '../../Modals.module.css';
 import * as userService from '../../../../services/userService';
 import AdminPanelUsersContext from '../../../../contexts/AdminPanelUsersContext';
 import { toast } from 'react-toastify';
+import { Spinner } from '../../../Spinner/Spinner';
 
 export function UserAdminModal({ closeHandler, user }) {
     const { user: adminUser } = useContext(UserContext);
     const { editUser } = useContext(AdminPanelUsersContext);
+    const [isLoading, setIsLoading] = useState(false);
+
+    if(isLoading) return <Spinner />
 
     function closeModal(e) {
         if (e.target.className === 'modal') return closeHandler();
@@ -22,14 +26,19 @@ export function UserAdminModal({ closeHandler, user }) {
     function changeRoleHandler() {
         const newRole = user.role === 'admin' ? 'user' : 'admin';
         const {_creationDate, ...newUser} = user;
+        setIsLoading(true);
 
         userService.editUser(user._id, { ...newUser, role: newRole }, adminUser['X-Auth-Token'])
             .then(data => {
+                setIsLoading(false);
                 editUser(data);
                 toast.success(`You successfully changed ${user.username}'s role!`);
                 closeHandler();
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => {
+                setIsLoading(false);
+                toast.error(err.message);
+            });
     }
 
     return (
