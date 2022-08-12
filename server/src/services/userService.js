@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
 
-const SALT_ROUNDS = process.env.SALT_ROUNDS;
+const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
 
 exports.getUsers = (search, limit, skip) => {
     const searchObject = {};
