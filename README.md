@@ -13,7 +13,8 @@
 
 - Go to client folder and type **`npm install`** patiently wait until the packages are install.
 - Go to server folder and type **`npm install`** patiently wait until the packages are install.
-- Once the packages are installed type **`npm start`** in both terminals and wait until the application start.
+- Once the packages are installed type **`npm start`** in client and server folders and wait until the application start.
+- Don't forget to change the urls on client in services folder
 
 
 ## Information about the application:
@@ -24,6 +25,8 @@ The application also has user and admin roles, admins can edit and delete users 
 
 ## TO DO: 
 
-- [ ] Show spinner when navigating
-- [ ] Show users own movies in profile page
+- [x] Show spinner when navigating
+- [ ] Show user's created movies in profile page
 - [ ] Optimize admin panel
+
+### Demo: https://movie-point-a1460.web.app/
