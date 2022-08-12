@@ -1,7 +1,8 @@
 const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
-const { saltRounds } = require('../../config/settings.json');
+
+const SALT_ROUNDS = process.env.SALT_ROUNDS;
 
 exports.getUsers = (search, limit, skip) => {
     const searchObject = {};
@@ -44,7 +45,7 @@ exports.getUsername = (username) => {
 
 exports.update = async (userId, newData) => {
     if (newData.hasOwnProperty('password')) {
-        newData.password = await bcrypt.hash(newData.password, saltRounds);
+        newData.password = await bcrypt.hash(newData.password, SALT_ROUNDS);
     }
     return User.findByIdAndUpdate(userId, newData, { runValidators: true, new: true }).select('-password');
 }

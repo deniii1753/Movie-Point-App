@@ -1,4 +1,4 @@
 const mongoose = require('mongoose');
-const { databaseUrl } = require('./settings.json');
+const MONGO_URL = process.env.MONGO_URL;
 
-exports.connectDatabase = () => mongoose.connect(databaseUrl);
+exports.connectDatabase = () => mongoose.connect(MONGO_URL);
